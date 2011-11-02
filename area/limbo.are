@@ -1,0 +1,284 @@
+#AREADATA
+Name Limbo~
+Builders None~
+VNUMs 1 54
+Credits { NONE} Diku    Limbo~
+Security 9
+End
+
+
+
+#MOBILES
+#0
+
+
+
+#OBJECTS
+#1
+coin silver gcash~
+a silver coin~
+One miserable silver coin.~
+silver~
+money 0 A
+1 0 0 0 0
+0 10 0 P
+#2
+coin gold gcash~
+a gold coin~
+One valuable gold coin.~
+gold~
+money 0 A
+0 1 0 0 0
+0 10 0 P
+#3
+coins gold gcash~
+%d gold coins~
+A pile of gold coins.~
+gold~
+money 0 A
+0 0 0 0 0
+0 10 0 P
+#4
+coins silver gcash~
+%d silver coins~
+A pile of silver coins.~
+silver~
+money 0 A
+0 0 0 0 0
+0 10 0 P
+#5
+coins money gcash~
+a pile of money~
+A pile of money.~
+gold~
+money 0 A
+0 0 0 0 0
+0 10 0 P
+#6
+coins platinum gcash~
+a platinum coin~
+One valuable platinum coin.~
+platinum~
+money 0 A
+0 0 0 0 0
+0 10 0 P
+#7
+coins platinum gcash~
+%d platinum coins~
+A pile of platinum coins.~
+platinum~
+money 0 A
+0 0 0 0 0
+0 10 0 P
+#10
+corpse~
+the corpse of %s~
+The corpse of %s is lying here.~
+meat~
+npc_corpse 0 A
+0 0 0 A 0
+0 1000 0 D
+#11
+corpse~
+the corpse of %s~
+The corpse of %s is lying here.~
+meat~
+pc_corpse O A
+0 0 0 A 0
+0 1000 0 D
+#12
+%s head~
+the head of %s~
+The severed head of %s is lying here.~
+meat~
+trash 0 AO
+0 0 0 0 0
+0 50 0 D
+#13
+%s heart~
+the heart of %s~
+The torn-out heart of %s is lying here.~
+meat~
+food 0 AO
+16 16 0 0 0
+0 20 0 D
+#14
+%s arm~
+the arm of %s~
+The sliced-off arm of %s is lying here.~
+meat~
+food 0 AO
+20 20 0 0 0
+0 50 0 D
+#15
+%s leg~
+the leg of %s~
+The sliced-off leg of %s is lying here.~
+meat~
+food 0 AO
+20 20 0 0 0
+0 50 0 D
+#16
+%s guts entrails~
+the guts of %s~
+A steaming pile of %s's entrails is lying here.~
+meat~
+food 0 AO
+5 5 0 A 0
+0 20 0 D
+#17
+%s brains brain~
+the brains of %s~
+The splattered brains of %s are lying here.~
+meat~
+food 0 AO
+10 10 0 0 0
+0 20 0 D
+#18
+pool blood~
+{Ra pool of blood{x~
+A small {Rpool of blood{x is here.~
+~
+fountain PT 0
+1 1 'blood' 0 0
+0 0 0 G
+#20
+mushroom~
+a Magic Mushroom~
+A delicious magic mushroom is here.~
+food~
+food 0 A
+8 8 0 0 0
+0 10 0 P
+#21
+ball light~
+a bright ball of light~
+A bright ball of light shimmers in the air.~
+energy~
+light A A
+0 0 999 0 0
+0 0 0 P
+#22
+spring~
+a magical spring~
+A magical spring flows from the ground here.~
+water~
+fountain G 0
+100000 100000 'water' 0 0
+0 0 0 P
+#23
+disc disk floating black~
+a floating disc~
+A floating black disc hangs in the air.~
+energy~
+container GMPUYZ AQ
+0 E 0 0 0
+0 0 0 P
+#25
+gate portal~
+a shimmering gate~
+A shimmering black gate rises from the ground, leading to parts unknown.~
+shadow~
+portal GOT 0
+0 0 0 0 0
+0 0 0 P
+#50
+pill quest white~
+a shimmering white pill~
+A shimmering white pill has been dropped here.~
+jelly~
+pill AGHTa A
+110 'quest pill' '' '' ''
+0 1 0 P
+#51
+%s voodoo doll~
+a voodoo doll of %s~
+A voodoo doll of %s is lying here.~
+energy~
+treasure G AO
+0 0 0 0 0
+20 5 50 P
+#52
+exit~
+exit~
+Nothing special there.~
+energy~
+exit ORTY 0
+A 0 0 0 0
+1 1 1 P
+#53
+exit chain up~
+the chain~
+The chain disappears in the clouds.~
+iron~
+exit ORTY 0
+BDFGHJKLM 0 0 0 0
+1 1 1 P
+E
+chain~
+The chain reaches the clouds high above you, the bottom link is mangled,
+and almost scrapes the ground.
+~
+#54
+bag~
+a paper bag~
+A small paper bag.~
+leather~
+container 0 A
+50 0 0 5 100
+0 10 0 G
+#0
+
+
+
+#ROOMS
+#1
+The Void~
+You are floating in nothing.
+~
+0 12 1
+S
+#2
+Limbo~
+You are floating in a formless void, detached from all sensation of physical
+matter, surrounded by swirling glowing light, which fades into the relative
+darkness around you without any trace of edges or shadow.
+   There is a "No Tipping" notice pinned to the darkness.
+~
+0 8 1
+D4
+~
+~
+0 -1 3001
+S
+#3
+The Corner~
+You are standing with your nose in the corner.  Every time you try to
+turn around, you get slapped upside the head and quickly resume your
+position.
+~
+0 40964 1
+S
+#0
+
+
+
+#SPECIALS
+S
+
+
+
+#RESETS
+S
+
+
+
+#SHOPS
+0
+
+
+
+#MOBPROGS
+#0
+
+#$

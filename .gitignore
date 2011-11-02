@@ -1,0 +1,9 @@
+*.o
+*.out
+bin/*
+test/*
+log/*
+*.log
+area/rot
+\.*
+\#*\#

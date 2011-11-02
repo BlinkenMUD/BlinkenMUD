@@ -1,0 +1,91 @@
+Rot Release 1.3
+Friday 13 Dec 1996
+
+Vengeance  vengeance@rot.com
+
+Each social consists of a name, and up to 8 different lines of text.
+The following is the format of the entry in the socials.are file:
+
+name 0 0
+char_no_arg
+others_no_arg
+char_found
+others_found
+vict_found
+char_not_found
+char_auto
+others_auto
+
+The first line consists of the name of the social (the command the player 
+enters), followed by two zeros (placeholders, not used)
+	example 0 0
+
+'char_no_arg' is the line of text displayed to the person doing the social
+when they do not give a target.
+        You look for someone to make an example of.
+
+'others_no_arg' is the line of text displayed to everyone else in the room
+when a player does not give a target.
+        $n is looking for someone to make an example of.
+** (see below for a list of the '$' variables) **
+
+'char_found' is the line displayed to the player doing the social when they
+did specify a target, and the target was found.
+        You make an example of $N.
+
+'others_found' is the line displayed to everyone in the room except for the
+player doing the social, and the target of the social.
+        $n makes an example of $N.
+
+'vict_found' is the line displayed to the target of the social.
+        $n makes an example of you!
+
+'char_not_found' is the line displayed to the player doing the social when
+they specify a target that cannot be found.
+        There's no-one by that name here.
+
+'char_auto' is the line displayed to the person doing the social when they
+specify themselves as the target.
+        You make an example of yourself.
+
+'others_auto' is the line displayed to everyone else in the room when
+a player specifies themself as the target.
+        $n makes an example of $mself.
+
+The list can be terminated early (ie: if there is no nead for anything
+after the others_no_arg) using a pound (#) on a line by itself.
+
+An empty line must contain a single dollar sign ($) on the line.
+
+
+=== The '$' sequences
+
+Here are all the '$' sequences used in socials:
+
+player = the player doing the social.
+target = the target of the social.
+
+    $n
+	Result is the name of player (or someone if invisible)
+
+    $N
+	Result is the name of target (or someone if invisible)
+
+    $e
+	Result is 'he', 'she', or 'it', depending on the sex of player
+
+    $E
+	Result is 'he', 'she', or 'it', depending on the sex of target
+
+    $m
+	Result is 'him', 'her', or 'it', depending on the sex of player
+
+    $M
+	Result is 'him', 'her', or 'it', depending on the sex of target
+
+    $s
+	Result is 'his', 'her', or 'its', depending on the sex of player
+
+    $S
+	Result is 'his', 'her', or 'its', depending on the sex of target
+

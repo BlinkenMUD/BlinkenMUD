@@ -1,0 +1,68 @@
+#!/usr/local/bin/perl
+
+# fclan will create the clan data files for existing players.
+# This does not need to be run on a new game, or after a pwipe,
+# only if you are keeping pfiles from an existing pre 1.4 game.
+#
+# To use: in your /Rot/player directory, first use the following
+# command:  ls -1 >../names.txt
+# then, in /Rot use: ./src/fclan
+#
+# You must have read/write permission to /Rot, /Rot/area & /Rot/player
+# You must also have an installed copy of perl 5.x, change the first
+# line of this file if perl is installed in a different location.
+
+undef %Clead;
+undef %Clan;
+undef @Names;
+open(INFILE, "names.txt");
+while (<INFILE>) {
+	chomp;
+	push(@Names, $_);
+}
+close INFILE;
+
+foreach $name (sort(@Names)) {
+	print $name,"\n";
+	undef @Lines;
+	open (INFILE, "player/$name");
+	while (<INFILE>) {
+		chomp;
+		push(@Lines, $_);
+	}
+	close INFILE;
+	foreach $tmp (@Lines) {
+	    ($type,$data)=split(' ', $tmp);
+	    if ($type eq "Name") {
+		chop $data;
+		$vname = $data;
+	    }
+	    if ($type eq "Clan") {
+		chop $data;
+		if (defined($Clan{$data})) {
+			$Clan{$data}++;
+		} else {
+			$Clan{$data}=1;
+		}
+	    }
+	    if ($type eq "Clead") {
+		chop $data;
+		if (defined($Clead{$data})) {
+		    $Clead{$data} .= "${vname}\n";
+		} else {
+		    $Clead{$data} = "${vname}\n";
+		}
+	    }
+	}
+}
+foreach $tmp (sort(keys(%Clan))) {
+	open (OUTFILE, ">area/${tmp}.cln");
+	$members = $Clan{$tmp};
+	print OUTFILE "${members}\n";
+	if (defined($Clead{$tmp})) {
+	    $leaders = $Clead{$tmp};
+	    print OUTFILE "${leaders}";
+	}
+	close OUTFILE;
+}
+exit;

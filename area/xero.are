@@ -1,0 +1,240 @@
+#AREADATA
+Name Xeros area~
+Builders Xero~
+VNUMs 21101 21200
+Credits [?? ??] Xero Unknown~
+Security 3
+End
+
+
+
+#MOBILES
+#21101
+Kronos~
+Kronos~
+Kronos, Xero's pet tiger, is here.
+~
+Kronos, Xero's loyal enchanted pet tiger, lies here sleeping.  The large
+striped mass looks almost cute when he's asleep, but if you disturb him,
+you'll become his lunch.  
+~
+cat~
+A JZ 0 -1000 0
+109 10 2d10+140 2d10+140 2d10+140 claw
+0 0 0 0
+CEFIJO C P R
+sleep sleep male 300
+ACGHV ABCDEFGHIJKQUV large flesh
+F off H
+#0
+
+
+
+#OBJECTS
+#21101
+A laptop~
+a laptop~
+Xero's laptop is here, sitting on his bed.~
+plastic and metal~
+furniture BEMO AP
+0 0 0 0 0
+10000 10000 0 P
+#21200
+bed~
+a bed~
+A comfortable bed is here~
+unknown~
+furniture O 0
+2 0 EK 500 500
+0 0 0 P
+#0
+
+
+
+#ROOMS
+#21101
+Xero's room~
+This is Xero's room.  It's messy and full
+of crumbs.  There's a bed in the corner of the
+room with Xero's laptop sitting on it humming
+softly.  The laptop has an evil aura around it
+as if it contained part of Xero's soul. 
+There's a small vent just big enough to crawl
+into to the east, and a surprisingly unlocked
+door to the west.  
+~
+0 12 0
+D0
+~
+~
+0 0 21110
+D1
+~
+~
+0 0 21106
+D3
+~
+~
+0 0 21103
+D4
+~
+~
+0 0 21102
+M 10000 H 50
+S
+#21102
+Xero's attic~
+This is Xero's attic.  It's quite small
+and he keeps dead creatures and plants in it. 
+He also seems to store his old weapons and
+electronics in here as well.  A few decaying
+bodies lie in a corner of the attic and the
+smell of salsa that's 10 eternities out of
+date wafts throughout it.  
+~
+0 0 0
+D5
+~
+~
+0 0 21101
+S
+#21103
+Hallway~
+You're in a simple hallway.  It's actually
+not simple at all, though.  It has pictures of
+Xero that seem to watch you wherever you go. 
+There's a statue of Xero that has the strange
+aura about it that feels like it's going to
+chop your head into tiny pieces with a very
+small knife.  To the east is Xero's room and
+to the west is more hallway.  
+~
+0 0 0
+D1
+~
+~
+0 0 21101
+D3
+~
+~
+0 0 21104
+S
+#21104
+Hallway~
+You're in a simple hallway.  To the north
+is Xero's bathroom and to the west is more
+freaking hallway.  
+~
+0 0 0
+D0
+~
+~
+0 0 21105
+D1
+~
+~
+0 0 21103
+S
+#21105
+Xero's bathroom~
+This is Xero's bathroom.  It has a toilet,
+a sink, and everything else in a typical
+bathroom.  However, there seems to be a water
+elemental (Xero's pet, perhaps?)  Coming out
+of the toilet.  
+~
+0 0 0
+D2
+~
+~
+0 0 21104
+S
+#21106
+The vent~
+You are in a small vent in Xero's house. 
+There seems to be hot air coming from the
+west.  
+~
+0 0 0
+D1
+~
+~
+0 0 21107
+D3
+~
+~
+0 0 21101
+S
+#21107
+The vent~
+You're still in the vent.  The hot air is
+coming from the north now.  
+~
+0 0 0
+D0
+~
+~
+0 0 21108
+D3
+~
+~
+0 0 21106
+S
+#21108
+Xero's Fan Room~
+Xero is a strange person indeed.  Not only
+did he make an easy exit for prisoners, but he
+also put a LOT of air conditioners in it.  Be
+careful not to cut yourself on one of the
+fans.  For some reason, all of the fans seem
+to be broken and only able to generate hot
+air.  
+~
+0 0 0
+D2
+~
+~
+0 0 21107
+S
+#21110
+The kitchen~
+This is Xero's kitchen.  Lots of food is
+strewn about the room, waiting to be either
+eaten, thrown away, or cooked.  There are a
+few maids in here and they might give you some
+food if you ask for it.  
+~
+0 0 0
+D2
+~
+~
+0 0 21101
+S
+#0
+
+
+
+#SPECIALS
+S
+
+
+
+#RESETS
+M 0 21101 1 21101 1 Load Kronos
+O 0 21200 0 21101 A bed loaded to Xero's room
+O 0 21101 0 21101 A laptop loaded to Xero's room
+M 0 9214 1 21105 4 Load a puddle
+M 0 621 1 21110 3 Load the maid
+S
+
+
+
+#SHOPS
+0
+
+
+
+#MOBPROGS
+#0
+
+#$

@@ -1,0 +1,497 @@
+#AREADATA
+Name The caverns of Keeperx~
+Builders None~
+VNUMs 21201 21400
+Credits Keeperx~
+Security 9
+End
+
+
+
+#MOBILES
+#0
+
+
+
+#OBJECTS
+#21201
+no name~
+(no short description)~
+(no description)~
+unknown~
+trash 0 0
+0 0 0 0 0
+0 0 0 P
+#21251
+A wall locker~
+a wall locker~
+A wall locker is attached to the wall here~
+unknown~
+container O 0
+0 ACD 0 50 0
+0 0 0 P
+#21252
+sconce torch~
+a torch is attached to the wall~
+A torch is atached to a wall sconce here.~
+iron~
+light O 0
+0 0 999 0 0
+0 0 0 P
+#21253
+stone key~
+a stone key~
+An anchient stone key~
+stone~
+key 0 0
+0 0 0 0 0
+0 0 0 P
+#21254
+old hammer~
+an old hammer~
+And old hammer has been left here~
+unknown~
+treasure G A
+0 0 0 0 0
+0 1 0 P
+#21255
+tin ring~
+a {Dtin{x ring~
+A {Dtin{x ring~
+tin~
+jewelry GY AB
+0 0 0 0 0
+0 0 0 P
+F
+A 0 0 F
+E
+unique~
+this ring is one of a kind
+
+
+
+~
+#0
+
+
+
+#ROOMS
+#21201
+A twisted tree~
+Standing in the middle of the path is a
+twisted gnarly looking tree.  The branches
+bend and fold in every direction as its dark
+myrtle green foliage shudders in the breeze. 
+The twisted tree nearly blocks the entire path
+as it as it stands ominous and silent.  The
+base of the tree is quite wide and there is an
+opening where the trunk meets the forest
+floor.  
+~
+0 1024 3
+D5
+~
+~
+1 0 21202
+S
+#21202
+Roots of a large tree.~
+Above this area grows a large tree, its
+roots hang down from the ceiling of the room. 
+Above you there is a a small opening that may
+be passable.  To the east, a dim
+phosphorescent glow eminates from a otherwise
+dark descent.  
+~
+0 8201 0
+D1
+~
+~
+0 0 21203
+D4
+~
+~
+1 0 21201
+S
+#21203
+A dark slope~
+This dark slope extends west to an area
+that has the odor of fresh dirt, and continues
+east where it opens into a larger room.  The
+walls here are covered with a phosphorescent
+moss that gives off a faint blue glow.  
+~
+0 8200 0
+D1
+~
+~
+0 0 21204
+D3
+~
+~
+0 0 21202
+S
+#21204
+The ledge~
+To the east lies a steep almost verticle
+drop into a dark foreboding abyss.  The ledge
+continues to the south and dimly lit path
+slopes up to the west.  
+~
+0 8201 0
+D2
+~
+~
+0 0 21205
+D3
+~
+~
+0 0 21203
+S
+#21205
+On the ledge~
+This narrow ledge is barely wide enough to
+pass safely.  The climb down from here is out
+of the question.  The narrow ledge continues
+to the north and south.  
+~
+0 10249 0
+D0
+~
+~
+0 0 21204
+D2
+~
+~
+0 0 21206
+S
+#21206
+The cave of many doors~
+Welcome to the cave of many doors.  There
+is a single door on the eastern wall.  
+~
+0 8193 0
+D0
+~
+~
+0 0 21205
+D1
+~
+~
+1 0 21207
+D2
+~
+~
+3 0 21208
+D3
+~
+~
+3 0 21209
+S
+#21207
+A bridge across the cavern.~
+This is the beginning of a long footbridge
+that traverses the expance of the cavern.  The
+bridge is constructed of wood and rope. 
+Considering the obvious age of this bridge,
+the structure is still quite solid.  The
+bridge spans to the east across the cavern.  
+~
+0 8201 0
+D1
+~
+~
+0 0 21210
+D3
+~
+~
+1 0 21206
+S
+#21208
+An old storage room~
+This room used to be used to store mining
+equipment.  Broken shovels and pick handles
+are strewn about.  
+~
+0 8193 0
+D0
+~
+~
+3 0 21206
+S
+#21209
+~
+~
+0 8193 0
+D1
+~
+~
+3 0 21206
+S
+#21210
+Above the abyss~
+Below the bridge lies a great chasm.  The
+air here is cool and humid.  The bridge
+continues to the west and to the east where
+torchlight can be seen.  
+~
+0 8201 0
+D1
+~
+~
+0 0 21211
+D3
+~
+~
+0 0 21207
+S
+#21211
+A missing plank~
+The bridge continues east and west from
+here.  A few of the planks that make the
+footpath of the bridge are missing.  The
+bridges structure can be seen below.  
+~
+0 8200 0
+D1
+~
+~
+0 0 21213
+D3
+~
+~
+0 0 21210
+D5
+~
+~
+0 0 21212
+S
+#21212
+Under the bridge~
+Standing on the crossbeams under the
+bridge, the floor below can barely be seen. 
+There is no way to go from here but up.  
+~
+0 8193 0
+D4
+~
+~
+0 0 21211
+S
+#21213
+The eastern end of the bridge~
+This is the eastern end of an old wooden
+bridge.  The bridge continues to the west
+across a vast open chasm.  To the north and
+south a path follows the edge of the ravine. 
+~
+0 8200 0
+D0
+~
+~
+0 0 21214
+D2
+~
+~
+0 0 21217
+D3
+~
+~
+0 0 21211
+S
+#21214
+A trail by the ravine~
+The ravine to the west is vast.  The
+bottom is not visible from here.  The ravine
+path continues north, to the south is the
+eastern end of a wooden bridge.  
+~
+0 8200 0
+D0
+~
+~
+0 0 21215
+D2
+~
+~
+0 0 21213
+S
+#21215
+A rockslide~
+The trail is blocked by a rockslide to the
+north.  To the west, the ravine impeads
+movement.  The stone wall to the east looks
+prety solid.  The path goes south from here. 
+~
+0 8200 0
+D1
+~
+~
+0 21253 21216
+D2
+~
+~
+0 0 21214
+S
+#21216
+~
+~
+0 0 0
+D3
+~
+~
+0 0 21215
+S
+#21217
+A bend in the trail~
+From here the trail leads north to a an
+old bridge, and east away from the ravine. 
+There is a strong breeze blowing in from the
+east, and the air has the smell of wet rock. 
+~
+0 8200 0
+D0
+~
+~
+0 0 21213
+D1
+~
+~
+0 0 21218
+S
+#21218
+The breezway~
+The walls and cieling form an archway and
+a strong wind rushes through from the east. 
+The wooshing and whistling block out all other
+sounds.  The air carries with it alot of
+moisture.  
+~
+0 8201 0
+D1
+~
+~
+0 0 21219
+D3
+~
+~
+0 0 21217
+S
+#21219
+Western shore~
+This is the western shore of a great
+underground river.  The river flows swiftly
+from north to south.  The sandy shore
+continues to the north from here.  
+~
+0 8193 10
+D0
+~
+~
+0 0 21222
+D1
+~
+~
+0 0 21220
+D3
+~
+~
+0 0 21218
+S
+#21220
+~
+~
+0 8201 7
+D0
+~
+~
+0 0 21223
+D2
+~
+~
+0 0 21221
+D3
+~
+~
+0 0 21219
+S
+#21221
+~
+~
+0 8201 7
+D0
+~
+~
+0 0 21220
+S
+#21222
+Old dock~
+The northern end of the western shore ends
+where a large boulder blocks the way to the
+north.  The beach here is littered with
+smaller rocks and pebbels.  To the east a
+river flows swiftly from north to south.  The
+western shore is south from here.  The
+remnants of an old dock can still be seen
+above the waterline.  
+~
+0 8201 10
+D1
+~
+~
+0 0 21223
+D2
+~
+~
+0 0 21219
+S
+#21223
+~
+~
+0 8201 7
+D2
+~
+~
+0 0 21220
+D3
+~
+~
+0 0 21222
+S
+#0
+
+
+
+#SPECIALS
+S
+
+
+
+#RESETS
+D 0 21206 1 1 The east door of The cave of many doors is closed
+D 0 21206 2 1 The south door of The cave of many doors is closed
+D 0 21206 3 1 The west door of The cave of many doors is closed
+D 0 21207 3 1 The west door of A bridge across the cavern. is closed
+D 0 21208 0 1 The north door of An old storage room is closed
+D 0 21209 1 1 The east door of  is closed
+O 0 21251 0 21208 A wall locker loaded to An old storage room
+P 0 21255 1 21251 1 A {dtin{x ring put inside a {Dtin{x ring
+O 0 21254 0 21212 An old hammer loaded to Under the bridge
+O 0 21252 0 21213 A torch is attached to the wall loaded to The eastern end of the bridge
+O 0 21252 0 21214 A torch is attached to the wall loaded to A trail by the ravine
+O 0 21252 0 21215 A torch is attached to the wall loaded to A rockslide
+O 0 21252 0 21217 A torch is attached to the wall loaded to A bend in the trail
+O 0 21252 0 21217 A torch is attached to the wall loaded to A bend in the trail
+S
+
+
+
+#SHOPS
+0
+
+
+
+#MOBPROGS
+#0
+
+#$

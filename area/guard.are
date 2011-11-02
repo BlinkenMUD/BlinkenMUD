@@ -1,0 +1,363 @@
+#AREA
+ROT v1.2 format~
+guard.are~
+Guardian Clan~
+{ CLAN } Clan    Guardian~
+29276 29299
+
+#MOBILES 
+#29280
+guard healer kildare~
+Dr. Kildare~
+Dr. Kildare is here.
+~
+You see a human male sitting here with lots of time on his hand, since
+they cancelled his show, he decided to help the Guardian Clan with his
+healing powers. Dr. Kildare has also attended Fnor's school of practice,
+and training, and gaining. he also exchanges coins.
+~
+human~
+BGJKQRTVabcd DTUZ HN 1000 0
+103 0 1d1+10000 1d1+1000 1d1+100 magic
+-399 -399 -399 -399
+AGHO ABCDEFGHIJKLMNOPQRS 0 0
+stand stand male 0
+0 0 huge 0
+
+#29281
+shopkeeper guard sam drucker~
+Sam Drucker~
+Sam Drucker the shopkeeper is here.
+~
+The older shopkeeper Sam has decided to sell things to younger adventurers
+of the Clan Guardians.
+~
+human~
+ABMV DF 0 1000 0
+100 100 1d1+1999 1d1+999 1d1+99 divine
+-250 -250 -250 -250
+0 ABCDEFGHIJK 0 0
+stand stand male 50
+0 0 large 0
+#29282
+guard Clan Guard Guardians~
+The Guardians Guardian~
+The Guard of the Guardian's is here.
+~
+Before you stands a giant of a man that has seen two lifetimes worth of
+battles. He looks down on you and smiles. Tread softly young adventurer
+and perhaps you may get to my age.
+~
+human~ 
+ABMT DFVc CDEH 1000 0 
+109 109 1d1+ 29000 25d5+4000 6d48+24 divine
+-599 -599 -599 -599
+BEGH AB 0  0
+stand stand male 5000
+0 0 huge 0
+#0
+
+#OBJECTS
+#29280 
+guard ring~
+The Guardians Ring~
+You see a signet ring with a letter "G"  in gold on it.~
+onyx~
+armor ABOT AB
+10 10 10 10 0
+25 10 1000 P
+A
+13 10
+A 
+18 2
+A 
+19 2
+C guard~
+#29281
+portal circle~
+a glowing circle~
+A glowing circle of energy to fire is here.~
+energy~
+portal A 0
+0 0 A 10416 0
+0 0 0 P
+#29282
+portal~
+a Portal~
+A totally {RRandom{x portal is here.~
+energy~
+portal A 0
+0 0 E 0 0
+0 0 0 P
+#29283
+guard cape~
+The Cape of Guardian's~
+You see a pile of cloth lying here.~
+cloth~
+armor ABOT AK
+10 10 10 10 0
+30 30 1500 P
+C guard~
+#29284
+guard plate~
+The Plate of Guardians~
+You see a piece of platemail with the word "Guardians" etched in gold on it
+lying here.~
+adamantite~
+armor ABIOT AD
+18 18 18 18  0
+35 120 8000 P
+A
+2 2 
+A
+18 2
+A
+19 2
+C guard~
+#29285
+guard orb~
+The Guardians Orb~
+You see an orb who's light is shifting through all the colours of the
+spectrum floating here.~
+crystal~
+armor ABOTU AQ
+10 10 10 10 0
+25 0 2000 P
+A
+18 2
+A
+19 2 
+C guard~
+#29286 
+guard dagger~
+The Guardians Dagger~
+A dagger of the {RG{Bu{Ra{Br{Rd{Bi{Ra{Bn{Rs{x clan is lying here.~
+obsidian~
+weapon AM AN
+dagger 4 12 stab ADH
+25 3 4000 P
+C guard~
+#29287
+leggings guard~
+Leggings of Guardians~
+You see some shiny metal here.~
+mithril~
+armor ABOT AF
+15 15 15 15  0
+40 40 6500 P
+F
+A 5 2 c
+C guard~
+#29288
+shoes guard~
+The Guard Shoes~
+You see some faintly glowing shoes here.~
+hard leather~
+armor AOT AG
+12 12 12 12 0
+55 55 5000 P
+F
+A 2 2 L
+C guard~
+#29289
+fountain cranberry~
+a fountain gushing rich cranberry juice~
+A fountain of cranberry juice is here.~
+marble~
+fountain G 0
+10000 10000 'cranberry juice' 0 0
+0 0 0 P
+#29290
+obsidian couch~
+a comfortable couch~
+A solid Obsidian couch sits here.~
+obsidian~
+furniture AB 0
+12 10000 BCEFHIKL 200 200
+0 0 0 P
+#29291
+pit~
+guard Donation Pit~
+A pit for your donation to the other members of Guardians is here.~
+~
+container O 0
+10000 0 0 1000 100
+0 0 0 P
+#29292
+sword~
+Guardians Guard Sword~
+You see a glowing sword here.~
+obsidian~
+weapon ABCFU N
+sword 10 50 slash BCDEFGH
+109 1000 1 P
+C guard~
+#29293
+sword~
+Guardians Sword~
+You see a glowing sword lying here.~
+obsidian~
+weapon ABCFM AN
+sword 8 11 slash DGH
+50 50 5000 P
+C guard~
+#29294 
+Healer's Couch~
+A large comfortable couch~
+A large comfortable couch is sits here.~
+feather~
+furniture AB 0
+12 6000 EHK 200 200
+0 0 0 P
+#29295
+globe light~
+The Guardians Globe~
+The Globe of Guardians is here.~
+energy~
+light A AO
+0 0 -1 0 0 
+25 1 2000 P 
+F 
+A 0 0 CDEFG
+#29296
+F'nors Sandwich~
+a sandwich~
+F'nors Ham and Swiss Sandwich.~
+food~
+food A A
+75 70 0 0 0 
+0 10 50 P
+#29297
+drakari portal~
+a portal to{!Lots of Eq and Gold{x~
+A portal to {$MAGIC{x is here.~
+nothingness~
+portal AB 0
+0 0 A 11702 0
+0 0 0 P
+#0
+
+#ROOMS
+#29280
+Guardians Clan Entry Hall~
+You see an elegantly furnish room with adamantite bookcases, and what
+seems to be an Obsidian Fireplace along the western wall. Since we are
+the Non-Pk Clan on this world, there is a soft couch and a place to relax
+safe from all the People who want to kill each other.
+~
+0 S 1
+D4
+A large shiny gateway prevent further entry into the halls of Clan
+Guardians.
+~
+gate crystal~
+1 0 29281
+D5
+~
+~
+0 0 3700
+S
+#29281
+Guardians Grand Hall~
+On these walls you see several murals that tell of Jondular's travels
+thru the different Realm's he has been too. You see a bookshelf with
+strange Titles like Dizzy, Oblivion, Glass Dragon, Thoth, Fractured.
+~
+0 DK 0
+D1
+You see the Hospital.
+~
+~
+0 0 29282
+D2
+You see the Guardians Store
+~
+~
+0 0 29284
+D3
+You see the Donation Room.
+~
+~
+0 0 29283
+D5
+You see the entry to the Clan Hall of the Guardians
+~
+~
+0 0  29280
+H 200 M 200
+C guard~
+S
+#29282
+hospital ward~
+This room is filled with all kinds of strange looking items, that seem
+quite unusual to you.  The walls are greenish in color, and the floor is
+spotlessly clean. 
+~
+0 DK 0
+D3
+You see the Guardians Clan Room.
+~
+~
+0 -1 29281
+S
+#29283
+Guardians Clan Donation Room~
+You see a room with ALL sorts of different looking items thrown into a
+{%HUGE{x pit lying next to the western wall. On the other walls hang
+Tapestries taken from different raids thoughtout Thera. A  PORTAL to riches
+is here.
+~
+0 D 0
+D1
+You see the Guardians Clan Room.
+~
+~
+0 0 29281
+S
+#29284
+Guardians Shop~
+You see a store that has various types of items for the use of the Guardians
+Clan Only. You see and older gentlemean stocking the armor and weapons.
+~
+0 D 1
+D0
+You see the Main Clan Hall
+~
+~
+0 0 29281
+S
+#0
+
+#RESETS
+M 0 29280 1 29282 1		* healer
+M 0 29281 1 29284 1             * shopkeeper
+G 1 29280 -1	                * ring
+G 1 29283 -1                    * cape
+G 1 29284 -1                    * plate
+G 1 29285 -1                    * globe 
+G 1 29286 -1                    * dagger
+G 1 29287 -1                    * leggings
+G 1 29288 -1                    * shoes
+G 1 29293 -1                    * sword
+G 1 29295 -1			* orb (floater)
+G 1 29296 -1                    * sandwich
+M 0 29282 1 29280 1		* guard
+E 1 29292 1 16			* Guard sword
+O 0 29290 0 29281               * obsidian couch
+O 0 29289 0 29281               * fountain
+O 0 29291 0 29283               * pit
+O 0 29294 0 29282               * healer's couch
+O 0 29281 0 29284               * portal hell
+O 0 29282 0 29282               * portal random
+O 0 29297 0 29283               * portal drakari
+S
+
+#SHOPS
+29281 32 0 0 0 0  100 88 0 23   * shopkeeper
+0
+
+#SPECIALS
+M 29280 spec_cast_adept		* healer
+M 29282 spec_breath_any		* Guard
+S
+#$

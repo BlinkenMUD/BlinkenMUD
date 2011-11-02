@@ -1,0 +1,854 @@
+#!/usr/local/bin/perl
+
+$infile = $ARGV[0];
+$outfile = $ARGV[1];
+
+if (($infile eq "") || ($outfile eq ""))
+{
+     print "Usage: rom2rot <file in> <file out>\n\n";
+     exit;
+}
+open(INFILE, "$infile") || die("Can't open file $infile\n");
+$AREA = 0;
+$MOBILES = 0;
+$OBJECTS = 0;
+$ROOMS = 0;
+$RESETS = 0;
+$SHOPS = 0;
+$SPECIALS = 0;
+while (<INFILE>)
+{
+    $_ = &strip($_);
+    if ($_ eq "#AREA")
+    {
+	$AREA = 1;
+    }
+    if ($_ eq "#MOBILES")
+    {
+	$MOBILES = 1;
+    }
+    if ($_ eq "#OBJECTS")
+    {
+	$OBJECTS = 1;
+    }
+    if ($_ eq "#ROOMS")
+    {
+	$ROOMS = 1;
+    }
+    if ($_ eq "#RESETS")
+    {
+	$RESETS = 1;
+    }
+    if ($_ eq "#SHOPS")
+    {
+	$SHOPS = 1;
+    }
+    if ($_ eq "#SPECIALS")
+    {
+	$SPECIALS = 1;
+    }
+}
+close INFILE;
+$COUNT = $AREA+$MOBILES+$OBJECTS+$ROOMS+$RESETS+$SHOPS+$SPECIALS;
+if ($COUNT != 7)
+{
+    print "Error: the following sections were not found in this file:\n";
+    if ($AREA != 1) {print "AREA ";}
+    if ($MOBILES != 1) {print "MOBILES ";}
+    if ($OBJECTS != 1) {print "OBJECTS ";}
+    if ($ROOMS != 1) {print "ROOMS ";}
+    if ($RESETS != 1) {print "RESETS ";}
+    if ($SHOPS != 1) {print "SHOPS ";}
+    if ($SPECIALS != 1) {print "SPECIALS";}
+    print "\n";
+    exit;
+}
+
+open(INFILE, "$infile");
+$filetype = (<INFILE>);
+$filetype = &strip($filetype);
+if ($filetype ne "#AREA")
+{
+    print "This is not an area file.\n";
+    exit;
+}
+$filename = (<INFILE>);
+$filename = &strip($filename);
+if ($filename =~ /\~/)
+{
+    chop $filename;
+}
+$areaname = (<INFILE>);
+$areaname = &strip($areaname);
+if ($areaname =~ /\~/)
+{
+    chop $areaname;
+}
+$arealist = (<INFILE>);
+$arealist = &strip($arealist);
+if ($arealist =~ /\~/)
+{
+    chop $arealist;
+}
+$vnums = (<INFILE>);
+$vnums = &strip($vnums);
+($vmin,$vmax)=split(' ', $vnums);
+$vmin = int($vmin);
+$vmax = int($vmax);
+close INFILE;
+print "Loading Mobiles.\n";
+open(INFILE, "$infile");
+$a = 0;
+while ($a == 0)
+{
+    $tmp = (<INFILE>);
+    $tmp = &strip($tmp);
+    if ($tmp eq "#MOBILES")
+    {
+	$a = 1;
+    }
+}
+$a = 0;
+while ($a == 0)
+{
+    $tmp = (<INFILE>);
+    $tmp = &strip($tmp);
+    if ($tmp =~ /\#/)
+    {
+	$a = 1;
+	($jnk,$vnum)=split(/\#/, $tmp);
+	$vnum = int($vnum);
+    }
+}
+if ($vnum != 0)
+{
+    $b = 0;
+    while ($b == 0)
+    {
+	$name = "";
+	$a = 0;
+	while ($a == 0)
+	{
+	    $tmp = (<INFILE>);
+	    $tmp = &strip($tmp);
+	    if ($tmp =~ /\~/)
+	    {
+	        chop $tmp;
+		$a = 1;
+	    }
+	    $name .= "$tmp\n";
+	}
+	$Mobile{$vnum,"name"} = &strip($name);
+	$short = "";
+	$a = 0;
+	while ($a == 0)
+	{
+	    $tmp = (<INFILE>);
+	    $tmp = &strip($tmp);
+	    if ($tmp =~ /\~/)
+	    {
+	        chop $tmp;
+		$a = 1;
+	    }
+	    $short .= "$tmp\n";
+	}
+	$Mobile{$vnum,"short"} = &strip($short);
+	$long = "";
+	$a = 0;
+	while ($a == 0)
+	{
+	    $tmp = (<INFILE>);
+	    $tmp = &strip($tmp);
+	    if ($tmp =~ /\~/)
+	    {
+	        chop $tmp;
+		$a = 1;
+	    }
+	    $long .= "$tmp\n";
+	}
+	$Mobile{$vnum,"long"} = &strip($long);
+	$look = "";
+	$a = 0;
+	while ($a == 0)
+	{
+	    $tmp = (<INFILE>);
+	    $tmp = &strip($tmp);
+	    if ($tmp =~ /\~/)
+	    {
+	        chop $tmp;
+		$a = 1;
+	    }
+	    $look .= "$tmp\n";
+	}
+	$Mobile{$vnum,"look"} = &strip($look);
+	$race = "";
+	$a = 0;
+	while ($a == 0)
+	{
+	    $tmp = (<INFILE>);
+	    $tmp = &strip($tmp);
+	    if ($tmp =~ /\~/)
+	    {
+	        chop $tmp;
+		$a = 1;
+	    }
+	    $race .= "$tmp\n";
+	}
+	$Mobile{$vnum,"race"} = &strip($race);
+	$tmp = (<INFILE>);
+	$tmp = &strip($tmp);
+	($act,$aff,$align,$group) = split(' ', $tmp);
+	$shd = "";
+	$newaff = "";
+	undef @Aff;
+	$a = 0;
+	@Aff = split('', $aff);
+	foreach $tmp (@Aff)
+	{
+	    if ( ($tmp eq "B") || ($tmp eq "H")
+	      || ($tmp eq "N") || ($tmp eq "O") )
+	    {
+		$shd .= $tmp;
+	    } else {
+		$newaff .= $tmp;
+	    }
+	}
+	if ($shd eq "")
+	{
+	    $shd = "0";
+	}
+	if ($newaff eq "")
+	{
+	    $newaff = "0";
+	}
+	$Mobile{$vnum,"act"} = &strip($act);
+	$Mobile{$vnum,"aff"} = &strip($newaff);
+	$Mobile{$vnum,"shd"} = &strip($shd);
+	$Mobile{$vnum,"align"} = int(&strip($align));
+	$Mobile{$vnum,"group"} = int(&strip($group));
+
+	$tmp = (<INFILE>);
+	$tmp = &strip($tmp);
+	($level,$bonus,$hit,$mana,$damage,$noun) = split(' ', $tmp, 6);
+	$Mobile{$vnum,"level"} = int(&strip($level));
+	$Mobile{$vnum,"bonus"} = int(&strip($bonus));
+	$Mobile{$vnum,"hit"} = &strip($hit);
+	$Mobile{$vnum,"mana"} = &strip($mana);
+	$Mobile{$vnum,"damage"} = &strip($damage);
+	$Mobile{$vnum,"noun"} = &strip($noun);
+
+	$tmp = (<INFILE>);
+	$tmp = &strip($tmp);
+	($ac1,$ac2,$ac3,$ac4) = split(' ', $tmp);
+	$Mobile{$vnum,"ac1"} = int(&strip($ac1));
+	$Mobile{$vnum,"ac2"} = int(&strip($ac2));
+	$Mobile{$vnum,"ac3"} = int(&strip($ac3));
+	$Mobile{$vnum,"ac4"} = int(&strip($ac4));
+
+	$tmp = (<INFILE>);
+	$tmp = &strip($tmp);
+	($off,$imm,$res,$vul) = split(' ', $tmp);
+	$Mobile{$vnum,"off"} = &strip($off);
+	$Mobile{$vnum,"imm"} = &strip($imm);
+	$Mobile{$vnum,"res"} = &strip($res);
+	$Mobile{$vnum,"vul"} = &strip($vul);
+
+	$tmp = (<INFILE>);
+	$tmp = &strip($tmp);
+	($pos1,$pos2,$sex,$val) = split(' ', $tmp);
+	$Mobile{$vnum,"pos1"} = &strip($pos1);
+	$Mobile{$vnum,"pos2"} = &strip($pos2);
+	$Mobile{$vnum,"sex"} = &strip($sex);
+	$Mobile{$vnum,"val"} = int(&strip($val));
+
+	$tmp = (<INFILE>);
+	$tmp = &strip($tmp);
+	($form,$part,$size,$mat) = split(' ', $tmp, 4);
+	$Mobile{$vnum,"form"} = &strip($form);
+	$Mobile{$vnum,"part"} = &strip($part);
+	$Mobile{$vnum,"size"} = &strip($size);
+	$Mobile{$vnum,"mat"} = &strip($mat);
+
+	$a = 0;
+	$c = 0;
+	while ($a == 0)
+	{
+	    $tmp = (<INFILE>);
+	    $tmp = &strip($tmp);
+	    if ($tmp =~ /\#/)
+	    {
+		$Mobile{$vnum,"count"} = $c;
+		$a = 1;
+		($jnk,$vnum)=split(/\#/, $tmp);
+		$vnum = int($vnum);
+		if ($vnum == 0)
+		{
+		    $b = 1;
+		}
+	    } else {
+		$remove = "";
+		$type = "";
+		$flags = "";
+		($remove,$type,$flags) = split(' ', $tmp);
+		if ($remove eq "F")
+		{
+		    if ($type eq "")
+		    {
+			$tmp = (<INFILE>);
+			$tmp = &strip($tmp);
+			($type,$flags)=split(' ', $tmp);
+		    }
+		    if ($type eq "aff")
+		    {
+			$shd = "";
+			$newaff = "";
+			undef @Aff;
+			@Aff = split('', $flags);
+			foreach $tmp (@Aff)
+			{
+			    if ( ($tmp eq "B") || ($tmp eq "H")
+			    || ($tmp eq "N") || ($tmp eq "O") )
+			    {
+				$shd .= $tmp;
+			    } else {
+				$newaff .= $tmp;
+			    }
+			}
+			if ($newaff ne "")
+			{
+			    $Mobile{$vnum,"flag",$c} = "F aff $newaff";
+			    $c++;
+			}
+			if ($shd ne "")
+			{
+			    $Mobile{$vnum,"flag",$c} = "F shd $shd";
+			    $c++;
+			}
+		    } else {
+			$Mobile{$vnum,"flag",$c} = "F $type $flags";
+			$c++;
+		    }
+		}
+	    }
+	}
+    }
+}
+close INFILE;
+print "Loading Objects.\n";
+open(INFILE, "$infile");
+$a = 0;
+while ($a == 0)
+{
+    $tmp = (<INFILE>);
+    $tmp = &strip($tmp);
+    if ($tmp eq "#OBJECTS")
+    {
+	$a = 1;
+    }
+}
+$a = 0;
+while ($a == 0)
+{
+    $tmp = (<INFILE>);
+    $tmp = &strip($tmp);
+    if ($tmp =~ /\#/)
+    {
+	$a = 1;
+	($jnk,$vnum)=split(/\#/, $tmp);
+	$vnum = int($vnum);
+    }
+}
+if ($vnum != 0)
+{
+    $b = 0;
+    while ($b == 0)
+    {
+	$name = "";
+	$a = 0;
+	while ($a == 0)
+	{
+	    $tmp = (<INFILE>);
+	    $tmp = &strip($tmp);
+	    if ($tmp =~ /\~/)
+	    {
+	        chop $tmp;
+		$a = 1;
+	    }
+	    $name .= "$tmp\n";
+	}
+	$Object{$vnum,"name"} = &strip($name);
+	$short = "";
+	$a = 0;
+	while ($a == 0)
+	{
+	    $tmp = (<INFILE>);
+	    $tmp = &strip($tmp);
+	    if ($tmp =~ /\~/)
+	    {
+	        chop $tmp;
+		$a = 1;
+	    }
+	    $short .= "$tmp\n";
+	}
+	$Object{$vnum,"short"} = &strip($short);
+	$long = "";
+	$a = 0;
+	while ($a == 0)
+	{
+	    $tmp = (<INFILE>);
+	    $tmp = &strip($tmp);
+	    if ($tmp =~ /\~/)
+	    {
+	        chop $tmp;
+		$a = 1;
+	    }
+	    $long .= "$tmp\n";
+	}
+	$Object{$vnum,"long"} = &strip($long);
+	$material = "";
+	$a = 0;
+	while ($a == 0)
+	{
+	    $tmp = (<INFILE>);
+	    $tmp = &strip($tmp);
+	    if ($tmp =~ /\~/)
+	    {
+	        chop $tmp;
+		$a = 1;
+	    }
+	    $material .= "$tmp\n";
+	}
+	$Object{$vnum,"material"} = &strip($material);
+
+	$tmp = (<INFILE>);
+	$tmp = &strip($tmp);
+	($type,$extras,$wear) = split(' ', $tmp);
+	$Object{$vnum,"type"} = &strip($type);
+	$Object{$vnum,"extras"} = &strip($extras);
+	$Object{$vnum,"wear"} = &strip($wear);
+
+	$tmp = (<INFILE>);
+	$tmp = &strip($tmp);
+	undef @Vs;
+	$prev = 0;
+	@Values = split(' ', $tmp);
+	foreach $tmp (@Values)
+	{
+	    if ($prev == 0)
+	    {
+		push(@Vs, $tmp);
+		@Cuts = split('', $tmp);
+		if (($Cuts[0] eq "\'")
+		&& ($Cuts[$#Cuts] ne "\'"))
+		{
+		    $prev = 1;
+		}
+	    } else {
+		$Vs[$#Vs] .= " $tmp";
+		@Cuts = split('', $tmp);
+		if ($Cuts[$#Cuts] eq "\'")
+		{
+		    $prev = 0;
+		}
+	    }
+	}
+	$Object{$vnum,"v0"} = &strip($Vs[0]);
+	$Object{$vnum,"v1"} = &strip($Vs[1]);
+	$Object{$vnum,"v2"} = &strip($Vs[2]);
+	$Object{$vnum,"v3"} = &strip($Vs[3]);
+	$Object{$vnum,"v4"} = &strip($Vs[4]);
+
+	$tmp = (<INFILE>);
+	$tmp = &strip($tmp);
+	($level,$weight,$cost,$cond) = split(' ', $tmp);
+	$Object{$vnum,"level"} = int(&strip($level));
+	$Object{$vnum,"weight"} = int(&strip($weight));
+	$Object{$vnum,"cost"} = int(&strip($cost));
+	$Object{$vnum,"cond"} = &strip($cond);
+
+	$a = 0;
+	$c = 0;
+	$d = 0;
+	$e = 0;
+	while ($a == 0)
+	{
+	    $tmp = (<INFILE>);
+	    $tmp = &strip($tmp);
+	    if ($tmp =~ /\#/)
+	    {
+		$Object{$vnum,"flagcount"} = $c;
+		$Object{$vnum,"applcount"} = $d;
+		$Object{$vnum,"extrcount"} = $e;
+		$a = 1;
+		($jnk,$vnum)=split(/\#/, $tmp);
+		$vnum = int($vnum);
+		if ($vnum == 0)
+		{
+		    $b = 1;
+		}
+	    } else {
+		$a1 = "";
+		$a2 = "";
+		$a3 = "";
+		$a4 = "";
+		$a5 = "";
+		($a1,$a2,$a3,$a4,$a5) = split(' ', $tmp);
+		if ($a1 eq "F")
+		{
+		    if ($a2 eq "")
+		    {
+			$tmp = (<INFILE>);
+			$tmp = &strip($tmp);
+			($a2,$a3,$a4,$a5)=split(' ', $tmp);
+		    }
+		    if ($a2 eq "A")
+		    {
+			$shd = "";
+			$newaff = "";
+			undef @Aff;
+			@Aff = split('', $a5);
+			foreach $tmp (@Aff)
+			{
+			    if ( ($tmp eq "B") || ($tmp eq "H")
+			    || ($tmp eq "N") || ($tmp eq "O") )
+			    {
+				$shd .= $tmp;
+			    } else {
+				$newaff .= $tmp;
+			    }
+			}
+			if ($newaff ne "")
+			{
+			    $Object{$vnum,"flag",$c} = "F A $a3 $a4 $newaff";
+			    $c++;
+			}
+			if ($shd ne "")
+			{
+			    if ($newaff ne "")
+			    {
+				$Object{$vnum,"flag",$c} = "F S 0 0 $shd";
+				$c++;
+			    } else {
+				$Object{$vnum,"flag",$c} = "F S $a3 $a4 $shd";
+				$c++;
+			    }
+			}
+		    } else {
+			$Object{$vnum,"flag",$c} = "F $a2 $a3 $a4 $a5";
+			$c++;
+		    }
+		} elsif ($a1 eq "A")
+		{
+		    if ($a2 eq "")
+		    {
+			$tmp = (<INFILE>);
+			$tmp = &strip($tmp);
+			($a2,$a3)=split(' ', $tmp);
+		    }
+		    $Object{$vnum,"apply",$d} = "A $a2 $a3";
+		    $d++;
+		} elsif ($a1 eq "E")
+		{
+
+		    $short = "";
+		    $n = 0;
+		    while ($n == 0)
+		    {
+			$tmp = (<INFILE>);
+			$tmp = &strip($tmp);
+			if ($tmp =~ /\~/)
+			{
+			    chop $tmp;
+			    $n = 1;
+			}
+			$short .= "$tmp\n";
+		    }
+		    $Object{$vnum,"extraname",$e} = &strip($short);
+		    $long = "";
+		    $n = 0;
+		    while ($n == 0)
+		    {
+			$tmp = (<INFILE>);
+			$tmp = &strip($tmp);
+			if ($tmp =~ /\~/)
+			{
+			    chop $tmp;
+			    $n = 1;
+			}
+			$long .= "$tmp\n";
+		    }
+		    $Object{$vnum,"extradesc",$e} = &strip($long);
+		    $e++;
+		}
+	    }
+	}
+    }
+}
+
+close INFILE;
+print "Loading Rooms.\n";
+open(INFILE, "$infile");
+$a = 0;
+while ($a == 0)
+{
+    $tmp = (<INFILE>);
+    $tmp = &strip($tmp);
+    if ($tmp eq "#ROOMS")
+    {
+	$a = 1;
+    }
+}
+undef @Allrooms;
+$b = 0;
+while ($b == 0)
+{
+    $a = 0;
+    while ($a == 0)
+    {
+	$tmp = (<INFILE>);
+	$tmp = &strip($tmp);
+	if ($tmp =~ /\#/)
+	{
+	    $a = 1;
+	    ($jnk,$vnum)=split(/\#/, $tmp);
+	    $vnum = int($vnum);
+	} else {
+	    push(@Allrooms, $tmp);
+	}
+    }
+    if ($vnum != 0)
+    {
+	$tmp = "#$vnum";
+	push(@Allrooms, $tmp);
+    } else {
+	$b = 1;
+    }
+}
+
+close INFILE;
+print "Loading Resets.\n";
+open(INFILE, "$infile");
+$a = 0;
+while ($a == 0)
+{
+    $tmp = (<INFILE>);
+    $tmp = &strip($tmp);
+    if ($tmp eq "#RESETS")
+    {
+	$a = 1;
+    }
+}
+undef @Allresets;
+$a = 0;
+while ($a == 0)
+{
+    $tmp = (<INFILE>);
+    $tmp = &strip($tmp);
+    if ($tmp eq "S")
+    {
+	$a = 1;
+    } else {
+	push(@Allresets, $tmp);
+    }
+}
+
+close INFILE;
+print "Loading Shops.\n";
+open(INFILE, "$infile");
+$a = 0;
+while ($a == 0)
+{
+    $tmp = (<INFILE>);
+    $tmp = &strip($tmp);
+    if ($tmp eq "#SHOPS")
+    {
+	$a = 1;
+    }
+}
+undef @Allshops;
+$a = 0;
+while ($a == 0)
+{
+    $tmp = (<INFILE>);
+    $tmp = &strip($tmp);
+    if ($tmp eq "0")
+    {
+	$a = 1;
+    } else {
+	push(@Allshops, $tmp);
+    }
+}
+
+close INFILE;
+print "Loading Specials.\n";
+open(INFILE, "$infile");
+$a = 0;
+while ($a == 0)
+{
+    $tmp = (<INFILE>);
+    $tmp = &strip($tmp);
+    if ($tmp eq "#SPECIALS")
+    {
+	$a = 1;
+    }
+}
+undef @Allspecials;
+$a = 0;
+while ($a == 0)
+{
+    $tmp = (<INFILE>);
+    $tmp = &strip($tmp);
+    if ($tmp eq "S")
+    {
+	$a = 1;
+    } else {
+	push(@Allspecials, $tmp);
+    }
+}
+
+close INFILE;
+
+open(OUTFILE, ">$outfile") || die("Can't open file $outfile\n");
+
+print OUTFILE "#AREA\n";
+print OUTFILE "ROT v1.3 format~\n";
+print OUTFILE $filename, "~\n";
+print OUTFILE $areaname, "~\n";
+print OUTFILE $arealist, "~\n";
+print OUTFILE $vnums, "\n\n";
+print "Saving Mobiles.\n";
+print OUTFILE "#MOBILES\n";
+for ($vnum = $vmin; $vnum <= $vmax; $vnum++)
+{
+    if (defined($Mobile{$vnum,"name"}))
+    {
+	print OUTFILE "#${vnum}\n";
+	print OUTFILE $Mobile{$vnum,"name"}, "~\n";
+	print OUTFILE $Mobile{$vnum,"short"}, "~\n";
+	print OUTFILE $Mobile{$vnum,"long"}, "\n~\n";
+	print OUTFILE $Mobile{$vnum,"look"}, "\n~\n";
+	print OUTFILE $Mobile{$vnum,"race"}, "~\n";
+	print OUTFILE $Mobile{$vnum,"act"}, " ";
+	print OUTFILE $Mobile{$vnum,"aff"}, " ";
+	print OUTFILE $Mobile{$vnum,"shd"}, " ";
+	print OUTFILE $Mobile{$vnum,"align"}, " ";
+	print OUTFILE $Mobile{$vnum,"group"}, "\n";
+	print OUTFILE $Mobile{$vnum,"level"}, " ";
+	print OUTFILE $Mobile{$vnum,"bonus"}, " ";
+	print OUTFILE $Mobile{$vnum,"hit"}, " ";
+	print OUTFILE $Mobile{$vnum,"mana"}, " ";
+	print OUTFILE $Mobile{$vnum,"damage"}, " ";
+	print OUTFILE $Mobile{$vnum,"noun"}, "\n";
+	print OUTFILE $Mobile{$vnum,"ac1"}, " ";
+	print OUTFILE $Mobile{$vnum,"ac2"}, " ";
+	print OUTFILE $Mobile{$vnum,"ac3"}, " ";
+	print OUTFILE $Mobile{$vnum,"ac4"}, "\n";
+	print OUTFILE $Mobile{$vnum,"off"}, " ";
+	print OUTFILE $Mobile{$vnum,"imm"}, " ";
+	print OUTFILE $Mobile{$vnum,"res"}, " ";
+	print OUTFILE $Mobile{$vnum,"vul"}, "\n";
+	print OUTFILE $Mobile{$vnum,"pos1"}, " ";
+	print OUTFILE $Mobile{$vnum,"pos2"}, " ";
+	print OUTFILE $Mobile{$vnum,"sex"}, " ";
+	print OUTFILE $Mobile{$vnum,"val"}, "\n";
+	print OUTFILE $Mobile{$vnum,"form"}, " ";
+	print OUTFILE $Mobile{$vnum,"part"}, " ";
+	print OUTFILE $Mobile{$vnum,"size"}, " ";
+	print OUTFILE $Mobile{$vnum,"mat"}, "\n";
+	for ($i = 0; $i < $Mobile{$vnum,"count"}; $i++)
+	{
+	    print OUTFILE $Mobile{$vnum,"flag",$i}, "\n";
+	}
+    }
+}
+print OUTFILE "#0\n\n";
+print "Saving Objects.\n";
+print OUTFILE "#OBJECTS\n";
+for ($vnum = $vmin; $vnum <= $vmax; $vnum++)
+{
+    if (defined($Object{$vnum,"name"}))
+    {
+	print OUTFILE "#${vnum}\n";
+	print OUTFILE $Object{$vnum,"name"}, "~\n";
+	print OUTFILE $Object{$vnum,"short"}, "~\n";
+	print OUTFILE $Object{$vnum,"long"}, "~\n";
+	print OUTFILE $Object{$vnum,"material"}, "~\n";
+	print OUTFILE $Object{$vnum,"type"}, " ";
+	print OUTFILE $Object{$vnum,"extras"}, " ";
+	print OUTFILE $Object{$vnum,"wear"}, "\n";
+	print OUTFILE $Object{$vnum,"v0"}, " ";
+	print OUTFILE $Object{$vnum,"v1"}, " ";
+	print OUTFILE $Object{$vnum,"v2"}, " ";
+	print OUTFILE $Object{$vnum,"v3"}, " ";
+	print OUTFILE $Object{$vnum,"v4"}, "\n";
+	print OUTFILE $Object{$vnum,"level"}, " ";
+	print OUTFILE $Object{$vnum,"weight"}, " ";
+	print OUTFILE $Object{$vnum,"cost"}, " ";
+	print OUTFILE $Object{$vnum,"cond"}, "\n";
+	for ($i = 0; $i < $Object{$vnum,"extrcount"}; $i++)
+	{
+	    print OUTFILE "E\n";
+	    print OUTFILE $Object{$vnum,"extraname",$i}, "~\n";
+	    print OUTFILE $Object{$vnum,"extradesc",$i}, "\n~\n";
+	}
+	for ($i = 0; $i < $Object{$vnum,"applcount"}; $i++)
+	{
+	    print OUTFILE $Object{$vnum,"apply",$i}, "\n";
+	}
+	for ($i = 0; $i < $Object{$vnum,"flagcount"}; $i++)
+	{
+	    print OUTFILE $Object{$vnum,"flag",$i}, "\n";
+	}
+    }
+}
+print OUTFILE "#0\n\n";
+print "Saving Rooms.\n";
+print OUTFILE "#ROOMS\n";
+foreach $line (@Allrooms)
+{
+	print OUTFILE $line, "\n";
+}
+print OUTFILE "#0\n\n";
+print "Saving Resets.\n";
+print OUTFILE "#RESETS\n";
+foreach $line (@Allresets)
+{
+	print OUTFILE $line, "\n";
+}
+print OUTFILE "S\n\n";
+print "Saving Shops.\n";
+print OUTFILE "#SHOPS\n";
+foreach $line (@Allshops)
+{
+	print OUTFILE $line, "\n";
+}
+print OUTFILE "0\n\n";
+print "Saving Specials.\n";
+print OUTFILE "#SPECIALS\n";
+foreach $line (@Allspecials)
+{
+	print OUTFILE $line, "\n";
+}
+print OUTFILE "S\n\n";
+print OUTFILE "#\$\n\n";
+close OUTFILE;
+exit;
+
+sub strip {
+    local($string)=@_;
+    local($outstring,@String);
+    chomp $string;
+    $outstring = $string;
+    @String = split('', $string);
+    if ($String[$#String] eq " ")
+    {
+	chop $string;
+	$outstring = &strip($string);
+    }
+    if ($String[$#String] eq "\n")
+    {
+	chomp $string;
+	$outstring = &strip($string);
+    }
+    return $outstring;
+}

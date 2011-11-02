@@ -1,0 +1,321 @@
+#AREA
+ROT v1.2 format~
+apoc.are~
+Apocalypse Clan~
+{ CLAN } Clan    Apocalypse~
+29200 29249
+
+#MOBILES 
+#29200
+Judge Aegir~
+Judge Aegir~
+Judge Aegir is here dispensing justice.
+~
+He says `What can I help you with ?, a heal, maybe a practice, some
+training, and gaining. Oh I also exchange coins, on the side.
+~
+human~
+BGJKQRTVabcd DTUZ HN 1000 0
+105 105 1d1+10000 1d1+1000 1d1+100 magic
+-399 -399 -399 -399
+AGHO ABCDEFGHIJKLMNOPQRS 0 0
+stand stand male 0
+0 0 huge 0
+#29201
+guard clan apocalypse~
+Apocalypse Clan Guard~
+{BApoc{Dal{Bypse{x Clan Guard is here.
+~
+You see a Huge man here, to protect the entrance of the Apocalypse Clan.
+~
+human~
+ABMT DFVc CDEH 1000 0
+109 109 1d1+29000 25d5+4000 6d48+24 slice
+-599 -599 -599 -599
+BEGH AB 0 0
+stand stand male 5000
+0 0 huge 0
+#29202
+shop owner apocalypse~
+Apocalypse Shop Owner~
+The {BApoc{Dal{Bypse{x shop owner is here.
+~
+The older adventurer has decided to change his lifestyle and sell things
+to younger adventures of the Clan Apocalypse.
+~
+human~
+ABMV DF 0 1000 0
+100 0 1d1+1999 1d1+999 1d1+99 divine
+-250 -250 -250 -250
+0 ABCDEFGHIJK 0 0
+stand stand male 50
+0 0 large 0
+
+
+
+#0
+
+#OBJECTS
+#29200
+diamond couch~
+a comfortable couch rest here.~
+A solid diamond couch sits here.~
+diamond~
+furniture AB 0
+20 20000 BCEFHIKL 200 200
+0 0 0 P
+#29201
+apocalypse Guard Sword~
+a glowing sword is here.~
+A deadly looking sword is here.~
+adamantite~
+weapon AB N
+sword 10 50 slice ABCDEFGH	
+109 1000 1 P
+#29202
+pit apocalypse~
+Apocalypse Donation Pit~
+A pit for your donation to the other members of the clan is here.~
+~
+container O 0
+10000 0 0 1000 100
+0 0 0 P
+#29203
+fountain water~
+a  marble fountain~
+A fountain is here gurgling out endless water.~
+marble~
+fountain G 0
+10000 100000 `water' 0 0 
+0 0 0 P
+#29204
+ring apocalypse~
+The {BApoc{Dal{Bypse Ring~
+You see a signet ring with the letter {R"A"{x engraved on it here.~
+onyx~
+armor ABOT AB
+10 10 10 10 0
+25 10 1000 P
+A
+13 10
+A
+18 2
+A
+19 2
+C apoc~
+#29205
+cape apocalypse~
+The Cape of {BApoc{Dal{Bypse{x~
+You see a pile of cloth lying here.~
+cloth~
+armor ABOT AK
+10 10 10 10 0
+30 30 1500 P
+C apoc~
+#29206
+plate apocalypse~
+The Plate Of {BApoc{Dal{Bypse{x~
+you see plate mail with the word {BApoc{Dal{Bypse{x engraved on it here.~
+adamantite~
+armor ABIOT AD
+18 18 18 18  0
+35 250 5000 P
+A
+1 2
+A
+18 2
+A 
+19 2
+C apoc~
+#29207
+globe light apocalypse~
+The {BApoc{Dal{Bypse{x Globe~
+The Globe of the {BApoc{Dal{Bypse{x is here.~
+energy~
+light AT AO
+0 0 -1 0 0
+25 10 2000 P
+F
+A 20 10 CDEFG
+C apoc~
+#29208
+dagger apocalypse~
+The {BApoc{Dal{Bypse{x Dagger~
+A Dagger of the {BApoc{Dal{Bypse{X clan is lying here.~
+obsidian~
+weapon AIMT AN
+dagger 4 12 stab ADH
+25 30 4000 P
+C apoc~
+#29209
+leggings apocalypse~
+Leggings of {BApoc{Dal{Bypse{x~
+You see some shiny metal here.~
+mithril~
+armor ABOT AF
+15 15 15 15  0
+40 40 6500 P
+F
+A 5 2 c
+C apoc~
+#29210
+shoes apocalypse~
+The Apocalypse Shoes~
+You see some faintly glowing shoes here.~
+hard leather~
+armor AOT AG
+12 12 12 12 0
+55 55 5000 P
+F
+A 2 2 L
+C apoc~
+#29211
+sword apocalypse~
+The {BApoc{Dal{Bypse{x Sword~
+You see a glowing {BApoc{Dal{Bypse{x sword lying here.~
+obsidian~
+weapon ABCFIMT AN
+sword 8 11 slash DGH
+50 50 6000 P
+C apoc~
+#29212
+orb apocalypse~
+The {BApoc{Dal{Bypse{x Orb~
+You see an Orb floating here~
+crystal~
+armor ABOT AQ
+10 10 10 10 0
+25 0 2000 P
+A
+18 2
+A
+19 2
+C apoc~
+#29213
+sandwich~
+a sandwich~
+Fnor's Ham and Swiss Sandwich.~
+food~
+food A A 
+75 70 0 0 0
+0 10 50 P
+#0
+
+#ROOMS
+#29200
+{BApoc{Dal{Bypse{x Clan Hall~
+Up above you hear the sounds of shuffling feet, and ruffling papers as
+the Apocalypses sort through various wanted posters and rush out to 
+serve justice. Better move quickly before an Apocalypse comes flying
+down the ladder and knocks you off.
+~
+0 D 1
+D4
+You see a ladder leading upwards into the halls of Apocalypse
+~
+~
+0 0 29201
+D5
+~
+~
+0 -1 3014
+S
+#29201
+{BApoc{Dal{Bypse{x Grand Hall~
+On these walls you see several wanted posters and all around you there's
+office staff sorting through letters from distraught Midgaard locals
+seeking some kind of retribution from the crimes against them. What
+stands out the most is a large banner with the slogan "Lex Talionis"
+~
+0 DK 1
+D1
+You see the Judge's Room
+~
+~
+0 0 29202
+D2
+You see the Apocalypse Store
+~
+~
+0 0 29203
+D3
+You see the Apocalypse Donation Room
+~
+~
+0 0 29204
+D5
+You see the entry to the Clan Hall of the Apocalypse
+~
+~
+0 0  29200
+H 200 M 200
+C apoc~
+S
+#29202
+Judge Aegir's Room~
+This room is littered with pictures of this very experienced traveller's
+past.  Judge Aegir himself sits at a large oak desk passing judgement on
+the people of Thera. 
+~
+0 D 1
+D3
+You see the Apocalypse Clan Hall.
+~
+~
+0 0 29201
+S
+# 29203
+{BApoc{Dal{Bypse{x Clan Store~
+As you step into the room a variety of Weapons and Armor, displayed on the
+walls. You see the Shopkeeper, looking at you with greedy anticiaption.
+~
+0 D 1
+D0
+You see the Apocalypse Grand Hall
+~
+~
+0 0 29201
+S
+#29204
+{BApoc{Dal{Bypse{x Donation Room~
+You step into a room that is cluttered with all sorts of items from all
+over Thera. You notice a pit in the floor.
+~
+0 D 1
+D1
+You see the Apocalypse Grand Hall
+~
+~
+0 0 29201
+S
+#0
+#RESETS
+M 0 29200 1 29202 1         	* judge (healer)
+M 0 29201 1 29200 1 		* guard
+E 1 29201 1 16			* sword guard
+M 1 29202 1 29203 1		* shopkeeper
+G 1 29204 -1			* ring
+G 1 29205 -1			* cape
+G 1 29206 -1			* plate
+G 1 29207 -1			* globe
+G 1 29208 -1			* dagger
+G 1 29209 -1 			* leggings
+G 1 29210 -1			* shoes
+G 1 29211 -1			* sword
+G 1 29212 -1			* orb
+G 1 29213 -1			* sandwich
+
+O 0 29200 1 29201		* couch
+O 0 29202 1 29204		* pit
+O 0 29203 1 29201		* fountain
+S
+
+#SHOPS
+29202 32 0 0 0 0 100 88 0 23	* shopkeeper
+0
+
+#SPECIALS
+M 29200 spec_cast_adept		* healer (judge)
+M 29201 spec_breath_any		* guard
+S
+#$

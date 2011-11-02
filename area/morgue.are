@@ -1,0 +1,59 @@
+#AREADATA
+Name Morgue~
+Builders Oblivion~
+VNUMs 30200 30299
+Credits { All } Lestat    Morgue~
+Security 4
+End
+
+
+
+#MOBILES
+#0
+
+
+
+#OBJECTS
+#0
+
+
+
+#ROOMS
+#30201
+The Morgue~
+You are standing in the city morgue. It stinks like death in here and
+all areound you are corpses of the people who got killed in battle. The
+walls are an off white and the floor is covered with blood. As you get
+everything from your corpse you realize that your floating object is
+in the place where you got killed.
+~
+0 1028 0
+D4
+You see the Market Square!
+~
+~
+0 -1 3014
+S
+#0
+
+
+
+#SPECIALS
+S
+
+
+
+#RESETS
+S
+
+
+
+#SHOPS
+0
+
+
+
+#MOBPROGS
+#0
+
+#$

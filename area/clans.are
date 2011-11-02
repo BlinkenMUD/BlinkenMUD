@@ -1,0 +1,187 @@
+#AREADATA
+Name Clans~
+Builders None~
+VNUMs 20000 20999
+Credits { CLAN} BlinkenMuD     Clan Rooms~
+Security 9
+End
+
+
+
+#MOBILES
+#20050
+clan guard~
+the clan guard~
+A clan guard is here.
+~
+A clan guard is here.
+~
+human~
+ABMNTV D D -750 0
+101 5 2d10+9500 60d9+1000 5d10+0 flame
+0 0 0 0
+CDEKLTU AB CI 0
+stand stand male 237
+AHMV ABCDEFGHIJK large 0
+#0
+
+
+
+#OBJECTS
+#20050
+guard claw~
+a guard claw~
+A guard claw lies here.~
+dragonscale~
+weapon AG AN
+exotic 6 24 none A
+94 10 2100 P
+A
+19 3
+A
+18 2
+#20051
+carved chest~
+the carved chest~
+A beautiful chest made from a single piece of mahogany is here.~
+oldstyle~
+container 0 0
+1000 A 0 100 5
+0 0 0 P
+#20052
+example sword~
+an example sword~
+An example sword lies here.~
+steel~
+weapon AGT AN
+sword 1 1 slash A
+1 10 0 P
+#20053
+example dagger~
+an example dagger~
+An example dagger lies here.~
+steel~
+weapon AGT AN
+dagger 1 1 pierce E
+1 10 0 P
+#20054
+example breastplate~
+an example breastplate~
+An example breastplate lies on the floor.~
+gold~
+armor AGT AD
+0 0 0 0 0
+1 10 0 P
+A
+17 -8
+#20055
+example visor~
+an example visor~
+An example visor lies on the floor.~
+gold~
+armor AGT AR
+0 0 0 0 0
+1 10 0 P
+A
+12 50
+#20056
+example arm plates~
+example arm plates~
+Some example arm plates lie on the floor.~
+steel~
+armor AGT AI
+0 0 0 0 0
+1 10 0 P
+A
+18 10
+#20057
+example girth~
+an example girth~
+An example girth lies on the floor.~
+gold~
+armor AGT AL
+0 0 0 0 0
+1 10 0 P
+A
+13 50
+#20058
+example leg plates~
+example leg plates~
+Some example leg plates lie on the floor.~
+gold~
+armor AGT AF
+0 0 0 0 0
+1 10 0 P
+A
+19 10
+#20099
+pit donpit~
+a pit of sacrifice~
+A pit for donations is in the center of the room~
+unknown~
+container O 0
+10000 0 0 1000 0
+0 0 0 P
+#0
+
+
+
+#ROOMS
+#20050
+An Example Clan Room~
+This room is bare, except for a portal above you, and an exit below you.
+~
+0 525320 0
+D5
+An Example Entrance room is below you.
+~
+~
+0 -1 20051
+M 200 H 200
+S
+#20051
+The Immortals of Eternal Devotion~
+The entrance to the clan rooms.  
+~
+0 524296 0
+D4
+An Example Clan Room is above you.
+~
+~
+0 -1 20050
+S
+#0
+
+
+
+#SPECIALS
+M 20050 spec_breath_fire Load to: the clan guard
+S
+
+
+
+#RESETS
+O 0 20051 0 20050 The carved chest loaded to An Example Clan Room
+P 0 20052 -1 20051 4 An example sword put inside an example sword
+P 0 20053 -1 20051 4 An example dagger put inside an example dagger
+P 0 20054 -1 20051 2 An example breastplate put inside an example breastplate
+P 0 20055 -1 20051 2 An example visor put inside an example visor
+P 0 20056 -1 20051 2 Example arm plates put inside example arm plates
+P 0 20057 -1 20051 2 An example girth put inside an example girth
+P 0 20058 -1 20051 2 Example leg plates put inside example leg plates
+O 0 20099 0 20050 A pit of sacrifice loaded to An Example Clan Room
+M 0 20050 1 20051 1 Load the clan guard
+E 0 20050 0 16 A guard claw is loaded wielded of the clan guard
+S
+
+
+
+#SHOPS
+0
+
+
+
+#MOBPROGS
+#0
+
+#$

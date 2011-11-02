@@ -1,0 +1,919 @@
+#AREA
+ROT v1.2 format~
+mystica.are~
+Mystica~
+{70 140} Taelus Mystica~
+1001 1040
+
+#MOBILES
+#1001
+aurumvorax cat~
+An Aurumvorax~
+A badger sized animal that looks like an eight legged cat is here.
+~
+Rather nasty looking, you hope not to fight it.
+
+~
+unique~
+AFGTU HV 0 S
+112 30 15d999+999 9d4+99 5d24+45 10
+-100 -100 -100 -100
+CDFHI AL EH 0
+8 8 1 0
+A 0 T 0
+#1002
+ankheg~
+An ankheg~
+An ankheg stands here, with an ugly look.
+~
+An ugly insectoid creature that looks mean.
+~
+unique~
+AGHT V 0 S
+105 25 15d551+99 1d1+99 50d3+0 8
+-52 -53 -51 -34
+DFHU 0 0 0
+8 8 0 0
+B 0 H 0
+#1003
+centaur warrior~
+A centaur warrior~
+There is a centaur here.
+~
+A fierce looking centaur warrior is here.
+~
+human~
+AT HV 309 S
+104 30 99d150+99 1d1+99 15d12+40 3
+-100 -100 -100 -100
+CDFKU 0 0 0
+8 8 1 50
+A 0 M 0
+#1004
+centaur leader~
+A centaur leader~
+A centaur leader is here
+~
+A little bigger, and more decorated than the warriors.
+~
+human~
+AT DFHNOVZ 309 S
+175 35 99d150+1999 1d1+99 9d40+9 0
+-150 -150 -150 -150
+ACDEFHIJKR 0 C 0
+8 8 1 125
+0 0 M 0
+#1005
+centaur priest~
+a centaur priest~
+A centaur priest is here.
+~
+He is wearing many ritualistic pieces of jewelry, and looking very holy.
+~
+human~
+AQa CDEFHNOTUVZa 1000 S
+120 50 110d170+999 99d99+99 12d35+9 37
+-250 -250 -250 -250
+ACEFKR N C M
+8 8 1 150
+0 0 M 0
+#1006
+wood elf~
+a wood elf~
+A wood elf is here.
+~
+Wearing dark green clothing, he seems to blend in with his surroundings
+~
+elf~
+AT DFHNOV 526 S
+101 20 99d99+1050 1d1+99 4d99+9 11
+-100 -100 -100 -100
+DEFKR B CQ 0
+8 8 1 57
+A 0 M 0
+#1007
+ettercap~
+an ettercap~
+An ettercap is here, hunting wood elves
+~
+A very ugly creature is standing before you, muttering 'slay elf, slay elf, slay elf'
+~
+unique~
+AFT DFHOV -351 S
+105 30 99d99+2300 9d99+99 10d50+9 9
+-150 -150 -150 -100
+CDEFU 0 0 0
+8 8 1 0
+B 0 L 0
+#1008
+giant kin voadkyn~
+A wood giant~
+A Voadkyn wood giant is here.
+~
+He looks much like a huge wood elf.
+~
+giant~
+AT CDFHNOPV 0 S
+108 40 99d99+5000 1d1+99 99d3+9 27
+-200 -200 -200 -200
+ADEFIKN 0 0 0
+8 8 1 200
+0 0 L 0
+#1009
+owlbear owl bear~
+an owlbear~
+An owlbear is here, growling.
+~
+An ugly cross between an owl and a bear, said to be created by a mad wizard's 
+experiments. They now roam free in the wild, and kill whatever they can.
+~
+giant~
+AFHOTU DFHV 0 S
+105 30 435d50+99 1d1+99 3d99+9 5
+-200 -200 -200 -100
+CDFIU AB 0 H
+8 8 1 0
+A 0 L 0
+#1010
+korred~
+a korred~
+A korred stands here.
+~
+A korred is a slightly more muscular, and more powerful version of a satyr.
+~
+elf~
+AHT DFHPUV 350 S
+106 25 99d130+99 1d1+99 3d90+9 7
+-200 -200 -200 -200
+CDEFIJKR AB 0 Z
+8 8 1 300
+A 0 M 0
+#1011
+treant~
+a treant~
+A large, tree like being is here.
+~
+Wise and powerful, it is not the sort of monster you would be sane to attack.
+~
+giant~
+ABGKTVa DFHNOV 500 S
+150 40 99d250+51 1d1+99 8d67+9 51
+-300 -300 -300 -300
+ACDEFHIJKMP ABLQ CD HJ
+8 8 1 0
+0 0 H 0
+#1012
+unicorn~
+A unicorn~
+A beautiful white horse with a single pearly horn coming out of it's head is here.
+~
+Doubtless one of the most beautiful creatures you have seen. You feel compelled to 
+leave it in peace.
+~
+unique~
+AGHTV DFHNOV 0 S
+1 40 99d150+99 1d1+99 3d99+9 2
+-300 -300 -300 -300
+CDEFHIKU AB C M
+8 8 1 0
+0 0 M 0
+#0
+
+#OBJECTS
+
+#1001
+aurumvorax hide~
+an aurumvorax hide~
+The hide of an aurumvorax is here.~
+gold~
+9 ABS AD
+40 40 40 10 0
+70 15 25000 P
+A
+13 150
+#1002
+elven chain mail~
+elven chain mail~
+Some fine chain mail is here, glinting in the sun.~
+adamantite~
+9 ABGI AD
+25 25 25 25 0
+50 0 0 P
+A
+2 4
+A
+3 1
+A
+12 100
+A
+13 150
+A
+18 15
+A
+19 15
+#1003
+giant long sword~
+A giant's long sword~
+A huge long sword, once wielded by a giant, is here.~
+steel~
+5 0 AN
+1 10 14 21 F
+0 25 12500 P
+A
+1 2
+A
+18 20
+A
+19 25
+#1004
+unicorn horn~
+A unicorn's horn~
+A unicorn's horn is here, glowing brightly
+~
+adamantite~
+5 ABGIK AN
+2 12 14 49 ABCDE
+0 5 9432 P
+A
+1 2
+A
+2 2
+A
+18 45
+A
+19 45
+#0
+
+#ROOMS
+#1001
+A woodland glade~
+You are in a woodland glade. It is very peaceful around here, and you are
+happy to be here.You can only make your way through the woods to the east
+and west.
+~
+99 C 3
+D1
+~
+~
+0 -1 1002
+D3
+~
+~
+0 -1 1003
+S
+#1002
+The beginnings of a path~
+You are beginning to see a path in the woodlands. The path goes east, and
+you can make your way through the forest to the west.
+~
+10 0 3
+D1
+~
+~
+0 -1 1004
+D3
+~
+~
+0 -1 1001
+S
+#1003
+Thick woodlands~
+You are in some thick woodlands. The sun is almost completely blocked out
+here.
+~
+10 0 3
+D1
+~
+~
+0 -1 1001
+D3
+~
+~
+0 -1 1009
+S
+#1004
+A path~
+You can now see the path quite clearly. It leads to the east.
+~
+10 0 3
+D1
+~
+~
+0 -1 1005
+D3
+~
+~
+0 -1 1002
+S
+#1005
+Along the path~
+You are walking along the path to what looks like a town. You can just see the
+tops of the highest buildings from here.
+~
+10 0 3
+D1
+~
+~
+0 -1 1006
+D3
+~
+~
+0 -1 1004
+S
+#1006
+A turn in the path~
+The path turns north now, and you are close to the town.
+~
+10 0 3
+D0
+~
+~
+0 -1 1007
+D3
+~
+~
+0 -1 1005
+S
+#1007
+Near the town~
+To the east, you can see the town's walls quite clearly. It isn't too big of a
+town, but I'm sure you can rest your weary bones, and perhaps find an
+adventure there.
+~
+10 0 3
+D1
+~
+~
+0 -1 1008
+D2
+~
+~
+0 -1 1006
+S
+#1008
+The massive gates~
+You are looking at massive iron gates. What could be so dangerous around
+here that they would need such protection?
+~
+10 0 3
+D3
+~
+~
+0 -1 1007
+S
+#1009
+The woodlands~
+The trees are slowly changing from oak and maple to spruce and pine. You
+notice the soil isn't as rich, and there are more stones around. You can only
+make your way through the woods to the north and east.
+~
+10 0 3
+D0
+~
+~
+0 -1 1010
+D1
+~
+~
+0 -1 1003
+S
+#1010
+Near a large mountain~
+That's why the trees are changing! You are getting close to a large mountain
+which was previously concealed from view by the trees. You wonder if you can
+find any Dwarves there.
+~
+10 0 3
+D2
+~
+~
+0 -1 1009
+D3
+~
+~
+0 -1 1011
+S
+#1011
+Beside the mountain~
+The trees are starting to thin out, but you still can't quite make it to the
+mountain from where you are.
+~
+10 0 4
+D1
+~
+~
+0 -1 1010
+D3
+~
+~
+0 -1 1012
+S
+#1012
+Foothills~
+You are now in the foothills of the mountain. You may go up into the mountain
+from here.
+~
+10 0 4
+D1
+~
+~
+0 -1 1011
+D3
+~
+~
+0 -1 1013
+S
+#1013
+In front of a cave~
+You are in front of a foul smelling cave. You may go in, to the north, or
+continue on through the woods to the west.
+~
+10 0 2
+D1
+~
+~
+0 -1 1012
+D3
+~
+~
+0 -1 1014
+S
+#1014
+Past the cave~
+You are past the cave, and in the woods. They are too thick to pass to the
+west and north, but you may go to the south.
+~
+10 0 3
+D1
+~
+~
+0 -1 1013
+D2
+~
+~
+0 -1 1015
+S
+#1015
+The forest~
+You are in the forest. The trees are gradually thickening as you move away
+from the mountain.
+~
+10 0 3
+D0
+~
+~
+0 -1 1014
+D2
+~
+~
+0 -1 1016
+S
+#1016
+Lush forest~
+The forest is getting more beautiful the farther you move from the mountain.
+~
+10 0 3
+D0
+~
+~
+0 -1 1015
+D2
+~
+~
+0 -1 1017
+S
+#1017
+Sylvan forest~
+At this point, you are sure this must be a Sylvan forest. You wonder if you will
+encounter any elves?
+~
+10 0 3
+D0
+~
+~
+0 -1 1016
+D2
+~
+~
+0 -1 1018
+S
+#1018
+Beautiful Sylvan forest~
+You are in the most beautiful forest you have ever seen. There are many
+flowers, and lush trees. The soil is rich and moist, and the wildlife is nice.
+~
+10 0 3
+D0
+~
+~
+0 -1 1017
+D3
+~
+~
+0 -1 1019
+S
+#1019
+Forest~
+You are in the most beautiful forest you have ever seen. There are many
+flowers, and lush trees. The soil is rich and moist, and the wildlife is nice.
+~
+10 0 3
+D0
+~
+~
+0 -1 1020
+D1
+~
+~
+0 -1 1018
+S
+#1020
+Sylvan forest~
+You are in the most beautiful forest you have ever seen. There are many
+flowers, and lush trees. The soil is rich and moist, and the wildlife is nice.
+~
+10 0 3
+D0
+~
+~
+0 -1 1021
+D2
+~
+~
+0 -1 1019
+S
+#1021
+Elven forest~
+This forest is so beautiful that you are sure now that it must be an Elven forest.
+You hope to meet some elves so that you can learn something from their great
+knowledge.
+~
+10 0 3
+D2
+~
+~
+0 -1 1020
+D3
+~
+~
+0 -1 1022
+S
+#1022
+Elven forest~
+This forest is so beautiful that you are sure now that it must be an Elven forest.
+You hope to meet some elves so that you can learn something from their great
+knowledge.
+~
+10 0 3
+D1
+~
+~
+0 -1 1021
+D3
+~
+~
+0 -1 1023
+S
+#1023
+In front of a glade~
+You are in front of a beautiful Elven glade. The trees thin out to the west so
+that you can move around pretty much freely.
+~
+10 0 3
+D1
+~
+~
+0 -1 1022
+D3
+~
+~
+0 -1 1024
+S
+#1024
+Elven glade~
+You are in a beautiful Elven glade. Who knows what wonderful creatures you
+might encounter?
+~
+10 0 3
+D0
+~
+~
+0 -1 1025
+D1
+~
+~
+0 -1 1023
+D2
+~
+~
+0 -1 1029
+D3
+~
+~
+0 -1 1027
+S
+#1025
+Elven glade~
+You are in a beautiful Elven glade. Who knows what wonderful creatures you
+might encounter?
+
+~
+10 0 3
+D0
+~
+~
+0 -1 1035
+D2
+~
+~
+0 -1 1024
+D3
+~
+~
+0 -1 1026
+S
+#1026
+Elven glade~
+You are in a beautiful Elven glade. Who knows what wonderful creatures you
+might encounter?
+~
+10 0 3
+D0
+~
+~
+0 -1 1034
+D1
+~
+~
+0 -1 1025
+D2
+~
+~
+0 -1 1027
+D3
+~
+~
+0 -1 1032
+S
+#1027
+Elven glade~
+You are in a beautiful Elven glade. Who knows what wonderful creatures you
+might encounter?
+~
+10 0 3
+D0
+~
+~
+0 -1 1026
+D1
+~
+~
+0 -1 1024
+D2
+~
+~
+0 -1 1028
+D3
+~
+~
+0 -1 1031
+S
+#1028
+Elven glade~
+You are in a beautiful Elven glade. Who knows what wonderful creatures you
+might encounter?
+~
+10 0 3
+D0
+~
+~
+0 -1 1027
+D1
+~
+~
+0 -1 1029
+D3
+~
+~
+0 -1 1030
+S
+#1029
+Elven glade~
+You are in a beautiful Elven glade. Who knows what wonderful creatures you
+might encounter?
+~
+10 0 3
+D0
+~
+~
+0 -1 1024
+D3
+~
+~
+0 -1 1028
+S
+#1030
+Elven glade~
+You are in a beautiful Elven glade. Who knows what wonderful creatures you
+might encounter?
+~
+10 0 3
+D0
+~
+~
+0 -1 1031
+D1
+~
+~
+0 -1 1028
+D3
+~
+~
+0 -1 1039
+S
+#1031
+Elven glade~
+You are in a beautiful Elven glade. Who knows what wonderful creatures you
+might encounter?
+~
+10 0 3
+D0
+~
+~
+0 -1 1032
+D1
+~
+~
+0 -1 1027
+D2
+~
+~
+0 -1 1030
+D3
+~
+~
+0 -1 1038
+S
+#1032
+Elven glade~
+You are in a beautiful Elven glade. Who knows what wonderful creatures you
+might encounter?
+~
+10 0 3
+D0
+~
+~
+0 -1 1033
+D1
+~
+~
+0 -1 1026
+D2
+~
+~
+0 -1 1031
+D3
+~
+~
+0 -1 1037
+S
+#1033
+Elven glade~
+You are in a beautiful Elven glade. Who knows what wonderful creatures you
+might encounter?
+~
+10 0 3
+D1
+~
+~
+0 -1 1034
+D2
+~
+~
+0 -1 1032
+D3
+~
+~
+0 -1 1036
+S
+#1034
+Elven glade~
+You are in a beautiful Elven glade. Who knows what wonderful creatures you
+might encounter?
+
+~
+10 0 3
+D1
+~
+~
+0 -1 1035
+D2
+~
+~
+0 -1 1026
+D3
+~
+~
+0 -1 1033
+S
+#1035
+Elven glade~
+You are in a beautiful Elven glade. Who knows what wonderful creatures you
+might encounter?
+~
+10 0 3
+D2
+~
+~
+0 -1 1025
+D3
+~
+~
+0 -1 1034
+S
+#1036
+Elven glade~
+You are in a beautiful Elven glade. Who knows what wonderful creatures you
+might encounter?
+~
+10 0 3
+D1
+~
+~
+0 -1 1033
+D2
+~
+~
+0 -1 1037
+S
+#1037
+Elven glade~
+You are in a beautiful Elven glade. Who knows what wonderful creatures you
+might encounter?
+~
+10 0 3
+D0
+~
+~
+0 -1 1036
+D1
+~
+~
+0 -1 1032
+D2
+~
+~
+0 -1 1038
+S
+#1038
+Elven glade~
+You are in a beautiful Elven glade. Who knows what wonderful creatures you
+might encounter?
+~
+10 0 3
+D0
+~
+~
+0 -1 1037
+D1
+~
+~
+0 -1 1031
+D2
+~
+~
+0 -1 1039
+S
+#1039
+Elven glade~
+You are in a beautiful Elven glade. Who knows what wonderful creatures you
+might encounter?
+~
+10 0 3
+D0
+~
+~
+0 -1 1038
+D1
+~
+~
+0 -1 1030
+S
+#0
+
+#RESETS
+S
+
+#SHOPS
+0
+
+
+#SPECIALS
+M 1001 spec_fido		; An Aurumvorax
+M 1002 spec_breath_acid		; An ankheg
+M 1005 spec_cast_cleric		; a centaur priest
+M 1007 spec_poison		; an ettercap
+M 1011 spec_cast_cleric		; a treant
+S
+
+#$

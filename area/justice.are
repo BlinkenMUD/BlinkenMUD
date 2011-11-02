@@ -1,0 +1,338 @@
+#AREA
+ROT v1.2 format~
+justice.are~
+Justice Clan~
+{CLAN} Clan    Justice~
+29350 29399
+
+#MOBILES
+#29350
+nurse~
+Nurse~
+A Nurse is here, healing the Sick.
+~
+She says `Do u wish to learn, heal, trade, or {rFIGHT!{x.
+~
+human~
+BGJKQRTVabcd DTUZ HN 1000 0
+105 105 1d1+10000 1d1+1000 1d1+100 magic
+-399 -399 -399 -399
+AGHO ABCDEFGHIJKLMNOPQRS 0 0
+stand stand male 0
+0 0 huge 0
+#29351
+fear its self~
+{DFear {wIts {DSelf{x~
+{DFear {wIts {DSelf{x stands, guarding the hall of {DC{wh{Wa{wo{Ds{x.
+~
+You see a huge, strong, fast man, guarding the entrance of 
+{DC{wh{Wa{wo{Ds{x.
+~
+human~
+ABMT DFVc CDEH 1000 0
+109 109 1d1+29000 25d5+4000 6d48+24 slice
+-599 -599 -599 -599
+BEGH AB 0 0
+stand stand male 5000
+0 0 huge 0
+#29352
+sadam housain~
+Sadam Housain~
+{rSa{Rdam Hous{rain{x is here, selling weapons to his clan members.
+~
+You see a man, skilled in war tactics, selling weapons to his clan 
+members.
+~
+human~
+ABMV DF 0 1000 0
+100 0 1d1+1999 1d1+999 1d1+99 divine
+-250 -250 -250 -250
+0 ABCDEFGHIJK 0 0
+stand stand male 50
+0 0 large 0
+
+#0
+
+#OBJECTS
+#29350
+bunker bunk~
+A Large Bunk~
+A Large Bunk is here, looks Very comfortable.~
+leather~
+furniture AB 0
+20 20000 BCEFHIKL 200 200
+0 0 0 P
+#29351
+fear~
+Fear~
+Fear lies here.~
+adamantite~
+weapon AB N
+sword 10 50 slice ABCDEFGH
+109 1000 1 P
+#29352
+pit locker justice~
+A lawful locker of the Lost and Found~
+A Locker, filled with goods for all to take, stands open here.~
+~
+container O 0
+10000 0 0 1000 100
+0 0 0 P
+#29353
+fountain water~
+A fountain of Water~
+A fountain is here gurgling out water, endless suply.~
+marble~
+fountain G 0
+10000 100000 `water' 0 0
+0 0 0 P
+#29354
+ring of justice~
+Ring of {WJUSTICE{x~
+You see a glowing ring of {WJUSTICE{x clan.~
+onyx~
+armor ABOT AB
+10 10 10 10 0
+25 10 1000 P
+A
+13 10
+A
+18 2
+A
+19 2
+C justice~
+#29355
+justice camo jacket~
+A {WJUSTICE{x Jacket~
+A Camo Jacket lies here.~
+cloth~
+armor ABOT AK
+10 10 10 10 0
+30 30 1500 P
+C justice~
+#29356
+bullet proof justice vest~
+A Bullet proof Vest of {WJUSTICE{x~
+A Bullet proof Vest lies here.~
+adamantite~
+armor ABIOT AD
+18 18 18 18  0
+35 250 5000 P
+A
+1 2
+A
+18 2
+A
+19 2
+C justice~
+#29357
+infered goggles justice~
+Some Infered Goggles of {WJUSTICE{x~
+A Pair of Infered Goggles lie here.~
+energy~
+light AT AO
+0 0 -1 0 0
+25 10 2000 P
+F
+A 20 10 CDEFG
+C justice~
+#29358
+field knife justice~
+a Sharp Field Knife~
+A field knife Lies here.~
+obsidian~
+weapon AIMT AN
+dagger 4 12 stab ADH
+25 30 4000 P
+C justice~
+#29359
+camo pants justice~
+Some Camo Pants~
+Some Camo Pants lie here~
+mithril~
+armor ABOT AF
+15 15 15 15  0
+40 40 6500 P
+F
+A 5 2 c
+C justice~
+#29360
+combat boots justice~
+A Pair of Combat Boots~
+Some Combat Boots lie here.~
+hard leather~
+armor AOT AG
+12 12 12 12 0
+55 55 5000 P
+F
+A 2 2 L
+C justice~
+#29361
+pimpcane cane pimp justice~ 
+a Pimpcane~
+A Pimpcane lies here.~
+obsidian~
+weapon ABCFIMT AN
+sword 8 11 slash DGH
+50 50 6000 P
+C justice~
+#29362
+justice mind~
+{WJUSTICEPx Mind~
+{WJUSTICE{x Mind lies here.~
+crystal~
+armor ABOT AQ
+10 10 10 10 0
+25 0 2000 P
+A
+18 2
+A
+19 2
+C justice~
+#29363
+snickers bar~
+a snickers bar~
+A Snickers Bar.~
+food~
+food A A
+75 70 0 0 0
+0 10 50 P
+#0
+
+#ROOMS
+#29350
+                       # # WELCOME TO {WJUSTICE{x # #~
+
+  In all the realm you will not find a more savage or brutal ground than 
+that which you walk upon. Fear leads grabs your eyes and throws them first 
+to the bullet on the floor. In all four corners of the room fire barrels set 
+ablaze give off an orange glow. Steel beams hang from the ceiling and appear
+about to fall at any moment.
+~
+0 D 1
+D4
+Sadam Housain's house of Toys
+~
+~
+0 0 29351
+D5
+~
+~
+0 -1 3170
+E
+wall sign~
+The Eastern wall reads "EnTeR aT yOuR OwN rIsK".
+~
+S
+#29351
+The Bunker Room.~
+  This room is aligned with bunkers, You notice the place around you reminds
+you of camp back home and memories of your first war come to mind.  To the 
+south you see a few weapons. To the east you see a nurse, Healing the sick. To
+the west you see the Lost and Found.
+~
+0 DK 1
+D1
+You see the healing tent
+~
+~
+0 0 29352
+D2
+You see Sadam housain
+~
+~
+0 0 29353
+D3
+You see the Lost and Found
+~
+~
+0 0 29354
+D5
+You see the welcoming of Justice
+~
+~
+0 0  29350
+H 200 M 200
+C justice~
+S
+#29352
+The Healing Tent~
+  You have entered the healing tent. Water leaks in through the canvas 
+roof and  colects in small puddles on the floor. Medics rush to your aid and 
+suggest that {WC{wH{DA{wO{WS{x grand. Your bones ache and Your muscles tighten. 
+Outside the  screams call to you. You pray for a speedy recovery, and the 
+nurse shuts the tent door behind you.
+~
+0 D 1
+D3
+You see the bunker room.
+~
+~
+0 0 29351
+E
+sign~
+This Portal in this room is totally random, be careful
+~
+S
+# 29353
+Welcome to Sadam Housains house o' toys.~
+  Weapons fit to an entire country's fancy hang on the walls. Sadam looks 
+at you, winks twice then opens up a hidden compartment in the wall. You are 
+drawn to win the  Persion Gulf War single handed. Sadam smiles and says, "All 
+the lands are yours, break windows, cause havoc, live a life of {WC{wH{DA{wO{WS{x.
+~
+0 D 1
+D0
+You see the bunker room.
+~
+~
+0 0 29351
+S
+#29354
+Lost and Found~
+  All around you are the treasures of the world. Hey they Lost it, we 
+found it,  more or less. Take These items and use them as implements to 
+foward the {WJUSTICE{x caught and place it back here.
+~
+0 D 1
+D1
+You see the bunker room.
+~
+~
+0 0 29351
+E
+circle glowing~
+A portal to room with Gold
+~
+S
+#0
+#RESETS
+M 0 29350 1 29352 1             * Nurse
+M 0 29351 1 29350 1             * Fear its Self
+E 1 29351 1 16                  * Fear
+M 1 29352 1 29353 1             * Sadam Housain
+G 1 29354 -1                    * ring
+G 1 29355 -1                    * jacket
+G 1 29356 -1                    * vest
+G 1 29357 -1                    * goggles
+G 1 29358 -1                    * knife
+G 1 29359 -1                    * pants
+G 1 29360 -1                    * boots
+G 1 29361 -1                    * pimpcane
+G 1 29362 -1                    * mind
+G 1 29363 -1                    * snickersbar
+
+O 0 29350 1 29351               * bunker
+O 0 29352 1 29354               * locker
+O 0 29353 1 29351               * fountain
+S
+
+#SHOPS
+29352 32 0 0 0 0 100 88 0 23    * sadam housain
+0
+
+#SPECIALS
+M 29350 spec_cast_adept         * nurse
+M 29351 spec_breath_any         * fear its self
+S
+#$

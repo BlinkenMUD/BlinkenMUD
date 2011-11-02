@@ -1,0 +1,410 @@
+#AREA
+ROT v1.2 format~
+shadow.are~
+Shadow Clan Hall~
+{CLAN} Lestat    Shadow Clan Hall~
+29400 29449
+
+#MOBILES
+#29400
+ALF alien~
+ALF~
+{yA{YL{yF{x is here, making fun of the other clans. 
+~
+He says `Do you wish to {Blearn{x, {Yheal{x, {Gtrade{x, or {rFIGHT!{x.
+~
+human~
+BGJKQRTVabcd DTUZ HN 1000 0
+105 105 1d1+10000 1d1+1000 1d1+100 magic
+-399 -399 -399 -399
+AGHO ABCDEFGHIJKLMNOPQRS 0 0
+stand stand male 0
+0 0 huge 0
+#29401
+Bruce Lee~
+{WSpirit{x of the {RDr{rag{Ron{x~
+The {WSpirit{x of Bruce Lee is here staring right at you with an {revil{x grin.
+~
+The Shadow have somehow brought Bruce Lee's spirit back from the beyond
+and now the fabled Dragon is the guardian and keeper of Shadow Grand
+Hall.  As you approach he whispers, 'You dare come invade my keepers realm?
+Defend yourself if you wish to enter!'
+
+~
+human~
+ABORMT DFVc CDEHO 1000 0
+109 109 1d1+29000 25d5+4000 6d9+24 slice
+-599 -599 -599 -599
+ABDEFGHK 0 GHL 0
+stand stand male 5000
+L 0 huge 0
+#29402
+Moesly Dealer~
+Moesly~
+Moesly the Dealer says, "Yo, whatcha want?"
+~
+Moesly says, "yo where muh {GMONEY{x at foo?!"
+~
+human~
+ABMV DF 0 1000 0
+100 0 1d1+1999 1d1+999 1d1+99 divine
+-250 -250 -250 -250
+0 ABCDEFGHIJK 0 0
+stand stand male 50
+0 0 large 0
+
+#0
+
+#OBJECTS
+#29400
+Green cloud~
+A {GG{Gr{Ge{ge{Gn {8Cloud{x~
+A {GG{Gr{Ge{ge{Gn {8Cloud{x is here smelling quite pungent.~
+hemp~
+furniture AB 0
+20 20000 BCEFHIKL 200 200
+0 0 0 P
+#29401
+holy nunchuks~
+{8Ebony{x Nunchuks~
+Some darkly holy nunchuks are lying on the ground~
+ebony~
+weapon AB N
+exotic 10 38 wrath ABCDEFGH
+109 1000 1 P
+#29402
+Shadow pit~
+{BS{Mh{Dad{Mo{Bw {xbottomless {8PiT {xo' {bLooT{x~
+A {8PiT{x for your loot for other members of the clan is here.~
+~
+container O 0
+10000 0 0 1000 100
+0 0 0 P
+#29403
+fountain energy~
+A fountain of {WAmbrosia {xthe {YNectar {xof the {CGods{x~
+A fountain is here gurgling out endless {WAmbrosia{x.~
+marble~
+fountain G 0
+10000 100000 `coke' 0 0
+0 0 0 P
+#29404
+Shadow ring~
+{8Ring {xof {WD{Ci{WV{Ci{WN{Ci{WT{Cy{x~
+You see a glowing ring with the {BS{Mh{Dad{Mo{Bw {xClan insignia here lying
+on the ground.~
+energy~
+armor AFHMT AB
+11 11 11 11 0
+30 10 1000 P
+A
+20 -5
+A
+18 3
+A
+19 2
+C shadow~
+#29405
+Shadow shroud~
+{CShroud {xof {BS{Mh{Dad{Mo{Bw{x~
+You see a very dark shroud here.~
+etherealness~
+armor BCFGHT AK
+11 11 11 12 0
+30 30 1500 P
+F
+A 2 3 P
+C shadow~
+#29406
+shadow mail~
+Shadow {8Mail{x of {RVen{rgea{Rnce{x~
+You see a strange mail made of material you've never seen before.~
+adamantite~
+armor CFGHT AD
+15 15 15 15  0
+35 250 5000 P
+A
+1 2
+A
+18 3
+A
+19 2
+C shadow~
+#29407
+Torch shadow~
+Shadow {RTorch{x of {bEnd{Bless {rFuRy{x~
+You see {rFury{x incarnate here lying on the ground.~
+energy~
+light ACFGHT AO
+-1 -1 -1 -15 0
+40 10 2000 P
+F
+A 20 -10 CDEFGL
+C shadow~
+#29408
+shadow wrath~
+{cWrath {Mof Shadow~
+A force is here with a distinct humm.~
+energy~
+weapon ACFHMIT AN
+exotic 6 12 wrath ADEH
+30 30 4000 P
+A
+18 5
+A
+19 5
+C shadow~
+#29409
+shadow insignia~
+A {Y-=|{CPhear{Y|=-{x Tattoo~
+You see a chunk of skin with the Shadow insignia on it here.~
+ethrealness~
+armor ABOT AR
+15 15 15 17  0
+70 40 6500 P
+A
+20 -10
+A
+18 3
+A
+19 4
+F
+A 13 50 c
+C shadow~
+#29410
+Bracer shadow~
+Shadow {8Bracer{x of {RVital {GStats{x~
+You see a bracer glowing in pale light.~
+mithril~
+armor ABFHMT AM
+10 10 10 10 0
+30 55 5000 P
+A
+3 1
+A
+4 1
+A
+5 1
+A
+18 2
+A
+19 2
+C shadow~
+#29411
+shadow sword~
+Shadow {WPeace{8maker{x~
+You see a glowing sword lying here.~
+obsidian~
+weapon ABCFIMT AN
+sword 8 15 slash DGH
+50 50 6000 P
+A
+18 10
+A
+19 10
+C shadow~
+#29412
+shadow Song~
+shadow {WSong{x~
+A song of death is here lingering about.~
+etherealness~
+armor BFHMT AQ
+20 20 20 20 0
+80 0 2000 P
+A
+20 -10
+A
+18 5
+A
+19 5
+A
+12 80
+A
+13 80
+C shadow~
+#29413
+spacecake~
+a {GS{gp{GA{gc{GE{ycake{x~
+a spacecake straight from Amsterdam is here waiting to be eaten.~
+food~
+food A A
+75 70 0 0 0
+0 10 50 P
+#29414
+portal hell~
+A Shadow gate to {RHell{x~
+You see a {8dark{x portal here.~
+air~
+portal B 0
+0 0 A 10416 0
+0 0 0 P
+#29415
+portal shadows~
+Some {8Shadows{x~
+Some {8Shadows{x are here converging into complete {wdarkness{x.~
+air~
+portal B 0
+0 0 E 0 0
+0 0 0 P
+#0
+
+#ROOMS
+#29400
+Asyan's War Room~
+As you step into the fabled Shadow Clan Entrance you feel an air of 
+anxiety and tension. Even though our oppressed people escaped from the 
+land of tyranny, the battle for our freedom is neverending. As your eyes 
+become accustomed to the dim light, you realize this room's purpose. 
+Detailed maps of all of Phoenix adorn each and every wall. This room is 
+the birthplace of strategic attacks which result in the swift and 
+efficient Shadow of all enemies of the clan. Above, on the ceiling, 
+our beloved leader's portrait can be seen watching over our actions with 
+a stern gaze. There is little else to be said of the immediate surroundings
+except for an unnatural mist which hovers around the room mysteriously and
+an unearthly voice which echoes through the hell whispering: 
+'never reveal the secret...'
+~ 
+0 D 1 D4 A magical platform leading into the halls of Shadow
+~
+~
+0 0 29401
+D5
+~
+~
+0 -1 3352
+S
+#29401
+Numb's Grand Hall of Pleasure~
+As you enter the room you feel a little light headed as you smell a pungent
+yet skunky odor thoughout the room.  Looking beneath you, you notice red
+carpet line the entire floor.  Looking up, you notice the countless trophies
+which adorn the walls, most of them heads of enemy clansmen.  You also notice
+pictures of clansmen beside the trophies to give credit to those who have
+killed our enemies.  Upon closer inspection you notice little tubes coming
+out of a centerpiece resembling a big, gigantic hookah.  Looking at the
+centerpiece you notice it's inscribed, 'Come sleep in a green cloud of
+happiness.'  Amongst all the carnage the Shadow create, this room
+seems like the eye of a storm.  A haven for the clansmen to recount their
+journeys and relax among InSaNiTy.  This sanctuary is a safe room for all
+Shadow's to rest from their battles afar.
+~
+0 DK 1
+D1
+You see Vern's White room.
+~
+~
+0 0 29402
+D2
+You see Dirge's Shadows.
+~
+~
+0 0 29403
+D3
+You see Savoy's room of Loot. 
+~
+~
+0 0 29404
+D5
+You see Asyan's war room.
+~
+~
+0 0  29400
+H 200 M 200
+C shadow~
+S
+#29402
+Vern's White room~
+Said to be modeled after Vern's own brain, this room is completely empty.
+You feel a sense of relief as you realize you won't have to wade through
+several lines of overly descriptive and entirely useless garbage about this
+room.
+Alf is here wondering why his show got cancelled.
+~
+0 D 1
+D3
+You see Numb's Grand Hall of Pleasure.
+~
+~
+0 0 29401
+S
+# 29403
+Dirge's ShadowS~
+As you step into this room you realize that it is the source of the smoke
+circulating in the main hall. However, as you scan the room, you see nothing
+aflame but there appears to be little red-orange lights sparking throughout
+the room.  Lava lamps adorn each corner and as you look at the walls you 
+see posters of japanimation anime...everything from Robotech + Streetfighter
+to Gundam Wing + Ninja Scroll. A lone figure sits at an ebony table with
+mountains of white powder and little green plants on the surface. The only
+other object of interest is a shadow which moves slowly around the room.
+
+~
+0 D 1
+D0
+You see Numb's Grand Hall of Pleasure.
+~
+~
+0 0 29401
+E
+sign~
+The Portal in this room is totally {&RANDOM{X, be careful
+~
+S
+#29404
+Savoy's room of Loot~
+This room is the room where all the loot and treasures found by clan members
+is divided and donated to help in the cause of InSaNiTy.  The room is colored
+grey and is the only room with a lot of light.  The light seems to be coming
+from a portal stuck in the corner.  
+~
+0 D 1
+D1
+You see Numb's Grand Hall of Pleasure.
+~
+~
+0 0 29401
+E
+portal of GREED~
+A portal to a room with Gold
+~
+S
+#0
+
+
+#RESETS
+M 0 29400 1 29402 1             * Alf
+M 0 29401 1 29400 1             * Bruce Lee
+E 1 29401 1 16                  * Ebony Nunchuks
+M 1 29402 1 29403 1             * Moe the dealer
+G 1 29404 -1                    * ring
+G 1 29405 -1                    * shroud
+G 1 29406 -1                    * mail
+G 1 29407 -1                    * torch
+G 1 29408 -1                    * wrath
+G 1 29409 -1                    * tattoo
+G 1 29410 -1                    * bracer
+G 1 29411 -1                    * sword
+G 1 29412 -1                    * song
+G 1 29413 -1                    * spacecake
+
+O 0 29400 1 29401               * cloud
+O 0 29402 1 29404               * pit
+O 0 29403 1 29401               * fountain
+O 0 29414 1 29404               * portal to hell (coins room)
+O 0 29415 1 29403               * Random portal
+S
+
+#SHOPS
+29402 32 0 0 0 0 100 88 0 23    * Moe the dealer
+0
+
+#SPECIALS
+M 29400 spec_cast_adept         * Alf
+M 29401 spec_breath_any         * Bruce
+S
+#$
+
+---------------
+
+
+
