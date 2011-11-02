@@ -2971,9 +2971,9 @@ void do_inventory( CHAR_DATA *ch, char *argument )
 void do_equipment (CHAR_DATA * ch, char *argument) {
     OBJ_DATA *obj;
     int iWear;
-    bool found;
+    //    bool found;
     send_to_char ("{wYou are using:{x\n\r", ch);
-    found = FALSE;
+    //found = FALSE;
     for (iWear = 0; iWear < MAX_WEAR; iWear++) {
         if ((obj = get_eq_char (ch, iWear)) == NULL) {
                 send_to_char("{w", ch);
@@ -2992,7 +2992,7 @@ void do_equipment (CHAR_DATA * ch, char *argument) {
         else    {
             send_to_char ("{Wsomething.\n\r", ch);
         }
-        found = TRUE;
+	//        found = TRUE;
     }
 
     send_to_char("{x", ch);

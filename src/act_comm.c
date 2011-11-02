@@ -576,14 +576,14 @@ void do_qgossip( CHAR_DATA *ch, char *argument )
 void do_grats( CHAR_DATA *ch, char *argument )
 {
     char buf[MAX_STRING_LENGTH];
-    char bufy[MAX_STRING_LENGTH];
-    char bufz[MAX_STRING_LENGTH];
+    //    char bufy[MAX_STRING_LENGTH];
+    //    char bufz[MAX_STRING_LENGTH];
     DESCRIPTOR_DATA *d;
     int wtime;
  
     buf[0] = '\0';
-    bufy[0] = '\0';
-    bufz[0] = '\0';
+    //bufy[0] = '\0';
+    //bufz[0] = '\0';
     if (argument[0] == '\0' )
     {
 	if (IS_SET(ch->comm,COMM_NOGRATS))

@@ -99,12 +99,12 @@ void	disarm		args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
 void violence_update( void )
 {
     CHAR_DATA *ch;
-    CHAR_DATA *ch_next;
+    //    CHAR_DATA *ch_next;
     CHAR_DATA *victim;
 
     for ( ch = char_list; ch != NULL; ch = ch->next )
     {
-	ch_next	= ch->next;
+      //ch_next	= ch->next;
 
 	if ( ( victim = ch->fighting ) == NULL || ch->in_room == NULL )
 	    continue;
@@ -884,7 +884,7 @@ void one_hit_mock( CHAR_DATA *ch, CHAR_DATA *victim, int dt, bool secondary )
     int diceroll;
     int sn,skill;
     int dam_type;
-    bool result;
+    //    bool result;
 
     sn = -1;
 
@@ -1094,7 +1094,8 @@ void one_hit_mock( CHAR_DATA *ch, CHAR_DATA *victim, int dt, bool secondary )
     if ( dam <= 0 )
 	dam = 1;
 
-    result = damage_mock( ch, victim, dam, dt, dam_type, TRUE );
+    //    result = damage_mock( ch, victim, dam, dt, dam_type, TRUE );
+    damage_mock( ch, victim, dam, dt, dam_type, TRUE );
     
     tail_chain( );
     return;
@@ -1449,7 +1450,7 @@ bool damage_mock(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
 	    bool show) 
 {
     long immdam;
-    bool immune;
+    //bool immune;
     char buf1[256], buf2[256], buf3[256];
     const char *attack;
 
@@ -1477,13 +1478,13 @@ bool damage_mock(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
     ||		     (IS_SHIELDED(victim, SHD_PROTECT_GOOD) && IS_GOOD(ch) )))
 	dam -= dam / 4;
 
-    immune = FALSE;
+    //    immune = FALSE;
 
 
     switch(check_immune(victim,dam_type))
     {
 	case(IS_IMMUNE):
-	    immune = TRUE;
+	  //immune = TRUE;
 	    dam = 0;
 	    break;
 	case(IS_RESISTANT):	
@@ -2045,12 +2046,12 @@ bool is_safe_mock(CHAR_DATA *ch, CHAR_DATA *victim)
 bool is_voodood(CHAR_DATA *ch, CHAR_DATA *victim)
 {
     OBJ_DATA *object;
-    bool found;
+    //    bool found;
 
     if ( ch->level > HERO )
 	return FALSE;
 
-    found = FALSE;
+    //    found = FALSE;
     for ( object = victim->carrying; object != NULL; object = object->next_content )
     {
 	if (object->pIndexData->vnum == OBJ_VNUM_VOODOO)
@@ -2854,7 +2855,7 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
 {
     char buf[MAX_STRING_LENGTH];
     CHAR_DATA *gch;
-    CHAR_DATA *lch;
+    //    CHAR_DATA *lch;
     int xp;
     int members=0;
     int group_levels=0;
@@ -2883,7 +2884,7 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
 	group_levels = ch->level ;
     }
 
-    lch = (ch->leader != NULL) ? ch->leader : ch;
+    //lch = (ch->leader != NULL) ? ch->leader : ch;
 
     for ( gch = ch->in_room->people; gch != NULL; gch = gch->next_in_room )
     {

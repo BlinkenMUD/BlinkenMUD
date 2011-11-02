@@ -2740,8 +2740,13 @@ void	mob_interpret	args( ( CHAR_DATA *ch, char *argument ) );
 /* note.c */
 void    expire_notes    args( ( void ) );
 
+/* quest.c */
+void generate_quest	args(( CHAR_DATA *ch, CHAR_DATA *questman ));
+void quest_update	args(( void ));
+bool chance		args(( int num ));
+
 /* reward.c */
-void	reset_hunt		args( ( CHAR_DATA *ch ) );
+void	reset_hunt	args( ( CHAR_DATA *ch ) );
 CD *	find_rewarder	args( ( CHAR_DATA *ch ) );
 CD *	find_captain	args( ( CHAR_DATA *ch ) );
 void	find_missing	args( ( CHAR_DATA *ch, CHAR_DATA *captain ) );

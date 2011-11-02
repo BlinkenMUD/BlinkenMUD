@@ -3382,7 +3382,7 @@ OEDIT( oedit_ed )
 
     if ( !str_cmp( command, "format" ) )
     {
-	EXTRA_DESCR_DATA *ped = NULL;
+        //EXTRA_DESCR_DATA *ped = NULL;
 
 	if ( keyword[0] == '\0' )
 	{
@@ -3394,7 +3394,7 @@ OEDIT( oedit_ed )
 	{
 	    if ( is_name( keyword, ed->keyword ) )
 		break;
-	    ped = ed;
+	    //ped = ed;
 	}
 
 	if ( !ed )

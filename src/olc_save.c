@@ -964,10 +964,10 @@ void do_asave( CHAR_DATA *ch, char *argument )
 {
     char arg1 [MAX_INPUT_LENGTH];
     AREA_DATA *pArea;
-    FILE *fp;
+    //FILE *fp;
     int value;
 
-    fp = NULL;
+    //fp = NULL;
 
     if ( !ch )       /* Do an autosave */
     {

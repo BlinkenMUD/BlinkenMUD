@@ -209,65 +209,6 @@ void wiznet(char *string, CHAR_DATA *ch, OBJ_DATA *obj,
 }
 
 
-/* removed for quest.c
-
-void do_quest( CHAR_DATA *ch, char *argument )
-{
-    char arg1[MAX_INPUT_LENGTH];
-    DESCRIPTOR_DATA *d;
-
-    argument = one_argument( argument, arg1 );
-
-    if ( ( arg1[0] == '\0' ) || ( !IS_IMMORTAL(ch) ) )
-    {
-	if (!global_quest)
-	{
-	    send_to_char("There is no quest in progress.\n\r",ch);
-	    return;
-	}
-	if (ch->on_quest)
-	{
-	    send_to_char("You'll have to wait till the quest is over.\n\r",ch);
-	    return;
-	}
-	ch->on_quest = TRUE;
-	send_to_char("Your quest flag is now on.\n\r",ch);
-	return;
-    }
-    if (!str_cmp(arg1, "on"))
-    {
-	if (global_quest)
-	{
-	    send_to_char("The global quest flag is already on.\n\r",ch);
-	    return;
-	}
-	global_quest = TRUE;
-	send_to_char("The global quest flag is now on.\n\r",ch);
-	return;
-    }
-    if (!str_cmp(arg1, "off"))
-    {
-	if (!global_quest)
-	{
-	    send_to_char("The global quest flag is not on.\n\r",ch);
-	    return;
-	}
-	global_quest = FALSE;
-	for ( d = descriptor_list; d != NULL; d = d->next )
-	{
-	    if ( d->connected == CON_PLAYING )
-	    {
-		d->character->on_quest = FALSE;
-	    }
-	}
-	send_to_char("The global quest flag is now off.\n\r",ch);
-	return;
-    }
-    do_quest(ch, "");
-    return;
-}
-*/
-
 
 
 /* equips a character */

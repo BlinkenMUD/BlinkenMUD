@@ -2014,7 +2014,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
 {
     DESCRIPTOR_DATA *d_old, *d_next;
     char buf[MAX_STRING_LENGTH];
-    char newbuf[MAX_STRING_LENGTH];
+    //    char newbuf[MAX_STRING_LENGTH];
     char arg[MAX_INPUT_LENGTH];
     CHAR_DATA *ch;
     CHAR_DATA *victim;
@@ -2318,7 +2318,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
 		pos = 0;
 	    } 
 	}
-	newbuf[0] = '\0';
+	//	newbuf[0] = '\0';
 	write_to_buffer(d,"\n\r\n\r",0);
 	write_to_buffer(d,"What is your race (help for more information)? ",0);
 	d->connected = CON_GET_NEW_RACE;
