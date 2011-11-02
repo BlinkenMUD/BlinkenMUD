@@ -2856,8 +2856,8 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
     CHAR_DATA *gch;
     CHAR_DATA *lch;
     int xp;
-    int members;
-    int group_levels;
+    int members=0;
+    int group_levels=0;
 
     /*
      * Monsters don't get kill xp's or alignment changes.
@@ -2867,8 +2867,6 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
     if ( victim == ch )
 	return;
     
-    members = 0;
-    group_levels = 0;
     for ( gch = ch->in_room->people; gch != NULL; gch = gch->next_in_room )
     {
 	if ( is_same_group( gch, ch ) )
@@ -2931,7 +2929,17 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
 		obj_to_room( obj, ch->in_room );
 	    }
 	}
-
+	/* QUEST COMPLETED */
+	if (IS_NPC(victim)
+	    && IS_SET(ch->act,PLR_QUESTOR)
+	    && (ch->questmob == victim->pIndexData->vnum))
+	  {
+	    act("QUEST ALMOST COMPLETED", ch, NULL, NULL, TO_CHAR);
+	    act("GET YOUR ASS TO THE QUEST MASTER NOW", ch, NULL, NULL, TO_CHAR);
+	    act("THIS MOFO IS COMPLETING HIS QUEST", ch, NULL, NULL, TO_CHAR);
+	    ch->questmob=-1;
+	    ch->countdown+=number_range(0,5); //Give some time to get back
+	  }
 
     }
 

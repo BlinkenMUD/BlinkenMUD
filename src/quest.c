@@ -538,8 +538,9 @@ void generate_quest(CHAR_DATA *ch, CHAR_DATA *questman)
     }
 
     /*  40% chance it will send the player on a 'recover item' quest. */
-
-    if (chance(40))
+    /*  TODO recover item quests dont work yet */
+    //    if (chance(40))
+    if (0)
     {
 	int objvnum = 0;
 
