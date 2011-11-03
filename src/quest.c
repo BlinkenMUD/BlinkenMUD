@@ -381,7 +381,7 @@ void do_quest(CHAR_DATA *ch, char *argument)
 
       if (IS_SET(ch->act, PLR_QUESTOR))
 	{
-	  if (ch->questmob == -1 && ch->countdown > 0)
+	  if (ch->questmob == -1 && ch->countdown > 0) /* Mob quest */
 	    {
 	      int reward, pointreward, pracreward;
 
@@ -411,10 +411,9 @@ void do_quest(CHAR_DATA *ch, char *argument)
 
 	      return;
 	    }
-	  else if (ch->questobj > 0 && ch->countdown > 0)
+	  else if (ch->questobj > 0 && ch->countdown > 0) /* Obj quest */
 	    {
 	      bool obj_found = FALSE;
-
 	      for (obj = ch->carrying; obj != NULL; obj= obj_next)
     		{
 		  obj_next = obj->next_content;
@@ -452,7 +451,7 @@ void do_quest(CHAR_DATA *ch, char *argument)
 		  ch->countdown = 0;
 		  ch->questmob = 0;
 		  ch->questobj = 0;
-		  ch->nextquest = 20;
+		  ch->nextquest = QUEST_WAIT_BETWEEN;
 		  ch->gold += reward;
 		  ch->questpoints += pointreward;
 		  extract_obj(obj);
@@ -548,12 +547,9 @@ void generate_quest(CHAR_DATA *ch, CHAR_DATA *questman)
     }
 
   /*  40% chance it will send the player on a 'recover item' quest. */
-  /*  TODO recover item quests dont work yet */
-  //    if (chance(40))
-  if (0)
+  if (chance(40))
     {
       int objvnum = 0;
-
       switch(number_range(0,4))
 	{
 	case 0:
@@ -576,11 +572,9 @@ void generate_quest(CHAR_DATA *ch, CHAR_DATA *questman)
 	  objvnum = QUEST_OBJQUEST5;
 	  break;
 	}
-
       questitem = create_object( get_obj_index(objvnum), ch->level );
       obj_to_room(questitem, room);
       ch->questobj = questitem->pIndexData->vnum;
-
       sprintf(buf, "Vile pilferers have stolen %s from the royal treasury!",questitem->short_descr);
       do_say(questman, buf);
       do_say(questman, "My court wizardess, with her magic mirror, has pinpointed its location.");
@@ -588,14 +582,12 @@ void generate_quest(CHAR_DATA *ch, CHAR_DATA *questman)
       /* I changed my area names so that they have just the name of the area
 	 and none of the level stuff. You may want to comment these next two
 	 lines. - Vassago */
-
       sprintf(buf, "Look in the general area of %s for %s!",room->area->name, room->name);
       do_say(questman, buf);
       return;
     }
 
   /* Quest to kill a mob */
-
   else 
     {
       switch(number_range(0,1))
