@@ -46,14 +46,6 @@
 
 DECLARE_DO_FUN( do_say );
 
-/* Object vnums for Quest Rewards */
-
-#define QUEST_ITEM1 8322
-#define QUEST_ITEM2 8323
-#define QUEST_ITEM3 8324
-#define QUEST_ITEM4 17543
-#define QUEST_ITEM5 8325
-
 /* Object vnums for object quest 'tokens'. In Moongate, the tokens are
    things like 'the Shield of Moongate', 'the Sceptre of Moongate'. These
    items are worthless and have the rot-death flag, as they are placed
@@ -67,7 +59,6 @@ DECLARE_DO_FUN( do_say );
 
 /* Time to wait between ending/failing and starting */
 #define QUEST_WAIT_BETWEEN 5
-
 
 enum quest_itemtype
   {
@@ -100,19 +91,18 @@ QUEST_BLIST quest_item_list [] =
   { /* List of items that you can buy with quest points.
        ... is added for alignment during print
        Please keep this list sorted on cost*/
-    { "Blinkenslapper!!!..........", "blinkenslapper slapper", 1337, 19191,  QUEST_OBJ_T  },
     { "COMFY CHAIR!!!!!...........", "comfy chair", 1000, 8322,   QUEST_OBJ_T  },
     { "Sword of Blinkenshell!.....", "sword", 750,  8323,   QUEST_OBJ_T  },
     { "Amulet of Blinkenshell!....", "amulet", 750,  8324,   QUEST_OBJ_T  },
-    { "Shield of Blinkenshell!....", "shield", 750,  17543,  QUEST_OBJ_T  },
+    { "Shield of Blinkenshell!....", "shield", 750,  8321,  QUEST_OBJ_T  },
     { "Decanter of Endless Water..", "decanter water", 550,  8325,   QUEST_OBJ_T  },
     { "350,000 pieces of gold.....", "gold gp", 500,  350000, QUEST_GOLD_T  },
     { "30 Practices...............", "pract prac practices", 500,  30,     QUEST_PRAC_T  },
     { "5 Trainings................", "train training trainings", 500,  5,      QUEST_TRAIN_T },
-    
     /* END OF LIST */
     { NULL, NULL, -1, -1, -1 }
   };
+
 /* The main quest function */
 void do_quest(CHAR_DATA *ch, char *argument)
 {

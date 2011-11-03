@@ -2935,9 +2935,9 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
 	    && IS_SET(ch->act,PLR_QUESTOR)
 	    && (ch->questmob == victim->pIndexData->vnum))
 	  {
-	    act("QUEST ALMOST COMPLETED", ch, NULL, NULL, TO_CHAR);
-	    act("GET YOUR ASS TO THE QUEST MASTER NOW", ch, NULL, NULL, TO_CHAR);
-	    act("THIS MOFO IS COMPLETING HIS QUEST", ch, NULL, NULL, TO_CHAR);
+	    act("{2QUEST{x almost {4COMPLETED{x", ch, NULL, NULL, TO_CHAR);
+	    act("{7Return to the questmaster at once to {4complete{x your quest", ch, NULL, NULL, TO_CHAR);
+	    act("a {2Quest{x is being completed", ch, NULL, NULL, TO_ROOM);
 	    ch->questmob=-1;
 	    ch->countdown+=number_range(0,5); //Give some time to get back
 	  }
