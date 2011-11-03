@@ -69,9 +69,25 @@ DECLARE_DO_FUN( do_say );
 #define QUEST_WAIT_BETWEEN 5
 
 
+enum quest_itemtype
+  {
+    QUEST_OBJ_T = 0,
+    QUEST_GOLD_T = 2,
+    QUEST_PRAC_T = 4,
+    QUEST_TRAIN_T = 8
+  };
+
+typedef struct  quest_buylist
+{
+  char * const  name; //Full name
+  char * const  mname; //name to match with
+  int           cost; //cost of the item
+  int           id; //vnum for objects or amount for gold/train etc
+  int           type; //type: gold, obj etc
+} QUEST_BLIST;
+
 
 /* CHANCE function. I use this everywhere in my code, very handy :> */
-
 bool chance(int num)
 {
   if (number_range(1,100) <= num)
@@ -80,8 +96,24 @@ bool chance(int num)
     return FALSE;
 }
 
+QUEST_BLIST quest_item_list [] =
+  { /* List of items that you can buy with quest points.
+       ... is added for alignment during print
+       Please keep this list sorted on cost*/
+    { "Blinkenslapper!!!..........", "blinkenslapper slapper", 1337, 19191,  QUEST_OBJ_T  },
+    { "COMFY CHAIR!!!!!...........", "comfy chair", 1000, 8322,   QUEST_OBJ_T  },
+    { "Sword of Blinkenshell!.....", "sword", 750,  8323,   QUEST_OBJ_T  },
+    { "Amulet of Blinkenshell!....", "amulet", 750,  8324,   QUEST_OBJ_T  },
+    { "Shield of Blinkenshell!....", "shield", 750,  17543,  QUEST_OBJ_T  },
+    { "Decanter of Endless Water..", "decanter water", 550,  8325,   QUEST_OBJ_T  },
+    { "350,000 pieces of gold.....", "gold gp", 500,  350000, QUEST_GOLD_T  },
+    { "30 Practices...............", "pract prac practices", 500,  30,     QUEST_PRAC_T  },
+    { "5 Trainings................", "train training trainings", 500,  5,      QUEST_TRAIN_T },
+    
+    /* END OF LIST */
+    { NULL, NULL, -1, -1, -1 }
+  };
 /* The main quest function */
-
 void do_quest(CHAR_DATA *ch, char *argument)
 {
   CHAR_DATA *questman;
@@ -202,135 +234,75 @@ void do_quest(CHAR_DATA *ch, char *argument)
 
   if (!strcmp(arg1, "list"))
     {
+      int i=0;
       act( "$n asks $N for a list of quest items.", ch, NULL, questman, TO_ROOM); 
       act ("You ask $N for a list of quest items.",ch, NULL, questman, TO_CHAR);
-      sprintf(buf, "Current Quest Items available for Purchase:\n\r 1000 qp.........The COMFY CHAIR!!!!!!\n\r 850qp..........Sword of Vassago\n\r 750qp..........Amulet of Vassago\n\r 750qp..........Shield of Vassago\n\r 550qp..........Decanter of Endless Water\n\r 500qp..........350,000 gold pieces\n\r 500qp..........30 Practices\n\r To buy an item, type 'QUEST BUY <item>'.\n\r");
-      send_to_char(buf, ch);
+      while(quest_item_list[i].name != NULL)
+	{
+	  sprintf(buf,"%s.......%d qp\n",quest_item_list[i].name,quest_item_list[i].cost);
+	  send_to_char(buf, ch);
+	  i++;
+	}
       return;
     }
-
   else if (!strcmp(arg1, "buy"))
     {
+      int i = 0;
       if (arg2[0] == '\0')
 	{
 	  send_to_char("To buy an item, type 'QUEST BUY <item>'.\n\r",ch);
 	  return;
 	}
-      if (is_name(arg2, "amulet"))
+      while(quest_item_list[i].name != NULL)
 	{
-	  if (ch->questpoints >= 750)
+	  if(is_name(arg2, quest_item_list[i].mname))
 	    {
-	      ch->questpoints -= 750;
-	      obj = create_object(get_obj_index(QUEST_ITEM1),ch->level);
+	      if(ch->questpoints > quest_item_list[i].cost)
+		{
+		  ch->questpoints -= quest_item_list[i].cost;
+		  switch(quest_item_list[i].type)
+		    {
+		    case QUEST_OBJ_T:
+		      obj = create_object(get_obj_index(quest_item_list[i].id), ch->level);
+		      act( "$N gives $p to $n.", ch, obj, questman, TO_ROOM );
+		      act( "$N gives you $p.",   ch, obj, questman, TO_CHAR );
+		      obj_to_char(obj, ch);
+		      break;
+		    case QUEST_GOLD_T:
+		      ch->gold += quest_item_list[i].id;
+		      sprintf(buf,"$N gives %d pieces of gold to $n.", quest_item_list[i].id);
+		      act(buf, ch, NULL, questman, TO_ROOM );
+		      sprintf(buf,"$N has %d in gold transfered from $s Swiss account to your balance.", quest_item_list[i].id);
+		      act( buf, ch, NULL, questman, TO_CHAR );
+		      break;
+		    case QUEST_PRAC_T:
+		      ch->practice += quest_item_list[i].id;
+		      sprintf(buf,"$N gives %d practices to $n.", quest_item_list[i].id);
+		      act( buf, ch, NULL, questman, TO_ROOM );
+		      sprintf(buf,"$N gives you %d practices.", quest_item_list[i].id);
+		      act( "$N gives you 30 practices.",   ch, NULL, questman, TO_CHAR );
+		      break;
+		    case QUEST_TRAIN_T:
+		      ch->train += quest_item_list[i].id;
+		      sprintf(buf, "$N gives %d trainings to $n.", quest_item_list[i].id);
+		      act(buf,ch,NULL,questman,TO_ROOM);
+		      sprintf(buf, "$N gives you %d trainings.", quest_item_list[i].id);
+		      act(buf,ch,NULL,questman,TO_CHAR);
+		      break;
+		    }
+		  return;
+		}
+	      else
+		{
+		  sprintf(buf, "Sorry, %s, but you don't have enough quest points for that.",ch->name);
+		  do_say(questman,buf);
+		  return;
+		}
 	    }
-	  else
-	    {
-	      sprintf(buf, "Sorry, %s, but you don't have enough quest points for that.",ch->name);
-	      do_say(questman,buf);
-	      return;
-	    }
+	  i++;
 	}
-      else if (is_name(arg2, "shield"))
-	{
-	  if (ch->questpoints >= 750)
-	    {
-	      ch->questpoints -= 750;
-	      obj = create_object(get_obj_index(QUEST_ITEM2),ch->level);
-	    }
-	  else
-	    {
-	      sprintf(buf, "Sorry, %s, but you don't have enough quest points for that.",ch->name);
-	      do_say(questman,buf);
-	      return;
-	    }
-	}
-      else if (is_name(arg2, "sword"))
-	{
-	  if (ch->questpoints >= 850)
-	    {
-	      ch->questpoints -= 850;
-	      obj = create_object(get_obj_index(QUEST_ITEM3),ch->level);
-	    }
-	  else
-	    {
-	      sprintf(buf, "Sorry, %s, but you don't have enough quest points for that.",ch->name);
-	      do_say(questman,buf);
-	      return;
-	    }
-	}
-      else if (is_name(arg2, "decanter endless water"))
-	{
-	  if (ch->questpoints >= 550)
-	    {
-	      ch->questpoints -= 550;
-	      obj = create_object(get_obj_index(QUEST_ITEM4),ch->level);
-	    }
-	  else
-	    {
-	      sprintf(buf, "Sorry, %s, but you don't have enough quest points for that.",ch->name);
-	      do_say(questman,buf);
-	      return;
-	    }
-	}
-      else if (is_name(arg2, "chair comfy"))
-	{
-	  if (ch->questpoints >= 1000)
-	    {
-	      ch->questpoints -= 1000;
-	      obj = create_object(get_obj_index(QUEST_ITEM5),ch->level);
-	    }
-	  else
-	    {
-	      sprintf(buf, "Sorry, %s, but you don't have enough quest points for that.",ch->name);
-	      do_say(questman,buf);
-	      return;
-	    }
-	}
-      else if (is_name(arg2, "practices pracs prac practice"))
-	{
-	  if (ch->questpoints >= 500)
-	    {
-	      ch->questpoints -= 500;
-	      ch->practice += 30;
-	      act( "$N gives 30 practices to $n.", ch, NULL, questman, TO_ROOM );
-	      act( "$N gives you 30 practices.",   ch, NULL, questman, TO_CHAR );
-	      return;
-	    }
-	  else
-	    {
-	      sprintf(buf, "Sorry, %s, but you don't have enough quest points for that.",ch->name);
-	      do_say(questman,buf);
-	      return;
-	    }
-	}
-      else if (is_name(arg2, "gold gp"))
-	{
-	  if (ch->questpoints >= 500)
-	    {
-	      ch->questpoints -= 500;
-	      ch->gold += 350000;
-	      act( "$N gives 350,000 gold pieces to $n.", ch, NULL, questman, TO_ROOM );
-	      act( "$N has 350,000 in gold transfered from $s Swiss account to your balance.",   ch, NULL, questman, TO_CHAR );
-	      return;
-	    }
-	  else
-	    {
-	      sprintf(buf, "Sorry, %s, but you don't have enough quest points for that.",ch->name);
-	      do_say(questman,buf);
-	      return;
-	    }
-	}
-      else
-	{
-	  sprintf(buf, "I don't have that item, %s.",ch->name);
-	  do_say(questman, buf);
-	}
-      if (obj != NULL)
-	{
-	  act( "$N gives $p to $n.", ch, obj, questman, TO_ROOM );
-	  act( "$N gives you $p.",   ch, obj, questman, TO_CHAR );
-	  obj_to_char(obj, ch);
-	}
+      sprintf(buf, "I don't have that item, %s.",ch->name);
+      do_say(questman, buf);
       return;
     }
   else if (!strcmp(arg1, "request"))
