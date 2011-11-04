@@ -36,7 +36,11 @@
  *  the latest version of quest.c, please send a request to the above add-  *
  *  ress. Quest Code v2.00.                                                 *
  ***************************************************************************/
-
+/*
+ * Copyright (C) 2007-2011 See the AUTHORS.BlinkenMUD file for details
+ * By using this code, you have agreed to follow the terms of the   
+ * ROT license, in the file doc/rot.license        
+*/
 #include <sys/types.h>
 #include <stdio.h>
 #include <stdlib.h>

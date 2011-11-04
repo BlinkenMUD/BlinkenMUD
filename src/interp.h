@@ -31,6 +31,12 @@
 *       By using this code, you have agreed to follow the terms of the     * 
 *       ROT license, in the file doc/rot.license                           * 
 ***************************************************************************/
+/*
+ * Copyright (C) 2007-2011 See the AUTHORS.BlinkenMUD file for details
+ * By using this code, you have agreed to follow the terms of the   
+ * ROT license, in the file doc/rot.license        
+*/
+
 
 /* this is a listing of all the commands and command related data */
 

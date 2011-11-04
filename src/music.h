@@ -30,6 +30,11 @@
 *       By using this code, you have agreed to follow the terms of the     * 
 *       ROT license, in the file doc/rot.license                           * 
 ***************************************************************************/
+/*
+ * Copyright (C) 2007-2011 See the AUTHORS.BlinkenMUD file for details
+ * By using this code, you have agreed to follow the terms of the   
+ * ROT license, in the file doc/rot.license        
+*/
 
 #define MAX_SONGS	20
 #define MAX_LINES	100 /* this boils down to about 1k per song */
