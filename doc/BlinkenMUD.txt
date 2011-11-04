@@ -21,8 +21,8 @@ FEATURES
 BlinkenMUD is/was developed on the free shell servers @ 
 http://www.blinkenshell.org and spearheaded by Keeperx (Alec 
 Perseghin) with support by many members along the way 
-(see BlinkenMUD.credits). 
+(see AUTHORS.BlinkenMUD). 
 
 A special thanks goes out to independence (owner operator of 
 blinkenshell.org) for facilitating the needs of the project 
-and the the players/developers. 
+and  the players/developers. 
