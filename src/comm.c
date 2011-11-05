@@ -72,6 +72,70 @@
 #include "recycle.h"
 #include "tables.h"
 
+const char * const clearColor[] = {
+    CLEAR,      //0
+    R_RED,      //1
+    R_GREEN,    //2
+    R_YELLOW,   //3
+    R_BLUE,     //4
+    R_MAGENTA,  //5
+    R_CYAN,     //6
+    R_WHITE,    //7
+    R_D_GREY,   //8
+    R_B_RED,    //9
+    R_B_GREEN,  //10
+    R_B_YELLOW, //11
+    R_B_BLUE,   //12
+    R_B_MAGENTA,//13
+    R_B_CYAN,   //14
+    R_B_WHITE,  //15
+    R_BLACK     //16
+};
+
+const char *const channelColors[] = {
+    CLEAR,      //0
+    C_RED,
+    C_GREEN,
+    C_YELLOW,
+    C_BLUE,
+    C_MAGENTA,
+    C_CYAN,
+    C_WHITE,
+    C_D_GREY,
+    C_B_RED,
+    C_B_GREEN,
+    C_B_YELLOW,
+    C_B_BLUE,
+    C_B_MAGENTA,
+    C_B_CYAN,
+    C_B_WHITE,
+    C_BLACK
+};
+
+struct colour_map {
+    char code;
+    char *colour;
+};
+
+struct colour_map mapping[] = {
+    {'z', BLINK},       {'{', "{"},
+    {'r', C_RED},       {'1', C_RED},        {'T', C_RED},
+    {'g', C_GREEN},     {'2', C_GREEN},      {'Q', C_GREEN},
+    {'y', C_YELLOW},    {'3', C_YELLOW},     {'J', C_YELLOW},
+    {'b', C_BLUE},      {'4', C_BLUE},
+    {'m', C_MAGENTA},   {'5', C_MAGENTA},    {'S', C_MAGENTA},    {'a', C_MAGENTA},
+    {'c', C_CYAN},      {'6', C_CYAN},       {'U', C_CYAN},       {'i', C_CYAN},     {'K', C_CYAN},
+    {'w', C_WHITE},     {'7', C_WHITE},      {'V', C_WHITE},
+    {'D', C_D_GREY},    {'8', C_D_GREY},     {'*', C_D_GREY},
+    {'B', C_B_BLUE},    {'$', C_B_BLUE},     {'e', C_B_BLUE},     {'h', C_B_BLUE},   {'H', C_B_BLUE},
+    {'C', C_B_CYAN},    {'^', C_B_CYAN},     {'N', C_B_CYAN},     {'l', C_B_CYAN},
+    {'G', C_B_GREEN},   {'@', C_B_GREEN},    {'A', C_B_GREEN},
+    {'M', C_B_MAGENTA}, {'%', C_B_MAGENTA},  {'F', C_B_MAGENTA},
+    {'R', C_B_RED},     {'!', C_B_RED},      {'E', C_B_RED},      {'f', C_B_RED},
+    {'W', C_B_WHITE},   {'&', C_B_WHITE},    {'L', C_B_WHITE},
+    {'Y', C_B_YELLOW},  {'#', C_B_YELLOW},   {'P', C_B_YELLOW},   {'j', C_B_YELLOW},
+};
+
 /* command procedures needed */
 DECLARE_DO_FUN(do_help		);
 DECLARE_DO_FUN(do_look		);
@@ -3382,433 +3446,161 @@ void act_new( const char *format, CHAR_DATA *ch, const void *arg1,
     return;
 }
 
-char *colour( char type, CHAR_DATA *ch )
-{
-
-    if( IS_NPC( ch ) )
-	return ( "" );
-
-    switch( type )
-    {
-	default:
-	    sprintf(clcode, colour_clear( ch ));
-	    break;
-	case 'x':
-	    sprintf(clcode, colour_clear( ch ));
-	    break;
-        case '0':
-	    sprintf(clcode, colour_clear( ch ));
-	    break;
-	case 'z':
-	    sprintf( clcode, BLINK );
-	    break;
-	case 'b':
-	    sprintf( clcode, C_BLUE );
-	    break;
-        case '4':
-            sprintf( clcode, C_BLUE );
-            break;
-	case 'c':
-	    sprintf( clcode, C_CYAN );
-	    break;
-        case '6':
-            sprintf( clcode, C_CYAN );
-            break;
-	case 'g':
-	    sprintf( clcode, C_GREEN );
-	    break;
-        case '2':
-            sprintf( clcode, C_GREEN );
-            break;
-	case 'm':
-	    sprintf( clcode, C_MAGENTA );
-	    break;
-        case '5':
-            sprintf( clcode, C_MAGENTA );
-            break;
-	case 'r':
-	    sprintf( clcode, C_RED );
-	    break;
-        case '1':
-            sprintf( clcode, C_RED );
-            break;
-	case 'w':
-	    sprintf( clcode, C_WHITE );
-	    break;
-        case '7':
-            sprintf( clcode, C_WHITE );
-            break;
-	case 'y':
-	    sprintf( clcode, C_YELLOW );
-	    break;
-        case '3':
-            sprintf( clcode, C_YELLOW );
-            break;
-	case 'B':
-	    sprintf( clcode, C_B_BLUE );
-	    break;
-        case '$':
-            sprintf( clcode, C_B_BLUE );
-            break;
-	case 'C':
-	    sprintf( clcode, C_B_CYAN );
-	    break;
-        case '^':
-            sprintf( clcode, C_B_CYAN );
-            break;
-	case 'G':
-	    sprintf( clcode, C_B_GREEN );
-	    break;
-        case '@':
-            sprintf( clcode, C_B_GREEN );
-            break;
-	case 'M':
-	    sprintf( clcode, C_B_MAGENTA );
-	    break;
-        case '%':
-            sprintf( clcode, C_B_MAGENTA );
-            break;
-	case 'R':
-	    sprintf( clcode, C_B_RED );
-	    break;
-        case '!':
-            sprintf( clcode, C_B_RED );
-            break;
-	case 'W':
-	    sprintf( clcode, C_B_WHITE );
-	    break;
-        case '&':
-            sprintf( clcode, C_B_WHITE );
-            break;
-	case 'Y':
-	    sprintf( clcode, C_B_YELLOW );
-	    break;
-        case '#':
-            sprintf( clcode, C_B_YELLOW );
-            break;
-	case 'D':
-	    sprintf( clcode, C_D_GREY );
-	    break;
-        case '8':
-            sprintf( clcode, C_D_GREY );
-            break;
-        case '*':
-            sprintf( clcode, C_D_GREY );
-            break;
-
-	case 'A':	/* Auction Channel */
-	    if (ch->color_auc)
-	    {
-		sprintf( clcode, colour_channel(ch->color_auc, ch));
-	    }
-	    else
-	    {
-		sprintf( clcode, C_B_GREEN );
-	    }
-	    break;
-	case 'E':	/* Clan Gossip Channel */
-	    if (ch->color_cgo)
-	    {
-		sprintf( clcode, colour_channel(ch->color_cgo, ch));
-	    }
-	    else
-	    {
-		sprintf( clcode, C_B_RED );
-	    }
-	    break;
-	case 'F':	/* Clan Talk Channel */
-	    if (ch->color_cla)
-	    {
-		sprintf( clcode, colour_channel(ch->color_cla, ch));
-	    }
-	    else
-	    {
-		sprintf( clcode, C_B_MAGENTA );
-	    }
-	    break;
-	case 'H':	/* Gossip Channel */
-	    if (ch->color_gos)
-	    {
-		sprintf( clcode, colour_channel(ch->color_gos, ch));
-	    }
-	    else
-	    {
-		sprintf( clcode, C_B_BLUE );
-	    }
-	    break;
-	case 'J':	/* Grats Channel */
-	    if (ch->color_gra)
-	    {
-		sprintf( clcode, colour_channel(ch->color_gra, ch));
-	    }
-	    else
-	    {
-		sprintf( clcode, C_YELLOW );
-	    }
-	    break;
-	case 'K':	/* Group Tell Channel */
-	    if (ch->color_gte)
-	    {
-		sprintf( clcode, colour_channel(ch->color_gte, ch));
-	    }
-	    else
-	    {
-		sprintf( clcode, C_CYAN );
-	    }
-	    break;
-	case 'L':	/* Immortal Talk Channel */
-	    if (ch->color_imm)
-	    {
-		sprintf( clcode, colour_channel(ch->color_imm, ch));
-	    }
-	    else
-	    {
-		sprintf( clcode, C_B_WHITE );
-	    }
-	    break;
-	case 'N':	/* Music Channel */
-	    if (ch->color_mus)
-	    {
-		sprintf( clcode, colour_channel(ch->color_mus, ch));
-	    }
-	    else
-	    {
-		sprintf( clcode, C_B_CYAN );
-	    }
-	    break;
-	case 'P':	/* Question+Answer Channel */
-	    if (ch->color_que)
-	    {
-		sprintf( clcode, colour_channel(ch->color_que, ch));
-	    }
-	    else
-	    {
-		sprintf( clcode, C_B_YELLOW );
-	    }
-	    break;
-	case 'Q':	/* Quote Channel */
-	    if (ch->color_quo)
-	    {
-		sprintf( clcode, colour_channel(ch->color_quo, ch));
-	    }
-	    else
-	    {
-		sprintf( clcode, C_GREEN );
-	    }
-	    break;
-	case 'S':	/* Say Channel */
-	    if (ch->color_say)
-	    {
-		sprintf( clcode, colour_channel(ch->color_say, ch));
-	    }
-	    else
-	    {
-		sprintf( clcode, C_MAGENTA );
-	    }
-	    break;
-	case 'T':	/* Shout+Yell Channel */
-	    if (ch->color_sho)
-	    {
-		sprintf( clcode, colour_channel(ch->color_sho, ch));
-	    }
-	    else
-	    {
-		sprintf( clcode, C_RED );
-	    }
-	    break;
-	case 'U':	/* Tell+Reply Channel */
-	    if (ch->color_tel)
-	    {
-		sprintf( clcode, colour_channel(ch->color_tel, ch));
-	    }
-	    else
-	    {
-		sprintf( clcode, C_CYAN );
-	    }
-	    break;
-	case 'V':	/* Wiznet Messages */
-	    if (ch->color_wiz)
-	    {
-		sprintf( clcode, colour_channel(ch->color_wiz, ch));
-	    }
-	    else
-	    {
-		sprintf( clcode, C_WHITE );
-	    }
-	    break;
-	case 'a':	/* Mobile Talk */
-	    if (ch->color_mob)
-	    {
-		sprintf( clcode, colour_channel(ch->color_mob, ch));
-	    }
-	    else
-	    {
-		sprintf( clcode, C_MAGENTA );
-	    }
-	    break;
-	case 'e':	/* Room Title */
-	    if (ch->color_roo)
-	    {
-		sprintf( clcode, colour_channel(ch->color_roo, ch));
-	    }
-	    else
-	    {
-		sprintf( clcode, C_B_BLUE );
-	    }
-	    break;
-	case 'f':	/* Opponent Condition */
-	    if (ch->color_con)
-	    {
-		sprintf( clcode, colour_channel(ch->color_con, ch));
-	    }
-	    else
-	    {
-		sprintf( clcode, C_B_RED );
-	    }
-	    break;
-	case 'h':	/* Fight Actions */
-	    if (ch->color_fig)
-	    {
-		sprintf( clcode, colour_channel(ch->color_fig, ch));
-	    }
-	    else
-	    {
-		sprintf( clcode, C_B_BLUE );
-	    }
-	    break;
-	case 'i':	/* Opponents Fight Actions */
-	    if (ch->color_opp)
-	    {
-		sprintf( clcode, colour_channel(ch->color_opp, ch));
-	    }
-	    else
-	    {
-		sprintf( clcode, C_CYAN );
-	    }
-	    break;
-	case 'j':	/* Disarm Messages */
-	    if (ch->color_dis)
-	    {
-		sprintf( clcode, colour_channel(ch->color_dis, ch));
-	    }
-	    else
-	    {
-		sprintf( clcode, C_B_YELLOW );
-	    }
-	    break;
-	case 'k':	/* Witness Messages */
-	    if (ch->color_wit)
-	    {
-		sprintf( clcode, colour_channel(ch->color_wit, ch));
-	    }
-	    else
-	    {
-		sprintf( clcode, colour_clear( ch ));
-	    }
-	    break;
-	case 'l':	/* Quest Gossip */
-            if (ch->color_qgo)
-            {
-                sprintf( clcode, colour_channel(ch->color_qgo, ch));
-            }
-            else
-            {
-                sprintf( clcode, C_B_CYAN);
-            }
-            break;
-
-	case '{':
-	    sprintf( clcode, "%c", '{' );
-	    break;
-    }
-    return clcode;
-}
-
 char *colour_clear( CHAR_DATA *ch )
 {
-
-    if (ch->color)
+    if (ch->color < 17)
     {
-	if (ch->color == 1)
-	    sprintf( clcode, R_RED );
-	else if (ch->color == 2)
-	    sprintf( clcode, R_GREEN );
-	else if (ch->color == 3)
-	    sprintf( clcode, R_YELLOW );
-	else if (ch->color == 4)
-	    sprintf( clcode, R_BLUE );
-	else if (ch->color == 5)
-	    sprintf( clcode, R_MAGENTA );
-	else if (ch->color == 6)
-	    sprintf( clcode, R_CYAN );
-	else if (ch->color == 7)
-	    sprintf( clcode, R_WHITE );
-	else if (ch->color == 8)
-	    sprintf( clcode, R_D_GREY );
-	else if (ch->color == 9)
-	    sprintf( clcode, R_B_RED );
-	else if (ch->color == 10)
-	    sprintf( clcode, R_B_GREEN );
-	else if (ch->color == 11)
-	    sprintf( clcode, R_B_YELLOW );
-	else if (ch->color == 12)
-	    sprintf( clcode, R_B_BLUE );
-	else if (ch->color == 13)
-	    sprintf( clcode, R_B_MAGENTA );
-	else if (ch->color == 14)
-	    sprintf( clcode, R_B_CYAN );
-	else if (ch->color == 15)
-	    sprintf( clcode, R_B_WHITE );
-	else if (ch->color == 16)
-	    sprintf( clcode, R_BLACK );
-	else
-	    sprintf( clcode, CLEAR );
+        sprintf( clcode, clearColor[ch->color] );
     }
     else
     {
-	sprintf( clcode, CLEAR );
+        sprintf( clcode, CLEAR );
     }
     return clcode;
 }
+
 
 char *colour_channel( int colornum, CHAR_DATA *ch )
 {
 
-    if (colornum == 1)
-	    sprintf( clcode, C_RED );
-    else if (colornum == 2)
-	    sprintf( clcode, C_GREEN );
-    else if (colornum == 3)
-	    sprintf( clcode, C_YELLOW );
-    else if (colornum == 4)
-	    sprintf( clcode, C_BLUE );
-    else if (colornum == 5)
-	    sprintf( clcode, C_MAGENTA );
-    else if (colornum == 6)
-	    sprintf( clcode, C_CYAN );
-    else if (colornum == 7)
-	    sprintf( clcode, C_WHITE );
-    else if (colornum == 8)
-	    sprintf( clcode, C_D_GREY );
-    else if (colornum == 9)
-	    sprintf( clcode, C_B_RED );
-    else if (colornum == 10)
-	    sprintf( clcode, C_B_GREEN );
-    else if (colornum == 11)
-	    sprintf( clcode, C_B_YELLOW );
-    else if (colornum == 12)
-	    sprintf( clcode, C_B_BLUE );
-    else if (colornum == 13)
-	    sprintf( clcode, C_B_MAGENTA );
-    else if (colornum == 14)
-	    sprintf( clcode, C_B_CYAN );
-    else if (colornum == 15)
-	    sprintf( clcode, C_B_WHITE );
-    else if (colornum == 16)
-	    sprintf( clcode, C_BLACK );
+    if (ch->color < 17)
+    {
+        sprintf( clcode, channelColors[ch->color] );
+    }
     else
-	sprintf( clcode, colour_clear( ch ));
+    {
+        sprintf( clcode, CLEAR );
+    }
 
+    return clcode;
+}
+
+char *colour( char type, CHAR_DATA *ch )
+{
+
+    if( IS_NPC( ch ) )
+      return ( "" );
+
+    /* Most common case should be clearing the color, check for that first */
+    if (type=='x' || type=='0')
+    {
+        colour_clear(ch);
+    }
+    /* Before we get to the general color mapping, check if we have an
+     * override for particular channels */
+    else if (type=='A' && ch->color_auc)        /* Auction Channel */
+    {
+        colour_channel(ch->color_auc, ch);
+    }
+    else if (type=='E' && ch->color_cgo)   /* Clan Gossip Channel */
+    {
+        colour_channel(ch->color_cgo, ch);
+    }
+    else if (type=='F' && ch->color_cla)   /* Clan Talk Channel */
+    {
+        colour_channel(ch->color_cla, ch);
+    }
+    else if (type=='H' && ch->color_gos)   /* Gossip Channel */
+    {
+        colour_channel(ch->color_gos, ch);
+    }
+    else if (type=='J' && ch->color_gra)   /* Grats Channel */
+    {
+        colour_channel(ch->color_gra, ch);
+    }
+    else if (type=='K' && ch->color_gte)   /* Group Tell Channel */
+    {
+        colour_channel(ch->color_gra, ch);
+    }
+    else if (type=='L' && ch->color_imm)  /* Immortal Talk Channel */
+    {
+        colour_channel(ch->color_imm, ch);
+    }
+    else if (type=='N' && ch->color_mus)    /* Music Channel */
+    {
+        colour_channel(ch->color_mus, ch);
+    }
+    else if (type=='P' && ch->color_que)    /* Question+Answer Channel */
+    {
+        colour_channel(ch->color_que, ch);
+    }
+    else if (type=='Q' && ch->color_quo)    /* Quote Channel */
+    {
+        colour_channel(ch->color_quo, ch);
+    }
+    else if (type=='Q' && ch->color_quo)    /* Quote Channel */
+    {
+        colour_channel(ch->color_quo, ch);
+    }
+    else if (type=='S' && ch->color_say)    /* Say Channel */
+    {
+        colour_channel(ch->color_say, ch);
+    }
+    else if (type=='T' && ch->color_sho)    /* Shout+Yell Channel */
+    {
+        colour_channel(ch->color_sho, ch);
+    }
+    else if (type=='U' && ch->color_tel)    /* Tell+Reply Channel */
+    {
+        colour_channel(ch->color_tel, ch);
+    }
+    else if (type=='V' && ch->color_wiz)    /* Wiznet Messages */
+    {
+        colour_channel(ch->color_wiz, ch);
+    }
+    else if (type=='a' && ch->color_mob)    /* Mobile Talk */
+    {
+        colour_channel(ch->color_mob, ch);
+    }
+    else if (type=='e' && ch->color_roo)    /* Room Title */
+    {
+        colour_channel(ch->color_roo, ch);
+    }
+    else if (type=='f' && ch->color_con)    /* Opponent Condition */
+    {
+        colour_channel(ch->color_con, ch);
+    }
+    else if (type=='h' && ch->color_fig)    /* Fight Actions */
+    {
+        colour_channel(ch->color_fig, ch);
+    }
+    else if (type=='i' && ch->color_opp)    /* Opponents Fight Actions */
+    {
+        colour_channel(ch->color_opp, ch);
+    }
+    else if (type=='j' && ch->color_dis)    /* Disarm Messages */
+    {
+        colour_channel(ch->color_dis, ch);
+    }
+    else if (type=='l' && ch->color_qgo)    /* Quest Gossip */
+    {
+        colour_channel(ch->color_qgo, ch);
+    }
+    else if (type=='k')    /* Witness Messages  or clear */
+    {
+        if (ch->color_wit)
+        {
+            colour_channel(ch->color_wit, ch);
+        }
+        else
+        {
+            colour_clear(ch);
+        }
+    }
+    else
+    {
+        int size = sizeof(mapping)/sizeof(mapping[0]);
+        int i;
+        for(i=0; i<size; i++)
+        {
+            if(mapping[i].code == type)
+            {
+                sprintf(clcode, mapping[i].colour);
+                return clcode;
+            }
+        }
+        colour_clear( ch );
+    }
     return clcode;
 }
 
