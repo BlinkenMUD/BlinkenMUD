@@ -1,8 +1,9 @@
 NAME    = BlinkenMUD
 CC      = gcc
 PROF    = -O -ggdb
-C_FLAGS = -Wall -lcrypt $(PROF)
-L_FLAGS = $(PROF)
+C_FLAGS =  $(PROF) $(NOCRYPT) -Wall -Wformat -Wformat-security -Wunused-value -Wextra \
+-Wno-unused-parameter
+L_FLAGS =  $(PROF)
 
 ROT_FILES = act_comm.o act_enter.o act_info.o act_move.o act_obj.o act_wiz.o \
           alias.o ban.o clans.o comm.o const.o curse.o db.o db2.o effects.o \
@@ -16,8 +17,8 @@ ROT_FILES = act_comm.o act_enter.o act_info.o act_move.o act_obj.o act_wiz.o \
 all:: rot
 
 rot: $(ROT_FILES)
-	rm -f rot
-	$(CC) $(L_FLAGS) -o rot $(ROT_FILES)
+	rm -f $(NAME)
+	$(CC) $(L_FLAGS) -o $(NAME) $(ROT_FILES)
 	@mv ./$(NAME) ../bin/
 
 .c.o: merc.h
