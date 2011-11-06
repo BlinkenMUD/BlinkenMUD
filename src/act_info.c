@@ -3013,9 +3013,9 @@ do_who (CHAR_DATA * ch, char *argument)
       add_buf (output, buf);
     }
 
-  count += countimm;
-  hour = localtime(&current_time)->tm_hour;
-  if (hour < 12)
+    count += countimm;
+    hour = localtime(&current_time)->tm_hour;
+    if (hour < 12)
     {
       if (is_pm)
 	{
@@ -3068,6 +3068,7 @@ do_count (CHAR_DATA * ch, char *argument)
   int hour;
   DESCRIPTOR_DATA *d;
   char buf[MAX_STRING_LENGTH];
+
 
   count = 0;
   hour = localtime (&current_time)->tm_hour;
