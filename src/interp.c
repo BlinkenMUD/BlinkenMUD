@@ -287,15 +287,16 @@ const struct cmd_type cmd_table[] = {
   /*
    * Mob command interpreter (placed here for faster scan...)
    */
-  {"mob", do_mob, POS_DEAD, 0, LOG_NEVER, 0},
-
+  { "mob",		do_mob,		POS_DEAD,	 0,  LOG_NEVER,  0, 0 },    
+    
   /*
    * Miscellaneous commands.
    */
-  {"enter", do_enter, POS_STANDING, 0, 1, LOG_NORMAL, 1},
-  {"follow", do_follow, POS_RESTING, 0, 1, LOG_NORMAL, 1},
-  {"gain", do_gain, POS_STANDING, 0, 1, LOG_NORMAL, 1},
-  {"go", do_enter, POS_STANDING, 0, 1, LOG_NORMAL, 0},
+  { "enter", 		do_enter, 	POS_STANDING,	 0,  1,  LOG_NORMAL, 1 },
+  { "follow",		do_follow,	POS_RESTING,	 0,  1,  LOG_NORMAL, 1 },
+  { "gain",		do_gain,	POS_STANDING,	 0,  1,  LOG_NORMAL, 1 },
+  { "go",		do_enter,	POS_STANDING,	 0,  1,  LOG_NORMAL, 0 },
+
 /*  { "group",		do_group,	POS_SLEEPING,	 0,  1,  LOG_NORMAL, 1 }, */
   {"groups", do_groups, POS_SLEEPING, 0, 1, LOG_NORMAL, 1},
   {"hide", do_hide, POS_RESTING, 0, 1, LOG_NORMAL, 1},
