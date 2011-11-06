@@ -14,7 +14,7 @@
  *  benefitting.  We hope that you share your changes too.  What goes	   *
  *  around, comes around.						   *
  ***************************************************************************/
- 
+
 /***************************************************************************
 *	ROM 2.4 is copyright 1993-1995 Russ Taylor			   *
 *	ROM has been brought to you by the ROM consortium		   *
@@ -37,18 +37,18 @@
 */
 
 #define MAX_SONGS	20
-#define MAX_LINES	100 /* this boils down to about 1k per song */
-#define MAX_GLOBAL	10  /* max songs the global jukebox can hold */
+#define MAX_LINES	100	/* this boils down to about 1k per song */
+#define MAX_GLOBAL	10	/* max songs the global jukebox can hold */
 
 struct song_data
 {
-    char *group;
-    char *name;
-    char *lyrics[MAX_LINES];
-    int lines;
+  char *group;
+  char *name;
+  char *lyrics[MAX_LINES];
+  int lines;
 };
 
 extern struct song_data song_table[MAX_SONGS];
 
-void song_update args( (void) );
-void load_songs	args( (void) );
+void song_update args ((void));
+void load_songs args ((void));

@@ -36,12 +36,8 @@
  * ROT license, in the file doc/rot.license        
 */
 
-#if defined(macintosh)
-#include <types.h>
-#else
 #include <sys/types.h>
 #include <sys/time.h>
-#endif
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -54,99 +50,105 @@
 #include "lookup.h"
 
 #define MAX_NEST	100
-static	OBJ_DATA *	rgObjNest	[MAX_NEST];
 
-extern  void	fread_char	args( ( CHAR_DATA *ch,  FILE *fp ) );
+static OBJ_DATA *rgObjNest[MAX_NEST];
 
-void do_finger( CHAR_DATA *ch, char *argument )
+extern void fread_char args ((CHAR_DATA * ch, FILE * fp));
+
+void
+do_finger (CHAR_DATA * ch, char *argument)
 {
-    char arg[MAX_INPUT_LENGTH];
-    char buf[MAX_STRING_LENGTH];
-    CHAR_DATA *victim;
-    FILE *fp;
-    bool fOld;
+  char arg[MAX_INPUT_LENGTH];
+  char buf[MAX_STRING_LENGTH];
+  CHAR_DATA *victim;
+  FILE *fp;
+  bool fOld;
 
-    one_argument( argument, arg );
+  one_argument (argument, arg);
 
-    if ( arg[0] == '\0' )
+  if (arg[0] == '\0')
     {
-	send_to_char( "Finger whom?\n\r", ch );
-	return;
+      send_to_char ("Finger whom?\n\r", ch);
+      return;
     }
 
-    if ( ( victim = get_char_world( ch, arg ) ) != NULL)
+  if ((victim = get_char_world (ch, arg)) != NULL)
     {
-	if (!IS_NPC(victim))
+      if (!IS_NPC (victim))
 	{
-	    act( "$N is on right now!", ch, NULL, victim, TO_CHAR );
-	    return;
+	  act ("$N is on right now!", ch, NULL, victim, TO_CHAR);
+	  return;
 	}
     }
 
-    victim = new_char();
-    victim->pcdata = new_pcdata();
-    fOld = FALSE;
-    
-    sprintf( buf, "%s%s", PLAYER_DIR, capitalize( arg ) );
-    if ( ( fp = fopen( buf, "r" ) ) != NULL )
+  victim = new_char ();
+  victim->pcdata = new_pcdata ();
+  fOld = FALSE;
+
+  sprintf (buf, "%s%s", PLAYER_DIR, capitalize (arg));
+  if ((fp = fopen (buf, "r")) != NULL)
     {
-	int iNest;
+      int iNest;
 
-	for ( iNest = 0; iNest < MAX_NEST; iNest++ )
-	    rgObjNest[iNest] = NULL;
+      for (iNest = 0; iNest < MAX_NEST; iNest++)
+	rgObjNest[iNest] = NULL;
 
-	fOld = TRUE;
-	for ( ; ; )
+      fOld = TRUE;
+      for (;;)
 	{
-	    char letter;
-	    char *word;
+	  char letter;
+	  char *word;
 
-	    letter = fread_letter( fp );
-	    if ( letter == '*' )
+	  letter = fread_letter (fp);
+	  if (letter == '*')
 	    {
-		fread_to_eol( fp );
-		continue;
+	      fread_to_eol (fp);
+	      continue;
 	    }
 
-	    if ( letter != '#' )
+	  if (letter != '#')
 	    {
-		bug( "Load_char_obj: # not found.", 0 );
-		break;
+	      bug ("Load_char_obj: # not found.", 0);
+	      break;
 	    }
 
-	    word = fread_word( fp );
-	    if      ( !str_cmp( word, "PLAYER" ) ) fread_char( victim, fp );
-	    else if ( !str_cmp( word, "OBJECT" ) ) break;
-	    else if ( !str_cmp( word, "O"      ) ) break;
-	    else if ( !str_cmp( word, "PET"    ) ) break;
-	    else if ( !str_cmp( word, "END"    ) ) break;
-	    else
+	  word = fread_word (fp);
+	  if (!str_cmp (word, "PLAYER"))
+	    fread_char (victim, fp);
+	  else if (!str_cmp (word, "OBJECT"))
+	    break;
+	  else if (!str_cmp (word, "O"))
+	    break;
+	  else if (!str_cmp (word, "PET"))
+	    break;
+	  else if (!str_cmp (word, "END"))
+	    break;
+	  else
 	    {
-		bug( "Load_char_obj: bad section.", 0 );
-		break;
+	      bug ("Load_char_obj: bad section.", 0);
+	      break;
 	    }
 	}
-	fclose( fp );
+      fclose (fp);
     }
-    if ( !fOld )
+  if (!fOld)
     {
-	send_to_char("No player by that name exists.\n\r",ch);
-	free_pcdata(victim->pcdata);
-	free_char(victim);
-	return;
+      send_to_char ("No player by that name exists.\n\r", ch);
+      free_pcdata (victim->pcdata);
+      free_char (victim);
+      return;
     }
-    if ( (victim->level > LEVEL_HERO) && (victim->level > ch->level) )
+  if ((victim->level > LEVEL_HERO) && (victim->level > ch->level))
     {
-	send_to_char("The gods wouldn't like that.\n\r",ch);
-	free_pcdata(victim->pcdata);
-	free_char(victim);
-	return;
+      send_to_char ("The gods wouldn't like that.\n\r", ch);
+      free_pcdata (victim->pcdata);
+      free_char (victim);
+      return;
     }
-    sprintf(buf,"%s last logged off on %s",
-	victim->name, (char *) ctime(&victim->llogoff));
-    send_to_char(buf,ch);
-    free_pcdata(victim->pcdata);
-    free_char(victim);
-    return;
+  sprintf (buf, "%s last logged off on %s",
+	   victim->name, (char *) ctime (&victim->llogoff));
+  send_to_char (buf, ch);
+  free_pcdata (victim->pcdata);
+  free_char (victim);
+  return;
 }
-

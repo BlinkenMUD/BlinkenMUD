@@ -14,7 +14,7 @@
  *  benefitting.  We hope that you share your changes too.  What goes	   *
  *  around, comes around.						   *
  ***************************************************************************/
- 
+
 /***************************************************************************
 *	ROM 2.4 is copyright 1993-1995 Russ Taylor			   *
 *	ROM has been brought to you by the ROM consortium		   *
@@ -37,7 +37,7 @@
 */
 
 
-int	clan_lookup	args( (const char *name) );
-int	position_lookup	args( (const char *name) );
-int 	sex_lookup	args( (const char *name) );
-int 	size_lookup	args( (const char *name) );
+int clan_lookup args ((const char *name));
+int position_lookup args ((const char *name));
+int sex_lookup args ((const char *name));
+int size_lookup args ((const char *name));

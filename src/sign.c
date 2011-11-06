@@ -14,7 +14,7 @@
  *  benefitting.  We hope that you share your changes too.  What goes      *
  *  around, comes around.                                                  *
  ***************************************************************************/
- 
+
 /***************************************************************************
 *	ROM 2.4 is copyright 1993-1995 Russ Taylor			   *
 *	ROM has been brought to you by the ROM consortium		   *
@@ -52,209 +52,211 @@
 #include "tables.h"
 
 /* local procedures */
-void parse_sign(CHAR_DATA *ch, char *argument, int type);
+void parse_sign (CHAR_DATA * ch, char *argument, int type);
 
-void do_sign(CHAR_DATA *ch,char *argument)
+void
+do_sign (CHAR_DATA * ch, char *argument)
 {
-    parse_sign(ch,argument,NOTE_SIGN);
+  parse_sign (ch, argument, NOTE_SIGN);
 }
 
-void sign_attach( CHAR_DATA *ch, int type )
+void
+sign_attach (CHAR_DATA * ch, int type)
 {
-    NOTE_DATA *pnote;
+  NOTE_DATA *pnote;
 
-    if ( ch->pnote != NULL )
-	return;
-
-    pnote = new_note();
-
-    pnote->next		= NULL;
-    pnote->sender	= str_dup( ch->name );
-    pnote->date		= str_dup( "" );
-    pnote->to_list	= str_dup( "" );
-    pnote->subject	= str_dup( "" );
-    pnote->text		= str_dup( "" );
-    pnote->type		= type;
-    ch->pnote		= pnote;
+  if (ch->pnote != NULL)
     return;
+
+  pnote = new_note ();
+
+  pnote->next = NULL;
+  pnote->sender = str_dup (ch->name);
+  pnote->date = str_dup ("");
+  pnote->to_list = str_dup ("");
+  pnote->subject = str_dup ("");
+  pnote->text = str_dup ("");
+  pnote->type = type;
+  ch->pnote = pnote;
+  return;
 }
 
-void parse_sign( CHAR_DATA *ch, char *argument, int type )
+void
+parse_sign (CHAR_DATA * ch, char *argument, int type)
 {
-    BUFFER *buffer;
-    char buf[MAX_STRING_LENGTH];
-    char arg[MAX_INPUT_LENGTH];
-    OBJ_INDEX_DATA *pObjIndex;
-    OBJ_DATA *obj;
+  BUFFER *buffer;
+  char buf[MAX_STRING_LENGTH];
+  char arg[MAX_INPUT_LENGTH];
+  OBJ_INDEX_DATA *pObjIndex;
+  OBJ_DATA *obj;
 
-    if ( IS_NPC(ch) )
-	return;
+  if (IS_NPC (ch))
+    return;
 
-    argument = one_argument( argument, arg );
-    smash_tilde( argument );
+  argument = one_argument (argument, arg);
+  smash_tilde (argument);
 
-    if ( arg[0] == '\0' )
+  if (arg[0] == '\0')
     {
-        return;
+      return;
     }
 
-    if ( !str_cmp( arg, "+" ) )
+  if (!str_cmp (arg, "+"))
     {
-	sign_attach( ch,type );
-	if (ch->pnote->type != type)
+      sign_attach (ch, type);
+      if (ch->pnote->type != type)
 	{
-	    send_to_char(
-		"You already have a different note in progress.\n\r",ch);
-	    return;
+	  send_to_char ("You already have a different note in progress.\n\r",
+			ch);
+	  return;
 	}
 
-	if (strlen(ch->pnote->text)+strlen(argument) >= 4096)
+      if (strlen (ch->pnote->text) + strlen (argument) >= 4096)
 	{
-	    send_to_char( "Sign too long.\n\r", ch );
-	    return;
+	  send_to_char ("Sign too long.\n\r", ch);
+	  return;
 	}
 
- 	buffer = new_buf();
+      buffer = new_buf ();
 
-	add_buf(buffer,ch->pnote->text);
-	add_buf(buffer,argument);
-	add_buf(buffer,"\n\r");
-	free_string( ch->pnote->text );
-	ch->pnote->text = str_dup( buf_string(buffer) );
-	free_buf(buffer);
-	send_to_char( "Ok.\n\r", ch );
-	return;
+      add_buf (buffer, ch->pnote->text);
+      add_buf (buffer, argument);
+      add_buf (buffer, "\n\r");
+      free_string (ch->pnote->text);
+      ch->pnote->text = str_dup (buf_string (buffer));
+      free_buf (buffer);
+      send_to_char ("Ok.\n\r", ch);
+      return;
     }
 
-    if (!str_cmp(arg,"-"))
+  if (!str_cmp (arg, "-"))
     {
- 	int len;
-	bool found = FALSE;
+      int len;
+      bool found = FALSE;
 
-	sign_attach(ch,type);
-        if (ch->pnote->type != type)
-        {
-            send_to_char(
-                "You already have a different note in progress.\n\r",ch);
-            return;
-        }
-
-	if (ch->pnote->text == NULL || ch->pnote->text[0] == '\0')
+      sign_attach (ch, type);
+      if (ch->pnote->type != type)
 	{
-	    send_to_char("No lines left to remove.\n\r",ch);
-	    return;
+	  send_to_char ("You already have a different note in progress.\n\r",
+			ch);
+	  return;
 	}
 
-	strcpy(buf,ch->pnote->text);
+      if (ch->pnote->text == NULL || ch->pnote->text[0] == '\0')
+	{
+	  send_to_char ("No lines left to remove.\n\r", ch);
+	  return;
+	}
 
-	for (len = strlen(buf); len > 0; len--)
- 	{
-	    if (buf[len] == '\r')
+      strcpy (buf, ch->pnote->text);
+
+      for (len = strlen (buf); len > 0; len--)
+	{
+	  if (buf[len] == '\r')
 	    {
-		if (!found)  /* back it up */
+	      if (!found)	/* back it up */
 		{
-		    if (len > 0)
-			len--;
-		    found = TRUE;
+		  if (len > 0)
+		    len--;
+		  found = TRUE;
 		}
-		else /* found the second one */
+	      else		/* found the second one */
 		{
-		    buf[len + 1] = '\0';
-		    free_string(ch->pnote->text);
-		    ch->pnote->text = str_dup(buf);
-		    return;
+		  buf[len + 1] = '\0';
+		  free_string (ch->pnote->text);
+		  ch->pnote->text = str_dup (buf);
+		  return;
 		}
 	    }
 	}
-	buf[0] = '\0';
-	free_string(ch->pnote->text);
-	ch->pnote->text = str_dup(buf);
-	return;
+      buf[0] = '\0';
+      free_string (ch->pnote->text);
+      ch->pnote->text = str_dup (buf);
+      return;
     }
 
-    if ( !str_prefix( arg, "make" ) )
+  if (!str_prefix (arg, "make"))
     {
-	sign_attach( ch,type );
-        if (ch->pnote->type != type)
-        {
-            send_to_char(
-                "You already have a different note in progress.\n\r",ch);
-            return;
-        }
-	free_string( ch->pnote->to_list );
-	free_string( ch->pnote->subject );
-	send_to_char( "Ok.\n\r", ch );
-	return;
-    }
-
-    if ( !str_prefix( arg, "clear" ) )
-    {
-	if ( ch->pnote != NULL )
+      sign_attach (ch, type);
+      if (ch->pnote->type != type)
 	{
-	    free_note(ch->pnote);
-	    ch->pnote = NULL;
+	  send_to_char ("You already have a different note in progress.\n\r",
+			ch);
+	  return;
+	}
+      free_string (ch->pnote->to_list);
+      free_string (ch->pnote->subject);
+      send_to_char ("Ok.\n\r", ch);
+      return;
+    }
+
+  if (!str_prefix (arg, "clear"))
+    {
+      if (ch->pnote != NULL)
+	{
+	  free_note (ch->pnote);
+	  ch->pnote = NULL;
 	}
 
-	send_to_char( "Ok.\n\r", ch );
-	return;
+      send_to_char ("Ok.\n\r", ch);
+      return;
     }
 
-    if ( !str_prefix( arg, "show" ) )
+  if (!str_prefix (arg, "show"))
     {
-	if ( ch->pnote == NULL )
+      if (ch->pnote == NULL)
 	{
-	    send_to_char( "You have no sign in progress.\n\r", ch );
-	    return;
+	  send_to_char ("You have no sign in progress.\n\r", ch);
+	  return;
 	}
 
-	if (ch->pnote->type != type)
+      if (ch->pnote->type != type)
 	{
-	    send_to_char("You aren't working on that kind of note.\n\r",ch);
-	    return;
+	  send_to_char ("You aren't working on that kind of note.\n\r", ch);
+	  return;
 	}
 
-	send_to_char( ch->pnote->text, ch );
-	return;
+      send_to_char (ch->pnote->text, ch);
+      return;
     }
 
-    if ( !str_prefix( arg, "post" ) || !str_prefix(arg, "send")
-    || !str_prefix(arg, "save"))
+  if (!str_prefix (arg, "post") || !str_prefix (arg, "send")
+      || !str_prefix (arg, "save"))
     {
-	EXTRA_DESCR_DATA *ed;
+      EXTRA_DESCR_DATA *ed;
 
-	if ( ch->pnote == NULL )
+      if (ch->pnote == NULL)
 	{
-	    send_to_char( "You have no sign in progress.\n\r", ch );
-	    return;
+	  send_to_char ("You have no sign in progress.\n\r", ch);
+	  return;
 	}
 
-        if (ch->pnote->type != type)
-        {
-            send_to_char("You aren't working on that kind of note.\n\r",ch);
-            return;
-        }
+      if (ch->pnote->type != type)
+	{
+	  send_to_char ("You aren't working on that kind of note.\n\r", ch);
+	  return;
+	}
 
-	pObjIndex = get_obj_index(OBJ_VNUM_QUEST_SIGN);
-	obj = create_object( pObjIndex, ch->level );
-	obj_to_room( obj, ch->in_room );
+      pObjIndex = get_obj_index (OBJ_VNUM_QUEST_SIGN);
+      obj = create_object (pObjIndex, ch->level);
+      obj_to_room (obj, ch->in_room);
 
-	ed = new_extra_descr();
+      ed = new_extra_descr ();
 
-	ed->keyword = str_dup( "sign" );
+      ed->keyword = str_dup ("sign");
 
-	buffer = new_buf();
-        add_buf(buffer,ch->pnote->text);
-	ed->description = str_dup(buf_string(buffer));
+      buffer = new_buf ();
+      add_buf (buffer, ch->pnote->text);
+      ed->description = str_dup (buf_string (buffer));
 
-	ed->next = NULL;
-	obj->extra_descr = ed;
-	ch->pnote = NULL;
+      ed->next = NULL;
+      obj->extra_descr = ed;
+      ch->pnote = NULL;
 
-        send_to_char( "A sign now floats before you.\n\r", ch );
-	return;
+      send_to_char ("A sign now floats before you.\n\r", ch);
+      return;
     }
 
-    send_to_char( "You can't do that.\n\r", ch );
-    return;
+  send_to_char ("You can't do that.\n\r", ch);
+  return;
 }
-
