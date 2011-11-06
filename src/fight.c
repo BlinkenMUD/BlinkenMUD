@@ -850,53 +850,38 @@ one_hit (CHAR_DATA * ch, CHAR_DATA * victim, int dt, bool secondary)
 	  damage (ch, victim, dam, 0, DAM_COLD, FALSE);
 	}
 
-      if (ch->fighting == victim && IS_WEAPON_STAT (wield, WEAPON_SHOCKING))
+      if (ch->fighting == victim && IS_WEAPON_STAT(wield,WEAPON_SHOCKING))
 	{
-	  dam = number_range (1, wield->level / 5 + 2);
-	  act ("{k$n is struck by {Ylightning{k from $p.{x", victim, wield,
-	       NULL, TO_ROOM);
-	  act ("{iYou are {Yshocked{i by $p.{x", victim, wield, NULL,
-	       TO_CHAR);
-	  shock_effect (victim, wield->level / 2, dam, TARGET_CHAR);
-	  damage (ch, victim, dam, 0, DAM_LIGHTNING, FALSE);
+	  dam = number_range(1,wield->level/5 + 2);
+	  act("{k$n is struck by {Ylightning{k from $p.{x",victim,wield,NULL,TO_ROOM);
+	  act("{iYou are {Yshocked{i by $p.{x",victim,wield,NULL,TO_CHAR);
+	    shock_effect(victim,wield->level/2,dam,TARGET_CHAR);
+	    damage(ch,victim,dam,0,DAM_LIGHTNING,FALSE);
 	}
     }
-  if (ch->fighting == victim);
-  {
-    if (result)
-      {
-	if (IS_SHIELDED (victim, SHD_ICE))
-	  {
-	    if (!IS_SHIELDED (ch, SHD_ICE))
-	      {
-		dt = skill_lookup ("iceshield");
-		dam = number_range (5, 15);
-		damage_old (victim, ch, dam, dt, DAM_COLD, TRUE);
-	      }
-	  }
-	if (IS_SHIELDED (victim, SHD_FIRE))
-	  {
-	    if (!IS_SHIELDED (ch, SHD_FIRE))
-	      {
-		dt = skill_lookup ("fireshield");
-		dam = number_range (10, 20);
-		damage_old (victim, ch, dam, dt, DAM_FIRE, TRUE);
-	      }
-	  }
-	if (IS_SHIELDED (victim, SHD_SHOCK))
-	  {
-	    if (!IS_SHIELDED (ch, SHD_SHOCK))
-	      {
-		dt = skill_lookup ("shockshield");
-		dam = number_range (15, 25);
-		damage_old (victim, ch, dam, dt, DAM_LIGHTNING, TRUE);
-	      }
-	  }
-      }
-  }
-
-  tail_chain ();
-  return;
+    if (ch->fighting == victim && result)
+	{
+	  if (IS_SHIELDED(victim, SHD_ICE) && !IS_SHIELDED(ch, SHD_ICE))
+	    {
+	      dt = skill_lookup("iceshield");
+	      dam = number_range(5, 15);
+	      damage_old(victim, ch, dam, dt, DAM_COLD, TRUE);
+	    }
+	  if (IS_SHIELDED(victim, SHD_FIRE) && !IS_SHIELDED(ch, SHD_FIRE))
+	    {
+	      dt = skill_lookup("fireshield");
+	      dam = number_range(10, 20);
+	      damage_old(victim, ch, dam, dt, DAM_FIRE, TRUE);
+	    }
+	  if (IS_SHIELDED(victim, SHD_SHOCK) && (!IS_SHIELDED(ch, SHD_SHOCK)))
+	    {
+	      dt = skill_lookup("shockshield");
+	      dam = number_range(15, 25);
+	      damage_old(victim, ch, dam, dt, DAM_LIGHTNING, TRUE);
+	    }
+	}
+    tail_chain( );
+    return;
 }
 
 /*
