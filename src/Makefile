@@ -1,8 +1,9 @@
 NAME    = BlinkenMUD
 CC      = gcc
-PROF    = -O -ggdb
-C_FLAGS =  $(PROF) $(NOCRYPT) -Wall -Wformat -Wformat-security -Wunused-value -Wextra \
--Wno-unused-parameter
+PROF    = -O -ggdb -lcrypt
+NOCRYPT =
+C_FLAGS =  $(PROF) $(NOCRYPT) -std=gnu99 -Wall -Wformat -Wformat-security -Wunused-value \
+ -Wextra -Wno-unused-parameter  
 L_FLAGS =  $(PROF)
 
 ROT_FILES = act_comm.o act_enter.o act_info.o act_move.o act_obj.o act_wiz.o \
