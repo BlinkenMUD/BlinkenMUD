@@ -210,6 +210,7 @@ const struct race_type race_table[] = {
     0,
     0,
     0,
+    0,
     0
   },
 
@@ -457,7 +458,7 @@ const struct race_type race_table[] = {
    0,
    0,
    0,
-   A | G | V, A | C | D | E | F | H | J | K | Q | U | V},
+   A | G | V, A | C | D | E | F | H | J | K | Q | U | V, FALSE},
 
   {
    "centipede", FALSE,
@@ -491,7 +492,7 @@ const struct race_type race_table[] = {
    RES_BASH | RES_LIGHT,
    VULN_SLASH | VULN_FIRE | VULN_ACID | VULN_LIGHTNING | VULN_ENERGY,
    0,
-   E | J | M | cc, A | B | C | G | H | K},
+   E | J | M | cc, A | B | C | G | H | K, FALSE},
 
   {"dragon", FALSE,
    0,
@@ -681,10 +682,10 @@ const struct race_type race_table[] = {
    0,
    A | B | G | Z, A | C | D | E | F | H | J | K | Q | V | X, FALSE},
 
-  {"unique", FALSE, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+  {"unique", FALSE, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 
   {
-   NULL, 0, 0, 0, 0, 0, 0}
+    NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,FALSE}
 };
 
 const struct pc_race_type pc_race_table[] = {
@@ -2988,7 +2989,7 @@ const struct skill_type skill_table[MAX_SKILL] = {
     1, 1, 2, 2, 2, 1, 2},
    spell_cancellation, TAR_CHAR_DEFENSIVE, POS_FIGHTING,
    NULL, FALSE, SLOT (507), 20, 12,
-   "" "!cancellation!", ""},
+   "", "!cancellation!", ""},
 
   {
    "cause critical",
@@ -3494,7 +3495,7 @@ const struct skill_type skill_table[MAX_SKILL] = {
     1, 1, 2, 2, 2, 1, 1},
    spell_harm, TAR_CHAR_OFFENSIVE, POS_FIGHTING,
    NULL, TRUE, SLOT (27), 35, 12,
-   "harm spell", "!Harm!,		" ""},
+   "harm spell", "!Harm!", ""},
 
   {
    "haste",
