@@ -1258,6 +1258,7 @@ struct kill_data
 #define ROOM_LAW		(S)
 #define ROOM_NOWHERE		(T)
 #define ROOM_LOCKED		(X)
+#define ROOM_NOMAP		(Y)
 
 /*
  * Directions.
