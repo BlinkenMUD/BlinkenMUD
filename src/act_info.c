@@ -1462,20 +1462,10 @@ do_look (CHAR_DATA * ch, char *argument)
     {
       /*
        * 'look' or 'look auto'
-       * Removed in favor of display_map
-             
-	if (IS_SET (pRoomIndex->room_flags, ROOM_NOMAP))
-	    {
-	    send_to_char( "{e", ch );
-	    send_to_char( ch->in_room->name, ch );
-	    send_to_char( "{x", ch );
-	    }
-	else
-	    { */
+       */             
 
  	    display_map (ch);
 
-	   /* }*/
 
       if (IS_IMMORTAL (ch)
 	  && (IS_NPC (ch) || IS_SET (ch->act, PLR_HOLYLIGHT)))

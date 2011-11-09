@@ -548,6 +548,8 @@ create_map (CHAR_DATA * ch)
   g_list[0][1] = center_x;
   g_list[0][2] = center_y;
 
+if (!IS_SET (ch->in_room->room_flags, ROOM_NOMAP))
+  {
   while (g_list[0][0] != 0)
     {
       pRoom = get_room_index (g_list[0][0]);
@@ -613,6 +615,12 @@ create_map (CHAR_DATA * ch)
 	break;
       continue;
     }
+  }
+else
+  {
+
+  } 
+
 }
 
 void
@@ -632,8 +640,8 @@ display_map (CHAR_DATA * ch)
 
   map_buf[0] = '\0';
 
+ 
   /* --------------- */
-
   if (IS_IMMORTAL (ch))
     {
       sprintf (buf, "%5d", ch->in_room->vnum);
@@ -643,6 +651,8 @@ display_map (CHAR_DATA * ch)
     }
   else
     strcat (map_buf, "\n\r{W+{D---------------{W+{x\n\r");
+
+
 
   for (y = min_y; y < max_y; ++y)
     {
@@ -663,6 +673,8 @@ display_map (CHAR_DATA * ch)
 	      sprintf (buf, "{D| {C %s", ch->in_room->name);
 	      strcat (map_buf, buf);
 	    }
+
+
 	  else if (y != max_y && y_pos < 3)
 	    {
 	      start = str_pos;
@@ -701,6 +713,8 @@ display_map (CHAR_DATA * ch)
 	}
     }
   strcat (map_buf, "{W+{D---------------{W+{x    ");
+
+
   while (desc[desc_pos] != '\0')
     {
       start = str_pos;
