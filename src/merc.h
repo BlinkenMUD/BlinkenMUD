@@ -93,12 +93,13 @@ int system ();
 #define LEVEL_IMMORTAL		   (MAX_LEVEL - 8)
 
 #define PULSE_PER_SECOND	    4
-#define PULSE_VIOLENCE		  ( 3 * PULSE_PER_SECOND)
-#define PULSE_MOBILE		  ( 4 * PULSE_PER_SECOND)
-#define PULSE_MUSIC		  ( 6 * PULSE_PER_SECOND)
-#define PULSE_QUEST		  (60 * PULSE_PER_SECOND)
-#define PULSE_TICK		  (60 * PULSE_PER_SECOND)
+#define PULSE_VIOLENCE		  ( 3  * PULSE_PER_SECOND)
+#define PULSE_MOBILE		  ( 4  * PULSE_PER_SECOND)
+#define PULSE_MUSIC		  ( 6  * PULSE_PER_SECOND)
+#define PULSE_QUEST		  (60  * PULSE_PER_SECOND)
+#define PULSE_TICK		  (60  * PULSE_PER_SECOND)
 #define PULSE_AREA		  (120 * PULSE_PER_SECOND)
+#define PULSE_TELEPORT            (20  * PULSE_PER_SECOND)
 
 #define IMPLEMENTOR		MAX_LEVEL
 #define	CREATOR			(MAX_LEVEL - 1)
@@ -1246,6 +1247,8 @@ struct kill_data
 #define ROOM_NO_MOB		(C)
 #define ROOM_INDOORS		(D)
 
+#define ROOM_TELEPORT           (G)
+
 #define ROOM_PRIVATE		(J)
 #define ROOM_SAFE		(K)
 #define ROOM_SOLITARY		(L)
@@ -1259,6 +1262,7 @@ struct kill_data
 #define ROOM_NOWHERE		(T)
 #define ROOM_LOCKED		(X)
 #define ROOM_NOMAP		(Y)
+
 
 /*
  * Directions.
@@ -2646,7 +2650,8 @@ SF *spec_lookup args ((const char *name));
 char *spec_name args ((SPEC_FUN * function));
 
 /* teleport.c */
-RID *room_by_name args ((char *target, int level, bool error));
+void tele_update (void);
+  
 
 /* update.c */
 void advance_level args ((CHAR_DATA * ch));

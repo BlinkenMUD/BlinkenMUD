@@ -1260,6 +1260,7 @@ update_handler (void)
   static int pulse_point;
   static int pulse_music;
   static int pulse_quest;
+  static int pulse_tele;
 
   if (--pulse_area <= 0)
     {
@@ -1301,6 +1302,12 @@ update_handler (void)
       char_update ();
       obj_update ();
       randomize_entrances (ROOM_VNUM_CHAIN);
+    }
+
+  if (--pulse_tele <= 0)
+    {
+      pulse_tele   =  PULSE_TELEPORT;
+      tele_update ();
     }
 
   aggr_update ();
