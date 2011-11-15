@@ -92,6 +92,10 @@ chance (int num)
     return FALSE;
 }
 
+#define in_range(num, min, max) ((num) >= (min) && (num) < (max)) 
+
+
+
 QUEST_BLIST quest_item_list[] = {	/* List of items that you can buy with quest points.
 					   ... is added for alignment during print
 					   Please keep this list sorted on cost */
@@ -351,6 +355,14 @@ do_quest (CHAR_DATA * ch, char *argument)
 	  do_say (questman, buf);
 	  return;
 	}
+
+      if (ch->level < 10)
+	{
+	  sprintf (buf, "You're very brave young %s, but you're not skilled enough. Please come back when you're level 10 or higher.\n\r", ch->name);
+	  do_say(questman,buf);
+	  return;
+	}
+      
       if (ch->nextquest > 0)
 	{
 	  sprintf (buf,
@@ -395,26 +407,28 @@ do_quest (CHAR_DATA * ch, char *argument)
 
       if (IS_SET (ch->act, PLR_QUESTOR))
 	{
+	  int reward, pointreward, pracreward;
+	  
+	  reward = number_range (50, ch->level*10); /* minimum is always 50 */
+	  pointreward = number_range (5, ch->level );
+	  
+	  if (chance (15))
+	    {
+	      pracreward = number_range (1, 6);
+	      sprintf (buf, "You gain %d practices!\n\r", pracreward);
+	      send_to_char (buf, ch);
+	      ch->practice += pracreward;
+	    }
+
+	      
 	  if (ch->questmob == -1 && ch->countdown > 0)	/* Mob quest */
 	    {
-	      int reward, pointreward, pracreward;
-
-	      reward = number_range (1500, 25000);
-	      pointreward = number_range (10, 40);
-
 	      sprintf (buf, "Congratulations on completing your quest!");
 	      do_say (questman, buf);
 	      sprintf (buf,
 		       "As a reward, I am giving you %d quest points, and %d gold.",
 		       pointreward, reward);
 	      do_say (questman, buf);
-	      if (chance (15))
-		{
-		  pracreward = number_range (1, 6);
-		  sprintf (buf, "You gain %d practices!\n\r", pracreward);
-		  send_to_char (buf, ch);
-		  ch->practice += pracreward;
-		}
 
 	      REMOVE_BIT (ch->act, PLR_QUESTOR);
 	      ch->questgiver = NULL;
@@ -442,11 +456,6 @@ do_quest (CHAR_DATA * ch, char *argument)
 		}
 	      if (obj_found == TRUE)
 		{
-		  int reward, pointreward, pracreward;
-
-		  reward = number_range (1500, 25000);
-		  pointreward = number_range (10, 40);
-
 		  act ("You hand $p to $N.", ch, obj, questman, TO_CHAR);
 		  act ("$n hands $p to $N.", ch, obj, questman, TO_ROOM);
 
@@ -456,14 +465,6 @@ do_quest (CHAR_DATA * ch, char *argument)
 			   "As a reward, I am giving you %d quest points, and %d gold.",
 			   pointreward, reward);
 		  do_say (questman, buf);
-		  if (chance (15))
-		    {
-		      pracreward = number_range (1, 6);
-		      sprintf (buf, "You gain %d practices!\n\r", pracreward);
-		      send_to_char (buf, ch);
-		      ch->practice += pracreward;
-		    }
-
 		  REMOVE_BIT (ch->act, PLR_QUESTOR);
 		  ch->questgiver = NULL;
 		  ch->countdown = 0;
@@ -477,8 +478,7 @@ do_quest (CHAR_DATA * ch, char *argument)
 		}
 	      else
 		{
-		  sprintf (buf,
-			   "You haven't completed the quest yet, but there is still time!");
+		  sprintf (buf, "You haven't completed the quest yet, but there is still time!");
 		  do_say (questman, buf);
 		  return;
 		}
@@ -501,8 +501,7 @@ do_quest (CHAR_DATA * ch, char *argument)
       return;
     }
 
-  send_to_char
-    ("QUEST commands: POINTS INFO TIME REQUEST COMPLETE LIST BUY.\n\r", ch);
+  send_to_char("QUEST commands: POINTS INFO TIME REQUEST COMPLETE LIST BUY.\n\r", ch);
   send_to_char ("For more information, type 'HELP QUEST'.\n\r", ch);
   return;
 }
@@ -536,23 +535,26 @@ generate_quest (CHAR_DATA * ch, CHAR_DATA * questman)
 	  /* Level differences to search for. Moongate has 350
 	     levels, so you will want to tweak these greater or
 	     less than statements for yourself. - Vassago */
-	  if (((level_diff < 70 && level_diff > -25)
-	       || (ch->level > 120 && ch->level < 200 && vsearch->level > 100
-		   && vsearch->level < 300) || (ch->level > 199
-						&& vsearch->level > 120))
-	      && IS_EVIL (vsearch) && vsearch->pShop == NULL
-	      && !IS_SET (vsearch->imm_flags, IMM_SUMMON)
-	      && !IS_SET (vsearch->act, ACT_TRAIN)
-	      && !IS_SET (vsearch->act, ACT_PRACTICE)
-	      && !IS_SET (vsearch->act, ACT_IS_HEALER) && chance (35))
-	    break;
+	  if  (IS_EVIL (vsearch) && vsearch->pShop == NULL
+	       && !IS_SET (vsearch->imm_flags, IMM_SUMMON)
+	       && !IS_SET (vsearch->act, ACT_TRAIN)
+	       && !IS_SET (vsearch->act, ACT_PRACTICE)
+	       && !IS_SET (vsearch->act, ACT_IS_HEALER))
+	    {
+	      if ( ( in_range(ch->level,10,20) && in_range(level_diff,-4,4))
+		   || ( in_range(ch->level,20,30) && in_range(level_diff,-6,6))
+		   || ( in_range(ch->level,30,50) && in_range(level_diff,-10,10))
+		   || ( in_range(ch->level,50,75) && in_range(level_diff,-20,20))
+		   || ( in_range(ch->level,75,MAX_LEVEL) && in_range(level_diff,-20,40))
+		   )		 
+		break;
+	    }
 	  else
 	    vsearch = NULL;
 	}
     }
 
-  if (vsearch == NULL
-      || (victim = get_char_world (ch, vsearch->player_name)) == NULL)
+  if (vsearch == NULL || (victim = get_char_world (ch, vsearch->player_name)) == NULL)
     {
       sprintf (buf,
 	       "I'm sorry, but I don't have any quests for you at this time.");
