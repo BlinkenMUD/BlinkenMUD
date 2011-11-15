@@ -1,6 +1,8 @@
 ====== Problem
 
-Some other muds use ROOM_FLAGS that aren't used in this mud. These need to be removed to prevent unwanted room behaviour when implementing new features. 
+Some other muds use ROOM_FLAGS that aren't used in this mud. 
+These need to be removed to prevent unwanted room behaviour 
+when implementing new features. 
 
 ====== Fix
 
