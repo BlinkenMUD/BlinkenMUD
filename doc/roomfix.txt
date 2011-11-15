@@ -14,3 +14,22 @@ $ gcc -o roomfix roomfix.c -std=gnu99 -Wall
 Run it with
 --
 $ cat ./$AREAFILE ./room > $OUTFILE
+
+
+Here is a simple script that will fix all the rooms in the 
+dorectory and save the fixed rooms with a .fix extention. 
+
+# Roomfix Script
+
+for f in *.are ; do 
+    cat $f | ./roomfix >$f.fix 
+done
+
+# End Script
+
+Save the abobe in a file called fix.sh ain the area folder 
+be sure to 'chmod +x fix.sh' before running 
+then just type './fix.sh'
+
+after that move all you .are files to a backup folder and rename 
+all your .are.fix files to .are. Thats it shoulld work fine.  
