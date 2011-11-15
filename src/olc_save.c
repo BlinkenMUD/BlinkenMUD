@@ -550,7 +550,7 @@ save_rooms (FILE * fp, AREA_DATA * pArea)
 	      fprintf (fp, "#%d\n", pRoomIndex->vnum);
 	      fprintf (fp, "%s~\n", pRoomIndex->name);
 	      fprintf (fp, "%s~\n", fix_string (pRoomIndex->description));
-	      fprintf (fp, "0 ");
+	      fprintf (fp, "%d ", pRoomIndex->tele_dest);
 	      fprintf (fp, "%d ", pRoomIndex->room_flags);
 	      fprintf (fp, "%d\n", pRoomIndex->sector_type);
 

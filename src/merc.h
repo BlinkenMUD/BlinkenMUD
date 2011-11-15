@@ -1930,6 +1930,7 @@ struct room_index_data
   char *description;
   char *owner;
   sh_int vnum;
+  int tele_dest;           /* BlinkenMUD */
   int room_flags;
   sh_int light;
   sh_int sector_type;

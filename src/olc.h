@@ -164,6 +164,9 @@ DECLARE_OLC_FUN (aedit_credits);
 /*
  * Room Editor Prototypes
  */
+
+DECLARE_OLC_FUN (redit_tele); /* BlinkenMUD */
+
 DECLARE_OLC_FUN (redit_show);
 DECLARE_OLC_FUN (redit_create);
 DECLARE_OLC_FUN (redit_name);

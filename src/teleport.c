@@ -15,6 +15,8 @@
 #include "merc.h"
 #include "interp.h"
 
+ROOM_INDEX_DATA * tele_random_room (CHAR_DATA * ch);
+
 void tele_update ( void ) 
 {
   CHAR_DATA 	*ch;
@@ -27,7 +29,10 @@ void tele_update ( void )
       if ( IS_SET(ch->in_room->room_flags, ROOM_TELEPORT ) )
 	{
 	  do_look ( ch, "tele" );
-	  pRoomIndex = get_random_room (ch);
+	  if ( ch->in_room->tele_dest <= 0 )
+	    pRoomIndex = tele_random_room (ch);
+	  else
+	    pRoomIndex = get_room_index(ch->in_room->tele_dest);
 	  send_to_char ("You have been teleported!!!\n\r", ch);
 	  act("$n vanishes!!!\n\r", ch, NULL, NULL, TO_ROOM);
 	  char_from_room(ch);
@@ -36,4 +41,28 @@ void tele_update ( void )
 	  do_look(ch, "auto");
 	}
     }
+}
+
+/* random room generation procedure */
+ROOM_INDEX_DATA *
+tele_random_room (CHAR_DATA * ch)
+{
+  ROOM_INDEX_DATA *room;
+
+  for (;;)
+    {
+      room = get_room_index (number_range (0, 65535));
+      if (room != NULL)
+	if (can_see_room (ch, room)
+	    && !room_is_private (ch, room)
+	    && !IS_SET (room->room_flags, ROOM_PRIVATE)
+	    && !IS_SET (room->room_flags, ROOM_SOLITARY)
+	    && !IS_SET (room->room_flags, ROOM_LOCKED)
+	    && !IS_SET (room->room_flags, ROOM_SAFE)
+	    && (IS_NPC (ch) || IS_SET (ch->act, ACT_AGGRESSIVE)
+		|| !IS_SET (room->room_flags, ROOM_LAW)))
+	  break;
+    }
+
+  return room;
 }

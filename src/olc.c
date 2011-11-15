@@ -249,6 +249,8 @@ const struct olc_cmd_type redit_table[] = {
   {"mana", redit_mana},
   {"clan", redit_clan},
 
+  {"teledest", redit_tele}, /* BlinkenMUD */
+  
   {"north", redit_north},
   {"south", redit_south},
   {"east", redit_east},

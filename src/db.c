@@ -1245,7 +1245,7 @@ load_rooms (FILE * fp)
       pRoomIndex->vnum = vnum;
       pRoomIndex->name = fread_string (fp);
       pRoomIndex->description = fread_string (fp);
-      /* Area number */ fread_number (fp);
+      pRoomIndex->tele_dest =  fread_number (fp);
       pRoomIndex->room_flags = fread_flag (fp);
       /* horrible hack */
       if (2900 <= vnum && vnum < 3400)

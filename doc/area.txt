@@ -329,7 +329,7 @@ The syntax of this section is:
 	#<vnum:number>
 	<name:string>
 	<description:string>
-	<area:number> <room-flags:number> <sector-type:number>
+	<teleport_dest:number> <room-flags:number> <sector-type:number>
 	{
 	    D <door:number>
 	    <description:string>
@@ -351,8 +351,9 @@ The 'name' is the name of the room.
 
 The 'description' is the long multi-line description of the room.
 
-The 'area' is obsolete and unused.  Rooms belong to whatever area was most
-recently defined with #AREA.
+The 'teleport_dest' is the VNUM of the rooms teleport destination.
+This only works when the teleport flag is set for the room. 
+If the teleport flag is set but 'teleport_dest' <= 0 then a random location is choosen.
 
 The 'room-flags' describe more attributes of the room.
 

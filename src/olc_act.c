@@ -1089,6 +1089,15 @@ REDIT (redit_show)
 	   flag_string (room_flags, pRoom->room_flags));
   strcat (buf1, buf);
 
+  if ( IS_SET(pRoom->room_flags, ROOM_TELEPORT))
+    {
+      if(pRoom->tele_dest <= 0)
+	sprintf(buf, "Room teleport location: RANDOM \n\r");
+      else
+	sprintf(buf, "Room teleport location: %d\n\r", pRoom->tele_dest);
+      strcat(buf1,buf);
+    }
+
   sprintf (buf, "Health recovery:[%d]\n\rMana recovery  :[%d]\n\r",
 	   pRoom->heal_rate, pRoom->mana_rate);
   strcat (buf1, buf);
@@ -1838,6 +1847,25 @@ REDIT (redit_mana)
   send_to_char ("Syntax : mana <#xnumber>\n\r", ch);
   return FALSE;
 }
+
+REDIT (redit_tele)
+{
+  char buf[56];
+  
+  ROOM_INDEX_DATA *pRoom;
+  EDIT_ROOM (ch,pRoom);
+    
+  if (is_number (argument))
+    {
+      pRoom->tele_dest = atoi(argument);
+      sprintf(buf, "Teleport destination set to %d.\n\r", pRoom->tele_dest);
+      send_to_char (buf,ch);
+      return TRUE;
+    }
+
+  send_to_char ("Syntax : teledest <#VNUM>\n\r",ch);
+}
+	      
 
 REDIT (redit_clan)
 {
