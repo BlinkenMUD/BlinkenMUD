@@ -3780,6 +3780,8 @@ room_bit_name (int room_flags)
     strcat (buf, " nowhere");
   if (room_flags & ROOM_LOCKED)
     strcat (buf, " locked");
+  if (room_flags & ROOM_NOMAP)
+    strcat (buf, " nomap");
 
   return (buf[0] != '\0') ? buf + 1 : "none";
 }
