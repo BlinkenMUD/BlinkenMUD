@@ -159,7 +159,7 @@ void read_room(void)
   b = atoi(i1);
   c = atoi(i2);
 
-  b = b && FLAGS;
+  b = b & (FLAGS);
 
   printf("%d %d %d\n", a,b,c);
 }
