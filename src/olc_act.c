@@ -1862,8 +1862,9 @@ REDIT (redit_tele)
       send_to_char (buf,ch);
       return TRUE;
     }
-
   send_to_char ("Syntax : teledest <#VNUM>\n\r",ch);
+
+  return TRUE;
 }
 	      
 
