@@ -388,3 +388,5 @@ DECLARE_DO_FUN (do_account);
 DECLARE_DO_FUN (do_deposit);
 DECLARE_DO_FUN (do_withdraw);
 DECLARE_DO_FUN (do_map);
+
+DECLARE_DO_FUN (do_wpeace);

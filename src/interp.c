@@ -85,7 +85,6 @@ const struct cmd_type cmd_table[] = {
   {"west", do_west, POS_STANDING, 0, 1, LOG_NEVER, 0},
   {"up", do_up, POS_STANDING, 0, 1, LOG_NEVER, 0},
   {"down", do_down, POS_STANDING, 0, 1, LOG_NEVER, 0},
-
   /*
    * Common other commands.
    * Placed here so one and two letter abbreviations work.
@@ -217,6 +216,7 @@ const struct cmd_type cmd_table[] = {
   {"note", do_note, POS_SLEEPING, 0, 1, LOG_NORMAL, 1},
   {"pose", do_pose, POS_RESTING, 0, 1, LOG_NORMAL, 1},
   {"quest", do_quest, POS_SLEEPING, 0, 1, LOG_NORMAL, 1},
+  {"wpeace", do_wpeace, POS_FIGHTING, 0, 1, LOG_NORMAL, 1},
   {"ask", do_ask, POS_SLEEPING, 0, 1, LOG_NORMAL, 1},
   {"quote", do_quote, POS_SLEEPING, 0, 1, LOG_NORMAL, 1},
   {"quiet", do_quiet, POS_SLEEPING, 0, 1, LOG_NORMAL, 1},
@@ -307,6 +307,7 @@ const struct cmd_type cmd_table[] = {
   {"quit", do_quit, POS_DEAD, 0, 1, LOG_NORMAL, 1},
   {"crecall", do_crecall, POS_FIGHTING, 0, 1, LOG_NORMAL, 1},
   {"quest", do_quest, POS_RESTING, 0, 1, LOG_NORMAL, 1},
+  {"wpeace", do_wpeace, POS_FIGHTING, 0, 1, LOG_NORMAL, 1},
   {"recall", do_recall, POS_FIGHTING, 0, 1, LOG_NORMAL, 1},
   {"/", do_recall, POS_FIGHTING, 0, 1, LOG_NORMAL, 0},
   {"rent", do_rent, POS_DEAD, 0, 1, LOG_NORMAL, 0},

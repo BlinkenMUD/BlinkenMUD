@@ -2664,7 +2664,6 @@ void update_handler args ((void));
 /* wizlist.c */
 void update_wizlist args ((CHAR_DATA * ch, int level));
 
-
 #undef	CD
 #undef	MID
 #undef	OD
