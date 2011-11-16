@@ -551,6 +551,7 @@ const struct flag_type type_flags[] = {
   {"jewelry", ITEM_JEWELRY, TRUE},
   {"jukebox", ITEM_JUKEBOX, TRUE},
   {"pit", ITEM_PIT, TRUE},
+  {"throwing", ITEM_THROWING, TRUE},
   {NULL, 0, 0}
 };
 

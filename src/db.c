@@ -168,6 +168,7 @@ sh_int gsn_gouge;
 sh_int gsn_grip;
 sh_int gsn_sharpen;
 
+sh_int gsn_throw;
 
 
 /*
@@ -2487,6 +2488,7 @@ create_object (OBJ_INDEX_DATA * pObjIndex, int level)
 	obj->cost /= 5;
       break;
 
+    case ITEM_THROWING:
     case ITEM_TREASURE:
     case ITEM_WARP_STONE:
     case ITEM_DEMON_STONE:

@@ -497,6 +497,15 @@ load_objects (FILE * fp)
 	  pObjIndex->value[3] = skill_lookup (fread_word (fp));
 	  pObjIndex->value[4] = skill_lookup (fread_word (fp));
 	  break;
+
+	case ITEM_THROWING:
+	  pObjIndex->value[0] = fread_number (fp);
+	  pObjIndex->value[1] = fread_number (fp);
+	  pObjIndex->value[2] = attack_lookup (fread_word (fp));
+	  pObjIndex->value[3] = fread_number (fp);
+	  pObjIndex->value[4] = fread_number (fp);
+	  break;
+	  
 	default:
 	  pObjIndex->value[0] = fread_flag (fp);
 	  pObjIndex->value[1] = fread_flag (fp);

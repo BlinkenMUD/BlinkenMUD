@@ -91,6 +91,7 @@ const struct item_type item_table[] = {
   {ITEM_DEMON_STONE, "demon_stone"},
   {ITEM_EXIT, "exit"},
   {ITEM_PIT, "pit"},
+  {ITEM_THROWING, "throwing"},
   {0, NULL}
 };
 
@@ -4473,7 +4474,18 @@ const struct skill_type skill_table[MAX_SKILL] = {
     1, 1, 2, 1, 1, 1, 1},
    spell_null, TAR_IGNORE, POS_STANDING,
    &gsn_recall, TRUE, SLOT (0), 0, 12,
-   "", "!Recall!", ""}
+   "", "!Recall!", ""},
+
+  {
+    "throw",
+    {1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1},
+   {2, 2, 2, 2, 2, 2, 2,
+    1, 1, 2, 1, 1, 1, 1},
+    spell_null, TAR_IGNORE, POS_FIGHTING,
+    &gsn_throw, TRUE, SLOT(0), 0, 0,
+    "throw", "!throw!", ""}
+    
 };
 
 const struct group_type group_table[MAX_GROUP] = {

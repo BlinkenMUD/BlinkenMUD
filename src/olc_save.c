@@ -326,6 +326,15 @@ save_object (FILE * fp, OBJ_INDEX_DATA * pObjIndex)
       fprintf (fp, "%s\n", fwrite_flag (pObjIndex->value[4], buf));
       break;
 
+    case ITEM_THROWING:
+      fprintf (fp, "%d %d '%s' %d %d\n",
+	       pObjIndex->value[0],
+	       pObjIndex->value[1],
+	       attack_table[pObjIndex->value[2]].name,
+	       pObjIndex->value[3],
+	       pObjIndex->value[4]);
+      break;
+      
     case ITEM_LIGHT:
       fprintf (fp, "0 0 %d 0 0\n", pObjIndex->value[2] < 1 ? 999	/* infinite */
 	       : pObjIndex->value[2]);
@@ -427,6 +436,7 @@ save_object (FILE * fp, OBJ_INDEX_DATA * pObjIndex)
 	       pObjIndex->value[3] != -1 ?
 	       skill_table[pObjIndex->value[3]].name : 0);
       break;
+
     }
 
   fprintf (fp, "%d ", pObjIndex->level);

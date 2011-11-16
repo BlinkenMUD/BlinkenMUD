@@ -2257,6 +2257,21 @@ show_obj_values (CHAR_DATA * ch, OBJ_INDEX_DATA * obj)
       send_to_char (buf, ch);
       break;
 
+    case ITEM_THROWING:
+      sprintf (buf,
+	       "[v0] Dice damage:    [%d]\n\r"
+	       "[v1] Dice sides:     [%d]\n\r"
+	       "[v2] Damage type:    %s\n\r"
+	       "[v3] Spell:          %s\n\r"
+	       "[v4] Spell level:    [%d]\n\r",
+	       obj->value[0], obj->value[1],
+	       attack_table[obj->value[2]].name,
+	       obj->value[3] != -1 ? skill_table[obj->value[3]].name : "none",
+	       obj->value[4]);
+      send_to_char(buf,ch);
+      break;
+	       
+      
     case ITEM_WAND:
     case ITEM_STAFF:
       sprintf (buf,
@@ -2535,6 +2550,35 @@ set_obj_values (CHAR_DATA * ch, OBJ_INDEX_DATA * pObj, int value_num,
 
 /* WEAPONS changed in ROM */
 
+    case ITEM_THROWING:
+      switch (value_num)
+	{
+	default:
+	  do_help (ch, "ITEM_THROWING");
+	  return FALSE;
+	case 0:
+	  send_to_char ("DICE DAMAGE SET.\n\r\n\r",ch);
+	  pObj->value[0] = atoi(argument);
+	  break;
+	case 1:
+	  send_to_char ("NUMBER OF DICE SET.\n\r\n\r",ch);
+	  pObj->value[1] = atoi(argument);
+	  break;
+	case 2:
+	  send_to_char ("WEAPON TYPE SET.\n\r\n\r",ch);
+	  pObj->value[2] = attack_lookup(argument);
+	  break;
+	case 3:
+	  send_to_char ("SPELL TYPE SET.\n\r", ch);
+	  pObj->value[3] = skill_lookup (argument);
+	  break;
+	case 4:
+	  send_to_char ("SPELL LEVEL SET.\n\r\n\r", ch);
+	  pObj->value[4] = atoi (argument);
+	  break;
+	}
+      break;
+      
     case ITEM_WEAPON:
       switch (value_num)
 	{

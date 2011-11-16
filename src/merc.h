@@ -1052,6 +1052,7 @@ struct kill_data
 #define ITEM_DEMON_STONE	     35
 #define ITEM_EXIT		     36
 #define ITEM_PIT		     37
+#define ITEM_THROWING                38
 
 /*
  * Extra flags.
@@ -2107,6 +2108,7 @@ extern sh_int gsn_gouge;
 extern sh_int gsn_grip;
 extern sh_int gsn_peek;
 
+extern sh_int gsn_throw;
 
 
 /*
