@@ -300,6 +300,18 @@ typedef void DO_FUN (CHAR_DATA * ch, char *argument);
 typedef bool SPEC_FUN (CHAR_DATA * ch);
 typedef void SPELL_FUN (int sn, int level, CHAR_DATA * ch, void *vo, int target);
 
+ /*
+ * This structure is used for the
+ * pathfinding algorithm.
+ */
+
+typedef struct heap_data {
+  sh_int iVertice;
+  ROOM_INDEX_DATA ** knude;
+  int32_t size;
+} HEAP;
+
+
 struct bit_type
 {
   const struct flag_type *table;
@@ -1857,6 +1869,7 @@ struct exit_data
   EXIT_DATA *next;		/* OLC */
   int rs_flags;			/* OLC */
   int orig_door;		/* OLC */
+  bool color;                   /* pathfind */
 };
 
 /*
@@ -1938,6 +1951,11 @@ struct room_index_data
   sh_int heal_rate;
   sh_int mana_rate;
   sh_int clan;
+
+  sh_int heap_index; /* pathfind */
+  sh_int steps; /* pathfind */ 
+  bool visited;  /* pathfind */
+  
 };
 
 
@@ -2618,6 +2636,9 @@ void mob_interpret args ((CHAR_DATA * ch, char *argument));
 
 /* note.c */
 void expire_notes args ((void));
+
+/* Pathfind.c */
+char * pathfind ( ROOM_INDEX_DATA * from, ROOM_INDEX_DATA * to);
 
 /* quest.c */
 void generate_quest args ((CHAR_DATA * ch, CHAR_DATA * questman));
