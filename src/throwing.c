@@ -131,7 +131,7 @@ do_throw( CHAR_DATA *ch, char *argument )
   one_argument( argument, arg );
   if ( arg[0] == '\0' && ch->fighting == NULL )
     {
-      send_to_char( "Throw on whom or what?\n\r", ch );
+      send_to_char( "Throw at whom or what?\n\r", ch );
       return;
     }
 
@@ -143,7 +143,7 @@ do_throw( CHAR_DATA *ch, char *argument )
 
   if ( obj->item_type != ITEM_THROWING )
     {
-      send_to_char( "You can throw only a throwing {!weapons{x.\n\r", ch );
+      send_to_char( "You can throw only a throwing {!weapon{x.\n\r", ch );
       return;
     }
 
@@ -227,7 +227,7 @@ do_throw( CHAR_DATA *ch, char *argument )
 
   WAIT_STATE( ch, 2 * PULSE_VIOLENCE ); 
 
-  sprintf(buf,"You have no more of %s.\n\r",obj->short_descr);
+  sprintf(buf,"That was your last %s.\n\r",obj->short_descr);
 
   /* ITEM THROWING */
 
