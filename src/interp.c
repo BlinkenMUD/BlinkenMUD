@@ -347,7 +347,7 @@ const struct cmd_type cmd_table[] = {
   {"dump", do_dump, POS_DEAD, ML, 1, LOG_ALWAYS, 0},
   {"trust", do_trust, POS_DEAD, ML, 1, LOG_ALWAYS, 1},
   {"violate", do_violate, POS_DEAD, ML, 1, LOG_ALWAYS, 1},
-
+  {"pathfind", do_pathfind, POS_DEAD, ML, 1, LOG_ALWAYS, 1},
   {"allow", do_allow, POS_DEAD, L2, 1, LOG_ALWAYS, 1},
   {"ban", do_ban, POS_DEAD, L2, 1, LOG_ALWAYS, 1},
   {"deny", do_deny, POS_DEAD, L1, 1, LOG_ALWAYS, 1},

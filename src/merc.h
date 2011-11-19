@@ -2638,7 +2638,8 @@ void mob_interpret args ((CHAR_DATA * ch, char *argument));
 void expire_notes args ((void));
 
 /* Pathfind.c */
-char * pathfind ( ROOM_INDEX_DATA * from, ROOM_INDEX_DATA * to);
+void do_pathfind (CHAR_DATA * ch, char * argument);
+
 
 /* quest.c */
 void generate_quest args ((CHAR_DATA * ch, CHAR_DATA * questman));

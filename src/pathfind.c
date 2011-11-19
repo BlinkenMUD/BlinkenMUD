@@ -14,13 +14,15 @@
  * benefitting.  We hope that you share your changes too.  What goes *
  * around, comes around.  *
  ***************************************************************************/ 
+
 /*****************************************************
  File: pathfind.c
  This code is copyright (C) 2001 by Brian Graversen.
  It may be used, modified and distributed freely, as
  long as you do not remove this copyright notice.
  Feel free to mail me if you like the code.
- E-mail: jobo@daimi.au.dk ******************************************************/
+ E-mail: jobo@daimi.au.dk
+******************************************************/
 
 /*
  * Copyright (C) 2007-2011 See the AUTHORS.BlinkenMUD file for details
@@ -37,15 +39,81 @@
 #include <time.h>
 #include "merc.h"
 
-#define RID ROOM_INDEX_DATA
+typedef ROOM_INDEX_DATA RID;
+
 /* local varibles */
 bool gFound;
-/* local functions */
 
+/* local functions */
+char * pathfind ( ROOM_INDEX_DATA * from, ROOM_INDEX_DATA * to);
 bool examine_room (RID *pRoom, RID *tRoom, AREA_DATA *pArea, int steps );
-void dijkstra args (RID *chRoom,RID *victRoom );
+void dijkstra (RID *chRoom,RID *victRoom );
 RID *heap_getMinElement ( HEAP *heap );
 HEAP *init_heap (RID *root );
+void do_pathfind (CHAR_DATA * ch, char * argument);
+
+/*
+  Find the path from the users current location to the
+  specified location
+*/
+
+void
+do_pathfind (CHAR_DATA * ch, char * argument)
+{
+  char arg[MAX_INPUT_LENGTH];
+  char arg2[MAX_INPUT_LENGTH];
+  char buf[MAX_STRING_LENGTH];
+  char * path;
+  
+  RID * RBegin;
+  RID * REnd;
+  
+  if (NULL == ch)
+    {
+      bug ("do_pathfind: CH == NULL", 0);
+      return;
+    }
+  
+  if (IS_NPC (ch))
+    return;
+
+  argument = one_argument (argument,arg);
+  argument = one_argument (argument,arg2);
+
+  if ( arg[0]=='\0' || arg[0]=='.' )
+    {
+      RBegin = ch->in_room;
+    }
+  else if ((RBegin = find_location (ch, arg)) == NULL)
+    {
+      sprintf(buf, "From: No such location: '%s', using current position.\n\r",arg);
+      send_to_char(buf,ch);
+      RBegin = ch->in_room;
+    }
+
+  sprintf(buf, "From: '%s'.\n\r", RBegin->name);
+  send_to_char(buf,ch);
+  
+  if ( (REnd = find_location (ch, arg2)) == NULL)
+    {
+      sprintf(buf, "To: No such location: '%s'.\n\r",arg);
+      send_to_char(buf,ch);
+      return;
+    }
+
+  sprintf(buf, "To: '%s'.\n\r", REnd->name);
+  send_to_char(buf,ch);
+  
+  if( (path = pathfind(RBegin, REnd)) == NULL)
+    {
+      sprintf(buf, "No path found.\n\r");
+    }
+  else
+    {
+      sprintf(buf, "Path: '%s'.\n\r",path);
+    }
+  send_to_char(buf, ch);
+}
 
 /*
  * This function will return a shortest path from
@@ -72,14 +140,15 @@ pathfind(RID *from, RID *to)
     return NULL;
 
   /* initialize all rooms in the area */
-  for (vnum = pArea->lvnum; vnum < pArea->uvnum; vnum++)
+  for (vnum = pArea->min_vnum; vnum < pArea->max_vnum; vnum++)
     {
       if ((pRoom = get_room_index(vnum)))
 	{
 	  pRoom->visited = FALSE;
 	  for (door = 0; door < 6; door++)
 	    {
-	      if (pRoom->exit[door] == NULL) continue;
+	      if (pRoom->exit[door] == NULL)
+		continue;
 	      pRoom->exit[door]->color = FALSE;
 	    }
 	}
@@ -107,7 +176,7 @@ pathfind(RID *from, RID *to)
 	{
 	  if (pRoom->exit[door] == NULL)
 	    continue;
-	  if (pRoom->exit[door]->to_room == NULL)
+	  if (pRoom->exit[door]->u1.to_room == NULL)
 	    continue;
 	  if (!pRoom->exit[door]->color)
 	    continue;
@@ -115,7 +184,7 @@ pathfind(RID *from, RID *to)
 	  found = TRUE;
 	  path[iPath] = exit_names[door];
 	  iPath++;
-	  pRoom = pRoom->exit[door]->to_room;
+	  pRoom = pRoom->exit[door]->u1.to_room;
 	}
       if (!found)
 	{
@@ -157,12 +226,12 @@ void dijkstra(RID *chRoom, RID *victRoom)
 	{
 	  if (pRoom->exit[door] == NULL)
 	    continue;
-	  if (pRoom->exit[door]->to_room == NULL)
+	  if (pRoom->exit[door]->u1.to_room == NULL)
 	    continue;
 	  /* update step count, and swap in the heap */
-	  if (pRoom->exit[door]->to_room->steps > pRoom->steps + 1)
+	  if (pRoom->exit[door]->u1.to_room->steps > pRoom->steps + 1)
 	    {
-	      xRoom = pRoom->exit[door]->to_room;
+	      xRoom = pRoom->exit[door]->u1.to_room;
 	      xRoom->steps = pRoom->steps + 1;
 	      stop = FALSE;
 	      while ((x = xRoom->heap_index) != 1 && !stop)
@@ -211,12 +280,12 @@ bool examine_room(RID *pRoom, RID *tRoom, AREA_DATA *pArea, int steps)
     {
       if (pRoom->exit[door] == NULL)
 	continue;
-      if (pRoom->exit[door]->to_room == NULL)
+      if (pRoom->exit[door]->u1.to_room == NULL)
 	continue;
       /* assume we are walking the right way */
       pRoom->exit[door]->color = TRUE;
       /* recursive return */
-      if (examine_room(pRoom->exit[door]->to_room, tRoom, pArea, steps + 1))
+      if (examine_room(pRoom->exit[door]->u1.to_room, tRoom, pArea, steps + 1))
 	return TRUE;
       /* it seems we did not walk the right way */
       pRoom->exit[door]->color = FALSE;
@@ -237,7 +306,7 @@ HEAP *init_heap(RID *root) {
       
   if ((pArea = root->area) == NULL)
     return NULL;
-  size = pArea->uvnum - pArea->lvnum;
+  size = pArea->max_vnum - pArea->min_vnum;
      
   /* allocate memory for heap */
   heap = calloc(1, sizeof(*heap));
@@ -248,7 +317,7 @@ HEAP *init_heap(RID *root) {
   heap->knude[1]->steps = 0;
   heap->knude[1]->heap_index = 1;
   /* initializing the rest of the heap */
-  for (i = 2, vnum = pArea->lvnum; vnum < pArea->uvnum; vnum++)
+  for (i = 2, vnum = pArea->min_vnum; vnum < pArea->max_vnum; vnum++)
     {
       if ((pRoom = get_room_index(vnum)))
 	{
