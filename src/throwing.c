@@ -374,7 +374,7 @@ do_throw( CHAR_DATA *ch, char *argument )
 	    case 4 : sprintf(buf,"The throw came from {6UP{x !!!\n\r");
 	      break;
 	    case 5 : sprintf(buf,"The throw came from {6DOWN{n !!!\n\r");
-	      breakx
+	      break;
 	    default : sprintf(buf,"Throw {3ERROR{x tell an IMM\n\r");
 	      break;
 	    }
