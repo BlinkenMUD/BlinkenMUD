@@ -1,0 +1,129 @@
+  This new slay command allows you to define several "slay" types, or
+options, each sending a different set of messages to all those involved
+in the slay. Even going so far as to allow you to assign each one to an
+"owner", only this person will see his kill option, and be able to use it.
+I suppose there's an upper limit as to how many different types you can
+have, but I think that limits up there pretty high. heh, in any case, on
+the mud I'm working on, I've set a MAX_SLAY_TYPE to 10. Define yours as
+you see fit.
+
+known bugs: none known
+todo list : read/write to a config file, code an online editor. (v2)
+
+To install:
+
+  (note: look for !! for special instructions)
+
+1: add these to "merc.h"
+
+#define MAX_SLAY_TYPE 10 /* or whatever# you want */
+/* NOTE: This file only includes two examples! write your own! */
+
+struct slay_type
+{
+  char *        owner;		/* only this player can use this option */
+  char *        title;		/* each one must have a unique title!   */
+  char *        char_msg;	/* is sent to the "slayer"		*/
+  char *        vict_msg;	/* is sent to the "slayee" (poor sucker)*/
+  char *        room_msg;	/* is sent to everyone else in the room */
+};
+
+!! This next line should go in merc.h along with the rest of your 
+   function prototypes 
+
+/* act_wiz.c */
+void do_slay args (( CHAR_DATA *ch, char *argument ));
+
+
+The do_fun information is allready included in interp.c and interp.h
+so what you need to do is comment out your old "do_slay" function and
+replace it with the one in this file.
+
+
+
+4: add the following to "const.c"
+
+   NOTE: I've only included 2 examples here for you, look them over
+   carefully. See how in the first one, the "owner" field is set to
+   "Rand"? This means that only the character "Rand" can see/use this 
+   option when happily slaying players/mobs. While in the second option,
+   the "owner" field is blank... this means any one (who has "slay" 
+   available to them) can use this option.
+
+   Like I said, I only included 2 examples, so you will either need to
+   fill out the others, or set your MAX_SLAY_TYPE to 2.
+
+
+/* "slay_type" for use with new slay command. [lvl58+]
+    The _msg strings are parsed through the "act" function, 
+    instead of "send_to_char", so the following macros may be used:
+
+    $t  Result is the 'arg1' argument interpreted as a string.
+
+    $T  Result is the 'arg2' argument interpreted as a string.
+
+    $n  Result is the name of 'ch'.  If 'ch' is not visible to the target
+        character, result is the string 'someone'.
+
+    $N  Result is the name of 'arg2' (considered as a victim).  If 'arg2'
+	is not visible to the target character, result is the string
+        'someone'.
+
+    $e  Result is 'he', 'she', or 'it', depending on the sex of 'ch'.
+
+    $E  Result is 'he', 'she', or 'it', depending on the sex of 'arg2'
+        (considered as a victim).
+
+    $m  Result is 'him', 'her', or 'it', depending on the sex of 'ch'.
+    $M  Result is 'him', 'her', or 'it', depending on the sex of 'arg2'
+        (considered as a victim).
+
+    $s  Result is 'his', 'her', or 'its', depending on the sex of 'ch'.
+
+    $S  Result is 'his', 'her', or 'its', depending on the sex of 'arg2'
+        (considered as a victim).
+
+    $p  Result is the short description of 'arg1' (considered as an
+	object).
+        If 'arg1' is invisible to the target character, result is the
+	string 'something'.
+
+    $P  Result is the short description of 'arg2' (considered as an
+	object). If 'arg2' is invisible to the target character, result is the
+	string 'something'.
+
+    $d  Result is the first word in 'arg2', considered as a string.  If
+	'arg2' is NULL, result is the string 'door'.  This is meant for
+	extracting the name from a door's keyword list, but may be used in 
+	general for other keyword lists.
+
+*/
+
+struct slay_type                slay_table      [MAX_SLAY_TYPES]        =
+{
+/* owner        title           char_msg        vict_msg        room_msg */
+  {
+    "Rand",
+    "Rand's balefire",
+    "Siezing Saidin, you blast $N with a bolt of blazing balefire!",
+    "Your vision goes negative as $n's searing bolt of balefire anhilates you!",    
+    "$n's blast of balefire rips $N from the pattern!"
+  },
+  {
+   "",
+   "demon attack",
+   "You gesture, and a slavering demon appears.  With a horrible grin, the foul creature turns on $N, who screams in panic before being eaten alive.",
+   "$n gestures, and a slavering demon appears.  The foul creature turns on you\n\r with a horrible grin.   You scream in panic before being eaten alive.",
+   "$n gestures, and a slavering demon appears.  With a horrible grin, the foul creature turns on $N, who screams in panic before being eaten alive."
+  }
+};
+
+
+
+
+
+
+
+
+slay-1.1/install.txt | gary@dharvest.com
+

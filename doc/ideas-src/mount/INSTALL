@@ -1,0 +1,4 @@
+1. do 'patch <rom24b4_horse.patch' in your source directory
+2. add mount.o to your Makefile
+3. copy mount.c to your source directory
+4. make clean (rm *.o rom) and recompile the mud

@@ -1,0 +1,1323 @@
+--- act_comm.c	1997/10/08 11:22:45	1.1
++++ act_comm.c	1997/08/09 14:25:32
+@@ -1455,6 +1455,7 @@
+ 
+     save_char_obj( ch );
+     send_to_char("Saving. Remember that ROM has automatic saving now.\n\r", ch);
++    WAIT_STATE(ch,4 * PULSE_VIOLENCE);
+     return;
+ }
+ 
+@@ -1576,6 +1577,26 @@
+     }
+     ch->pet = NULL;
+ 
++    if ( ch->mount
++	&& (ch->mount->in_room == ch->in_room || ch->mount->in_room==NULL) )
++    {
++	pet = ch->mount;
++	do_dismount(ch, "");
++	if (pet->in_room != NULL)
++	    act("$N slowly fades away.",ch,NULL,pet,TO_NOTVICT);
++	else
++	    log_string("void nuke_pets: Extracting null pet");
++        ch->mount = NULL;
++        ch->riding = FALSE;            
++	extract_char(pet, TRUE);
++    }
++    else if (ch->mount)
++    {
++	ch->mount->mount = NULL;
++	ch->mount->riding = FALSE;
++    }
++    ch->mount = NULL;
++
+     return;
+ }
+ 
+@@ -1646,7 +1667,26 @@
+     else
+     {
+ 	fAll   = FALSE;
+-	if ( ( victim = get_char_room( ch, arg ) ) == NULL )
++
++        if (!strcmp(arg, "mount"))
++        {
++            if (!ch->mount)
++            {
++                send_to_char("Your don't have a mount.\n\r", ch);
++                return;
++            }
++
++            if (ch->mount->in_room != ch->in_room)
++            {
++                send_to_char("Your mount isn't here!\n\r", ch);
++                return;
++            }
++            else
++            {
++                victim = ch->mount;
++            }
++        }
++        else if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+ 	{
+ 	    send_to_char( "They aren't here.\n\r", ch );
+ 	    return;
+@@ -1658,7 +1698,22 @@
+ 	    return;
+ 	}
+ 
+-	if (!IS_AFFECTED(victim, AFF_CHARM) || victim->master != ch 
++        if ( victim->mount == ch )
++	{ 
++	    if ( !mount_success(ch, victim, FALSE) )
++	    {
++		act("$N ignores your orders.", ch, NULL, victim, TO_CHAR);
++                return;
++	    }
++	    else
++	    {
++		sprintf(buf,"%s orders you to \'%s\'.", ch->name, argument);
++		send_to_char(buf, victim);
++	    	interpret( victim, argument );
++                return;
++            }                
++        }
++	else if (!IS_AFFECTED(victim, AFF_CHARM) || victim->master != ch 
+ 	||  (IS_IMMORTAL(victim) && victim->trust >= ch->trust))
+ 	{
+ 	    send_to_char( "Do it yourself!\n\r", ch );
+--- act_info.c	1997/10/08 11:22:45	1.1
++++ act_info.c	1997/08/09 13:30:36
+@@ -256,6 +256,11 @@
+ 
+     buf[0] = '\0';
+ 
++    if ( RIDDEN(victim) )
++	if ( ch != RIDDEN(victim) )
++	    strcat( buf, "(Ridden) " );
++	else
++	    strcat( buf, "(Your mount) " );
+     if ( IS_SET(victim->comm,COMM_AFK	  )   ) strcat( buf, "[AFK] "	     );
+     if ( IS_AFFECTED(victim, AFF_INVISIBLE)   ) strcat( buf, "(Invis) "      );
+     if ( victim->invis_level >= LEVEL_HERO    ) strcat( buf, "(Wizi) "	     );
+@@ -387,8 +392,16 @@
+ 		strcat(buf,message);
+ 	    }
+ 	}
++	else if ( MOUNTED(victim) )
++	{
++	    strcat( buf, " is here, riding " );
++	    strcat( buf, MOUNTED(victim)->short_descr );
++	    strcat( buf, ".");
++	}
+ 	else
+-	    strcat( buf, " is here." );               
++	{
++	    strcat( buf, " is here." );
++	} 
+ 	break;
+     case POS_FIGHTING:
+ 	strcat( buf, " is here, fighting " );
+@@ -442,6 +455,17 @@
+ 	act( "You see nothing special about $M.", ch, NULL, victim, TO_CHAR );
+     }
+ 
++    if ( MOUNTED(victim) )
++    {
++	sprintf( buf, "%s is riding %s.\n\r", victim->name, MOUNTED(victim)->short_descr);
++	send_to_char( buf, ch);
++    }
++    if ( RIDDEN(victim) )
++    {
++        sprintf( buf, "%s is being ridden by %s.\n\r", victim->short_descr, RIDDEN(victim)->name );
++        send_to_char( buf, ch);
++    }
++
+     if ( victim->max_hit > 0 )
+ 	percent = ( 100 * victim->hit ) / victim->max_hit;
+     else
+@@ -507,7 +531,8 @@
+ 
+     for ( rch = list; rch != NULL; rch = rch->next_in_room )
+     {
+-	if ( rch == ch )
++	if ( rch == ch 
++	    || ( RIDDEN(rch) && rch->in_room == RIDDEN(rch)->in_room && RIDDEN(rch) != ch ) )
+ 	    continue;
+ 
+ 	if ( get_trust(ch) < rch->invis_level)
+@@ -516,6 +541,8 @@
+ 	if ( can_see( ch, rch ) )
+ 	{
+ 	    show_char_to_char_0( rch, ch );
++            if( MOUNTED(rch) && (rch->in_room == MOUNTED(rch)->in_room) )
++                show_char_to_char_0( MOUNTED(rch), ch );
+ 	}
+ 	else if ( room_is_dark( ch->in_room )
+ 	&&        IS_AFFECTED(rch, AFF_INFRARED ) )
+@@ -1516,13 +1543,27 @@
+ 	send_to_char( "You are sitting.\n\r",		ch );
+ 	break;
+     case POS_STANDING:
+-	send_to_char( "You are standing.\n\r",		ch );
++        if(MOUNTED(ch))
++	{
++	    sprintf( buf, "You are riding on %s.\n\r", MOUNTED(ch)->short_descr );
++	    send_to_char( buf, ch);
++	}
++	else
++	{
++	    send_to_char( "You are standing.\n\r",		ch );
++	}
+ 	break;
+     case POS_FIGHTING:
+ 	send_to_char( "You are fighting.\n\r",		ch );
+ 	break;
+     }
+ 
++    if(RIDDEN(ch))
++    {
++	sprintf( buf, "You are ridden by %s.\n\r",
++		IS_NPC(RIDDEN(ch)) ? RIDDEN(ch)->short_descr : RIDDEN(ch)->name);
++	send_to_char( buf, ch);
++    }
+ 
+     /* print AC values */
+     if (ch->level >= 25)
+--- act_move.c	1997/10/08 11:22:45	1.1
++++ act_move.c	1997/08/09 13:30:37
+@@ -74,6 +74,7 @@
+     ROOM_INDEX_DATA *in_room;
+     ROOM_INDEX_DATA *to_room;
+     EXIT_DATA *pexit;
++    char buf[MAX_STRING_LENGTH];
+ 
+     if ( door < 0 || door > 5 )
+     {
+@@ -112,6 +113,20 @@
+ 	return;
+     }
+ 
++    if ( MOUNTED(ch) )
++    {
++	if (MOUNTED(ch)->position < POS_FIGHTING)
++	{
++	    send_to_char("Your mount must be standing.\n\r", ch);
++            return; 
++        }
++	if (!mount_success(ch, MOUNTED(ch), FALSE))
++	{
++            send_to_char("Your mount subbornly refuses to go that way.\n\r", ch);
++            return;
++        }
++    }
++
+     if ( !IS_NPC(ch) )
+     {
+ 	int iClass, iGuild;
+@@ -133,13 +148,33 @@
+ 	if ( in_room->sector_type == SECT_AIR
+ 	||   to_room->sector_type == SECT_AIR )
+ 	{
+-	    if ( !IS_AFFECTED(ch, AFF_FLYING) && !IS_IMMORTAL(ch))
++	    if ( MOUNTED(ch) )
+ 	    {
+-		send_to_char( "You can't fly.\n\r", ch );
+-		return;
++		if( !IS_AFFECTED(MOUNTED(ch), AFF_FLYING) )
++		{
++		    send_to_char( "Your mount can't fly.\n\r", ch );
++                    return;
++                }
++	    }
++	    else
++	    {
++		if ( !IS_AFFECTED(ch, AFF_FLYING) && !IS_IMMORTAL(ch))
++		{
++		    send_to_char( "You can't fly.\n\r", ch );
++		    return;
++		}
+ 	    }
+ 	}
+ 
++	if ( (in_room->sector_type == SECT_WATER_NOSWIM
++	    ||    to_room->sector_type == SECT_WATER_NOSWIM )
++	    &&    MOUNTED(ch))
++        {
++            sprintf( buf,"You can't take your mount there.\n\r");
++            send_to_char(buf, ch);
++            return;
++        } 
++
+ 	if (( in_room->sector_type == SECT_WATER_NOSWIM
+ 	||    to_room->sector_type == SECT_WATER_NOSWIM )
+   	&&    !IS_AFFECTED(ch,AFF_FLYING))
+@@ -176,33 +211,105 @@
+ 
+         move /= 2;  /* i.e. the average */
+ 
++	if ( !MOUNTED(ch) )
++	{
++	    /* conditional effects */
++	    if (IS_AFFECTED(ch,AFF_FLYING) || IS_AFFECTED(ch,AFF_HASTE))
++		move /= 2;
+ 
+-	/* conditional effects */
+-	if (IS_AFFECTED(ch,AFF_FLYING) || IS_AFFECTED(ch,AFF_HASTE))
+-	    move /= 2;
++	    if (IS_AFFECTED(ch,AFF_SLOW))
++		move *= 2;
+ 
+-	if (IS_AFFECTED(ch,AFF_SLOW))
+-	    move *= 2;
++	    if ( ch->move < move )
++	    {
++		send_to_char( "You are too exhausted.\n\r", ch );
++		return;
++	    }
++	}
++	else
++	{
++            if (IS_AFFECTED( MOUNTED(ch), AFF_FLYING)
++	      || IS_AFFECTED( MOUNTED(ch), AFF_HASTE))
++                move /= 2;
+ 
+-	if ( ch->move < move )
++            if (IS_AFFECTED( MOUNTED(ch), AFF_SLOW))
++                move *= 2;
++
++	    if ( MOUNTED(ch)->move < move )
++	    {
++		send_to_char( "Your mount is too exhausted.\n\r", ch );
++		return;
++            }
++        }
++
++	WAIT_STATE( ch, 1 );
++
++	if (!MOUNTED(ch))
++            ch->move -= move;
++        else
++            MOUNTED(ch)->move -= move;
++    }
++
++    if (RIDDEN(ch))
++    {
++	CHAR_DATA *rch;
++	rch = RIDDEN(ch);
++
++	if (!mount_success(rch, ch, FALSE))
++	{
++	    act( "Your mount escapes your control, and leaves $T.", rch, NULL, dir_name[door], TO_CHAR );
++	    if (RIDDEN(ch))
++		ch = RIDDEN(ch);
++	}
++	else
+ 	{
+-	    send_to_char( "You are too exhausted.\n\r", ch );
++	    send_to_char("You steady your mount.\n\r", rch);
+ 	    return;
+ 	}
+-
+-	WAIT_STATE( ch, 1 );
+-	ch->move -= move;
+     }
+ 
++
+     if ( !IS_AFFECTED(ch, AFF_SNEAK)
+     &&   ch->invis_level < LEVEL_HERO)
+ 	act( "$n leaves $T.", ch, NULL, dir_name[door], TO_ROOM );
++    {
++	if (MOUNTED(ch))
++	{
++	    if( !IS_AFFECTED(MOUNTED(ch), AFF_FLYING) )
++		sprintf(buf, "$n leaves $T, riding on %s.", MOUNTED(ch)->short_descr);
++            else
++               sprintf(buf, "$n soars $T, on %s.", MOUNTED(ch)->short_descr);
++            act( buf, ch, NULL, dir_name[door], TO_ROOM );
++        }
++	else
++	{
++	    act( "$n leaves $T.", ch, NULL, dir_name[door], TO_ROOM );
++        }
++    }
+ 
+     char_from_room( ch );
+     char_to_room( ch, to_room );
+     if ( !IS_AFFECTED(ch, AFF_SNEAK)
+-    &&   ch->invis_level < LEVEL_HERO)
+-	act( "$n has arrived.", ch, NULL, NULL, TO_ROOM );
++      &&   ch->invis_level < LEVEL_HERO)
++    {
++	if(!MOUNTED(ch))
++	{
++	    act( "$n has arrived.", ch, NULL, NULL, TO_ROOM );
++	}
++	else
++	{
++	    if ( !IS_AFFECTED(MOUNTED(ch), AFF_FLYING) )
++		act( "$n has arrived, riding on $N.", ch, NULL, MOUNTED(ch), TO_ROOM );
++	    else
++		act( "$n soars in, riding on $N.", ch, NULL, MOUNTED(ch), TO_ROOM );
++        }
++    }
++
++    if (MOUNTED(ch))
++    {
++        char_from_room( MOUNTED(ch) );
++        char_to_room( MOUNTED(ch), to_room );
++    }
+ 
+     do_look( ch, "auto" );
+ 
+@@ -540,6 +647,12 @@
+ 	return;
+     }
+ 
++    if (MOUNTED(ch))
++    {
++        send_to_char("You can't reach the lock from your mount.\n\r", ch);
++        return;
++    }
++
+     if ( ( obj = get_obj_here( ch, arg ) ) != NULL )
+     {
+ 	/* portal stuff */
+@@ -648,6 +761,12 @@
+ 	return;
+     }
+ 
++    if (MOUNTED(ch))
++    {
++        send_to_char("You can't reach the lock from your mount.\n\r", ch);
++        return;
++    }
++
+     if ( ( obj = get_obj_here( ch, arg ) ) != NULL )
+     {
+  	/* portal stuff */
+@@ -757,6 +876,12 @@
+ 	return;
+     }
+ 
++    if (MOUNTED(ch))
++    {
++        send_to_char("You can't pick locks while mounted.\n\r", ch);
++        return;
++    }
++
+     WAIT_STATE( ch, skill_table[gsn_pick_lock].beats );
+ 
+     /* look for guards */
+@@ -981,6 +1106,18 @@
+ {
+     OBJ_DATA *obj = NULL;
+ 
++    if (MOUNTED(ch))
++    {
++        send_to_char("You can't rest while mounted.\n\r", ch);
++        return;
++    }
++
++    if (RIDDEN(ch))
++    {
++        send_to_char("You can't rest while being ridden.\n\r", ch);
++        return;
++    }
++
+     if (ch->position == POS_FIGHTING)
+     {
+ 	send_to_char("You are already fighting!\n\r",ch);
+@@ -1116,6 +1253,18 @@
+ {
+     OBJ_DATA *obj = NULL;
+ 
++    if (MOUNTED(ch))
++    {
++        send_to_char("You can't sit while mounted.\n\r", ch);
++        return;
++    }
++
++    if (RIDDEN(ch))
++    {
++        send_to_char("You can't sit while being ridden.\n\r", ch);
++        return;
++    }
++
+     if (ch->position == POS_FIGHTING)
+     {
+ 	send_to_char("Maybe you should finish this fight first?\n\r",ch);
+@@ -1236,6 +1385,18 @@
+ {
+     OBJ_DATA *obj = NULL;
+ 
++    if (MOUNTED(ch))
++    {
++        send_to_char("You can't sleep while mounted.\n\r", ch);
++        return;
++    }
++
++    if (RIDDEN(ch))
++    {
++        send_to_char("You can't sleep while being ridden.\n\r", ch);
++        return;
++    }
++
+     switch ( ch->position )
+     {
+     case POS_SLEEPING:
+@@ -1341,6 +1502,12 @@
+ {
+     AFFECT_DATA af;
+ 
++    if (MOUNTED(ch))
++    {
++        send_to_char("You can't sneak while riding.\n\r", ch);
++        return;
++    }
++
+     send_to_char( "You attempt to move silently.\n\r", ch );
+     affect_strip( ch, gsn_sneak );
+ 
+@@ -1369,6 +1536,12 @@
+ 
+ void do_hide( CHAR_DATA *ch, char *argument )
+ {
++    if (MOUNTED(ch))
++    {
++        send_to_char("You can't hide while riding.\n\r", ch);
++        return;
++    }
++
+     send_to_char( "You attempt to hide.\n\r", ch );
+ 
+     if ( IS_AFFECTED(ch, AFF_HIDE) )
+@@ -1410,7 +1583,7 @@
+     CHAR_DATA *victim;
+     ROOM_INDEX_DATA *location;
+ 
+-    if (IS_NPC(ch) && !IS_SET(ch->act,ACT_PET))
++    if (IS_NPC(ch) && !IS_SET(ch->act,ACT_PET) && !ch->mount )
+     {
+ 	send_to_char("Only players can recall.\n\r",ch);
+ 	return;
+@@ -1467,6 +1640,9 @@
+     
+     if (ch->pet != NULL)
+ 	do_recall(ch->pet,"");
++
++    if (ch->mount != NULL)
++        do_recall( ch->mount, "" );
+ 
+     return;
+ }
+--- act_obj.c	1997/10/08 11:22:45	1.1
++++ act_obj.c	1997/08/09 13:30:37
+@@ -2517,6 +2517,12 @@
+ 	return;
+     }
+ 
++    if ( IS_SET(ch->in_room->room_flags, ROOM_MOUNT_SHOP) )
++    {
++        do_buy_mount( ch, argument );
++	return;
++    }
++
+     if ( IS_SET(ch->in_room->room_flags, ROOM_PET_SHOP) )
+     {
+ 	char arg[MAX_INPUT_LENGTH];
+@@ -2750,7 +2756,8 @@
+ {
+     char buf[MAX_STRING_LENGTH];
+ 
+-    if ( IS_SET(ch->in_room->room_flags, ROOM_PET_SHOP) )
++    if ( IS_SET(ch->in_room->room_flags, ROOM_PET_SHOP)
++      || IS_SET(ch->in_room->room_flags, ROOM_MOUNT_SHOP) )
+     {
+ 	ROOM_INDEX_DATA *pRoomIndexNext;
+ 	CHAR_DATA *pet;
+@@ -2772,12 +2779,16 @@
+ 	found = FALSE;
+ 	for ( pet = pRoomIndexNext->people; pet; pet = pet->next_in_room )
+ 	{
+-	    if ( IS_SET(pet->act, ACT_PET) )
++	    if ( IS_SET(pet->act, ACT_PET) 
++		|| IS_SET(pet->act, ACT_MOUNT) )
+ 	    {
+ 		if ( !found )
+ 		{
+ 		    found = TRUE;
+-		    send_to_char( "Pets for sale:\n\r", ch );
++		    if (IS_SET(pet->act, ACT_PET))
++		        send_to_char( "Pets for sale:\n\r", ch );
++		    else if (IS_SET(pet->act, ACT_MOUNT))
++		        send_to_char( "Mounts for sale:\n\r", ch );
+ 		}
+ 		sprintf( buf, "[%2d] %8d - %s\n\r",
+ 		    pet->level,
+@@ -2787,7 +2798,10 @@
+ 	    }
+ 	}
+ 	if ( !found )
+-	    send_to_char( "Sorry, we're out of pets right now.\n\r", ch );
++            if (IS_SET(ch->in_room->room_flags, ROOM_PET_SHOP) )
++                send_to_char( "Sorry, we're out of pets right now.\n\r", ch );
++            else
++                send_to_char( "Sorry, we're out of mounts right now.\n\r", ch );        return;
+ 	return;
+     }
+     else
+--- act_wiz.c	1997/10/08 11:22:45	1.1
++++ act_wiz.c	1997/08/09 13:35:30
+@@ -872,6 +872,20 @@
+     char_from_room( victim );
+     char_to_room( victim, location );
+     act( "$n arrives from a puff of smoke.", victim, NULL, NULL, TO_ROOM );
++
++    if( MOUNTED(victim) )
++    {
++        char_from_room( MOUNTED(victim) );
++        char_to_room( MOUNTED(victim), location );
++        send_to_char("Your rider is being transferred, and so are you.\n\r", MOUNTED(victim));
++    }
++
++    if (ch->pet != NULL)
++    {
++    	char_from_room (ch->pet);
++	char_to_room (ch->pet, location);
++    }
++
+     if ( ch != victim )
+ 	act( "$n has transferred you.", ch, NULL, victim, TO_VICT );
+     do_look( victim, "auto" );
+@@ -981,6 +995,19 @@
+     char_from_room( ch );
+     char_to_room( ch, location );
+ 
++    if (ch->pet != NULL)
++    {
++    	char_from_room (ch->pet);
++	char_to_room (ch->pet, location);
++    }
++
++    if( MOUNTED(ch) )
++    {
++        char_from_room( MOUNTED(ch) );
++        char_to_room( MOUNTED(ch), location );
++        send_to_char("Your rider is a god, and did a goto. You went along for the ride.\n\r", MOUNTED(ch));
++    }   
++
+ 
+     for (rch = ch->in_room->people; rch != NULL; rch = rch->next_in_room)
+     {
+@@ -1710,10 +1737,11 @@
+ 	send_to_char(buf,ch);
+     }
+ 
+-    sprintf( buf, "Master: %s  Leader: %s  Pet: %s\n\r",
++    sprintf( buf, "Master: %s  Leader: %s  Pet: %s  Horse: %s\n\r",
+ 	victim->master      ? victim->master->name   : "(none)",
+ 	victim->leader      ? victim->leader->name   : "(none)",
+-	victim->pet 	    ? victim->pet->name	     : "(none)");
++	victim->pet 	    ? victim->pet->name	     : "(none)",
++	victim->mount 	    ? victim->mount->name    : "(none)");
+     send_to_char( buf, ch );
+ 
+     sprintf( buf, "Short description: %s\n\rLong  description: %s",
+--- comm.c	1997/10/08 11:22:45	1.1
++++ comm.c	1997/08/09 13:30:37
+@@ -2110,6 +2110,14 @@
+ 	    act("$n has entered the game.",ch->pet,NULL,NULL,TO_ROOM);
+ 	}
+ 
++        if (ch->mount != NULL)
++ 	{
++	    char_to_room(ch->mount,ch->in_room);
++            act("$n has entered the game.",ch->mount,NULL,NULL,TO_ROOM);
++            add_follower(ch->mount, ch);
++            do_mount(ch, ch->mount->name);
++        }
++
+ 	do_unread(ch,"");
+ 	break;
+     }
+--- const.c	1997/10/08 11:22:45	1.1
++++ const.c	1997/08/09 13:30:37
+@@ -1961,6 +1961,13 @@
+ 	spell_null,		TAR_IGNORE,		POS_STANDING,
+ 	&gsn_recall,		SLOT( 0),	0,	12,
+ 	"",			"!Recall!",		""
++    },
++
++    {
++	"riding",		{  1,  1,  1,  1 },	{ 2, 2, 2, 2},
++	spell_null,		TAR_IGNORE,		POS_STANDING,
++	&gsn_riding,		SLOT( 0),	0,	12,
++	"",			"!Riding!",		""
+     }
+ };
+ 
+--- db.c	1997/10/08 11:22:45	1.1
++++ db.c	1997/08/09 13:30:38
+@@ -139,6 +139,7 @@
+ sh_int  		gsn_staves;
+ sh_int  		gsn_wands;
+ sh_int  		gsn_recall;
++sh_int  		gsn_riding;
+ 
+ 
+ 
+--- fight.c	1997/10/08 11:22:45	1.1
++++ fight.c	1997/08/09 13:30:38
+@@ -120,6 +120,8 @@
+ 	
+ 	if (IS_AWAKE(rch) && rch->fighting == NULL)
+ 	{
++            if (RIDDEN(rch) == ch || MOUNTED(rch) == ch)
++                multi_hit(rch,victim,TYPE_UNDEFINED);
+ 
+ 	    /* quick check for ASSIST_PLAYER */
+ 	    if (!IS_NPC(ch) && IS_NPC(rch) 
+@@ -221,6 +223,12 @@
+ 	return;
+     }
+ 
++    if (MOUNTED(ch))
++    {
++	if (!mount_success(ch, MOUNTED(ch), FALSE))
++	send_to_char("You fall off your mount as you start your attacks!\n\r", ch);
++    }
++
+     one_hit( ch, victim, dt );
+ 
+     if (ch->fighting != victim)
+@@ -1661,6 +1669,9 @@
+     if ( !IS_AWAKE(victim) )
+ 	return FALSE;
+ 
++    if ( MOUNTED(victim) )
++	return FALSE;
++
+     chance = get_skill(victim,gsn_dodge) / 2;
+ 
+     if (!can_see(victim,ch))
+@@ -2565,6 +2576,12 @@
+ 	}
+     }
+ 
++    if ( MOUNTED(ch) )
++    {
++        send_to_char("You can't bash while riding!\n\r", ch);
++        return;
++    }
++ 
+     else if ((victim = get_char_room(ch,arg)) == NULL)
+     {
+ 	send_to_char("They aren't here.\n\r",ch);
+@@ -2651,6 +2668,11 @@
+ 	victim->position = POS_RESTING;
+ 	damage(ch,victim,number_range(2,2 + 2 * ch->size + chance/20),gsn_bash,
+ 	    DAM_BASH,FALSE);
++
++        if (RIDDEN(victim))
++	{
++            mount_success(RIDDEN(victim), victim, FALSE);
++        }
+ 	
+     }
+     else
+@@ -2696,6 +2718,12 @@
+ 	}
+     }
+ 
++    if ( MOUNTED(ch) )
++    {
++        send_to_char("You can't dirt while riding!\n\r", ch);
++        return;
++    }
++
+     else if ((victim = get_char_room(ch,arg)) == NULL)
+     {
+ 	send_to_char("They aren't here.\n\r",ch);
+@@ -2836,6 +2864,12 @@
+ 	return;
+     }
+ 
++    if ( MOUNTED(ch) )
++    {
++        send_to_char("You can't trip while riding!\n\r", ch);
++        return;
++    }
++
+     if (is_safe(ch,victim))
+ 	return;
+ 
+@@ -3071,6 +3105,12 @@
+         return;
+     }
+ 
++    if ( MOUNTED(ch) )
++    {
++        send_to_char("You can't backstab while riding!\n\r", ch);
++        return;
++    }
++ 
+     if (ch->fighting != NULL)
+     {
+ 	send_to_char("You're facing the wrong end.\n\r",ch);
+@@ -3280,6 +3320,12 @@
+ 
+     if (IS_NPC(ch) && !IS_SET(ch->off_flags,OFF_KICK))
+ 	return;
++
++    if ( MOUNTED(ch) )
++    {
++        send_to_char("You can't kick while riding!\n\r", ch);
++        return;
++    }
+ 
+     if ( ( victim = ch->fighting ) == NULL )
+     {
+--- handler.c	1997/10/08 11:22:45	1.1
++++ handler.c	1997/08/09 14:22:23
+@@ -1934,9 +1934,9 @@
+ 	return;
+     }
+     */
+-    
++
+     nuke_pets(ch);
+-    ch->pet = NULL; /* just in case */
++    ch->pet = NULL;
+ 
+     if ( fPull )
+ 
+@@ -1962,6 +1962,25 @@
+ 
+     if ( IS_NPC(ch) )
+ 	--ch->pIndexData->count;
++    else
++    {
++	nuke_pets(ch);
++	ch->pet = NULL;
++
++	if ( ch->mount && ch->mount->mount == ch )
++	{
++	    ch->mount->mount = NULL;
++
++	    if (ch->mount->riding)
++	    {
++		act("You fall off of $N.", ch->mount, NULL, ch, TO_CHAR);
++		act("$n falls off of $N.", ch->mount, NULL, ch, TO_ROOM);
++		ch->mount->riding = FALSE;
++		if (!IS_IMMORTAL(ch->mount))
++		    ch->mount->position = POS_SITTING;
++	    }
++	}
++    }
+ 
+     if ( ch->desc != NULL && ch->desc->original != NULL )
+     {
+@@ -2006,7 +2025,6 @@
+ }
+ 
+ 
+-
+ /*
+  * Find a char in the room.
+  */
+@@ -2663,6 +2681,7 @@
+ 	if (act_flags & ACT_STAY_AREA	) strcat(buf, " stay_area");
+ 	if (act_flags & ACT_WIMPY	) strcat(buf, " wimpy");
+ 	if (act_flags & ACT_PET		) strcat(buf, " pet");
++	if (act_flags & ACT_MOUNT	) strcat(buf, " mount");
+ 	if (act_flags & ACT_TRAIN	) strcat(buf, " train");
+ 	if (act_flags & ACT_PRACTICE	) strcat(buf, " practice");
+ 	if (act_flags & ACT_UNDEAD	) strcat(buf, " undead");
+--- interp.c	1997/10/08 11:22:45	1.1
++++ interp.c	1997/08/09 13:30:39
+@@ -277,7 +277,8 @@
+     { "wake",		do_wake,	POS_SLEEPING,	 0,  LOG_NORMAL, 1 },
+     { "where",		do_where,	POS_RESTING,	 0,  LOG_NORMAL, 1 },
+ 
+-
++    { "mount",		do_mount,	POS_FIGHTING,	 0,  LOG_NORMAL, 1 },
++    { "dismount",	do_dismount,	POS_FIGHTING,	 0,  LOG_NORMAL, 1 },
+ 
+     /*
+      * Immortal commands.
+--- magic.c	1997/10/08 11:22:45	1.1
++++ magic.c	1997/08/09 13:41:46
+@@ -2926,6 +2926,16 @@
+ 	act("$n has arrived through a gate.",ch->pet,NULL,NULL,TO_ROOM);
+ 	do_look(ch->pet,"auto");
+     }
++
++    if( MOUNTED(ch) )
++    {
++        act("$n steps through a gate and vanishes.",MOUNTED(ch),NULL,NULL,TO_ROOM);
++        send_to_char("You step through a gate and vanish.\n\r",MOUNTED(ch));
++        char_from_room(MOUNTED(ch));
++        char_to_room(MOUNTED(ch),victim->in_room);
++        act("$n has arrived through a gate.",MOUNTED(ch),NULL,NULL,TO_ROOM);
++        do_look(MOUNTED(ch),"auto");
++    }
+ }
+ 
+ 
+--- save.c	1997/10/08 11:22:45	1.1
++++ save.c	1997/08/09 13:30:41
+@@ -92,8 +92,10 @@
+ void	fwrite_obj	args( ( CHAR_DATA *ch,  OBJ_DATA  *obj,
+ 			    FILE *fp, int iNest ) );
+ void	fwrite_pet	args( ( CHAR_DATA *pet, FILE *fp) );
++void	fwrite_mount	args( ( CHAR_DATA *pet, FILE *fp) );
+ void	fread_char	args( ( CHAR_DATA *ch,  FILE *fp ) );
+ void    fread_pet	args( ( CHAR_DATA *ch,  FILE *fp ) );
++void    fread_mount	args( ( CHAR_DATA *ch,  FILE *fp ) );
+ void	fread_obj	args( ( CHAR_DATA *ch,  FILE *fp ) );
+ 
+ 
+@@ -149,6 +151,9 @@
+ 	if (ch->pet != NULL && ch->pet->in_room == ch->in_room)
+ 	    fwrite_pet(ch->pet,fp);
+ 	fprintf( fp, "#END\n" );
++        if (ch->mount && ch->mount->in_room == ch->in_room)
++            fwrite_mount(ch->mount, fp);
++        fprintf( fp, "#END\n" );
+     }
+     fclose( fp );
+     rename(TEMP_FILE,strsave);
+@@ -398,6 +403,83 @@
+     fprintf(fp,"End\n");
+     return;
+ }
++
++    
++/* write a mount */
++void fwrite_mount( CHAR_DATA *pet, FILE *fp)
++{
++    AFFECT_DATA *paf;
++    
++    fprintf(fp,"#MOUNT\n");
++
++    fprintf(fp,"Vnum %d\n",pet->pIndexData->vnum);
++    
++    fprintf(fp,"Name %s~\n", pet->name);
++    fprintf(fp,"LogO %ld\n", current_time);
++    if (pet->short_descr != pet->pIndexData->short_descr)
++    	fprintf(fp,"ShD  %s~\n", pet->short_descr);
++    if (pet->long_descr != pet->pIndexData->long_descr)
++    	fprintf(fp,"LnD  %s~\n", pet->long_descr);
++    if (pet->description != pet->pIndexData->description)
++    	fprintf(fp,"Desc %s~\n", pet->description);
++    if (pet->race != pet->pIndexData->race)
++    	fprintf(fp,"Race %s~\n", race_table[pet->race].name);
++    if (pet->clan)
++        fprintf( fp, "Clan %s~\n",clan_table[pet->clan].name);
++    fprintf(fp,"Sex  %d\n", pet->sex);
++    if (pet->level != pet->pIndexData->level)
++    	fprintf(fp,"Levl %d\n", pet->level);
++    fprintf(fp, "HMV  %d %d %d %d %d %d\n",
++    	pet->hit, pet->max_hit, pet->mana, pet->max_mana, pet->move, pet->max_move);
++    if (pet->gold > 0)
++    	fprintf(fp,"Gold %ld\n",pet->gold);
++    if (pet->silver > 0)
++        fprintf(fp,"Silv %ld\n",pet->silver);
++    if (pet->exp > 0)
++    	fprintf(fp, "Exp  %d\n", pet->exp);
++    if (pet->act != pet->pIndexData->act)
++        fprintf(fp, "Act  %s\n", print_flags(pet->act));
++    if (pet->affected_by != pet->pIndexData->affected_by)
++        fprintf(fp, "AfBy %s\n", print_flags(pet->affected_by));
++    if (pet->comm != 0)
++        fprintf(fp, "Comm %s\n", print_flags(pet->comm));
++    fprintf(fp,"Pos  %d\n", pet->position = POS_FIGHTING ? POS_STANDING : pet->position);
++    if (pet->saving_throw != 0)
++    	fprintf(fp, "Save %d\n", pet->saving_throw);
++    if (pet->alignment != pet->pIndexData->alignment)
++    	fprintf(fp, "Alig %d\n", pet->alignment);
++    if (pet->hitroll != pet->pIndexData->hitroll)
++    	fprintf(fp, "Hit  %d\n", pet->hitroll);
++    if (pet->damroll != pet->pIndexData->damage[DICE_BONUS])
++    	fprintf(fp, "Dam  %d\n", pet->damroll);
++    fprintf(fp, "ACs  %d %d %d %d\n",
++    	pet->armor[0],pet->armor[1],pet->armor[2],pet->armor[3]);
++    fprintf(fp, "Attr %d %d %d %d %d\n",
++    	pet->perm_stat[STAT_STR], pet->perm_stat[STAT_INT],
++    	pet->perm_stat[STAT_WIS], pet->perm_stat[STAT_DEX],
++    	pet->perm_stat[STAT_CON]);
++    fprintf(fp, "AMod %d %d %d %d %d\n",
++    	pet->mod_stat[STAT_STR], pet->mod_stat[STAT_INT],
++    	pet->mod_stat[STAT_WIS], pet->mod_stat[STAT_DEX],
++    	pet->mod_stat[STAT_CON]);
++    
++    for ( paf = pet->affected; paf != NULL; paf = paf->next )
++    {
++    	if (paf->type < 0 || paf->type >= MAX_SKILL)
++    	    continue;
++    	    
++    	fprintf(fp, "Affc '%s' %3d %3d %3d %3d %3d %10d\n",
++    	    skill_table[paf->type].name,
++    	    paf->where, paf->level, paf->duration, paf->modifier,paf->location,
++    	    paf->bitvector);
++    }
++    
++    fprintf(fp,"End\n");
++    return;
++}
++    
++
++
+     
+ /*
+  * Write an object and its contents.
+@@ -614,6 +696,7 @@
+ 	    else if ( !str_cmp( word, "OBJECT" ) ) fread_obj  ( ch, fp );
+ 	    else if ( !str_cmp( word, "O"      ) ) fread_obj  ( ch, fp );
+ 	    else if ( !str_cmp( word, "PET"    ) ) fread_pet  ( ch, fp );
++	    else if ( !str_cmp( word, "MOUNT"  ) ) fread_mount( ch, fp );
+ 	    else if ( !str_cmp( word, "END"    ) ) break;
+ 	    else
+ 	    {
+@@ -1338,6 +1421,223 @@
+     	}
+     }
+ }
++
++
++/* load a mount from the forgotten reaches */
++void fread_mount( CHAR_DATA *ch, FILE *fp )
++{
++    char *word;
++    CHAR_DATA *pet;
++    bool fMatch;
++    int lastlogoff = current_time;
++    int percent;
++
++    /* first entry had BETTER be the vnum or we barf */
++    word = feof(fp) ? "END" : fread_word(fp);
++    if (!str_cmp(word,"Vnum"))
++    {
++    	int vnum;
++    	
++    	vnum = fread_number(fp);
++    	if (get_mob_index(vnum) == NULL)
++	{
++    	    bug("Fread_mount: bad vnum %d.",vnum);
++	    pet = create_mobile(get_mob_index(MOB_VNUM_FIDO));
++	}
++    	else
++    	    pet = create_mobile(get_mob_index(vnum));
++    }
++    else
++    {
++        bug("Fread_mount: no vnum in file.",0);
++        pet = create_mobile(get_mob_index(MOB_VNUM_FIDO));
++    }
++    
++    for ( ; ; )
++    {
++    	word 	= feof(fp) ? "END" : fread_word(fp);
++    	fMatch = FALSE;
++    	
++    	switch (UPPER(word[0]))
++    	{
++    	case '*':
++    	    fMatch = TRUE;
++    	    fread_to_eol(fp);
++    	    break;
++    		
++    	case 'A':
++            KEY( "Act",         pet->act,               fread_flag(fp));
++            KEY( "AfBy",        pet->affected_by,       fread_flag(fp));
++    	    KEY( "Alig",	pet->alignment,		fread_number(fp));
++    	    
++    	    if (!str_cmp(word,"ACs"))
++    	    {
++    	    	int i;
++    	    	
++    	    	for (i = 0; i < 4; i++)
++    	    	    pet->armor[i] = fread_number(fp);
++    	    	fMatch = TRUE;
++    	    	break;
++    	    }
++    	    
++    	    if (!str_cmp(word,"AffD"))
++    	    {
++    	    	AFFECT_DATA *paf;
++    	    	int sn;
++    	    	
++                paf = new_affect();
++
++                sn = skill_lookup(fread_word(fp));
++                if (sn < 0)
++                    bug("Fread_char: unknown skill.",0);
++                else
++                   paf->type = sn;
++
++                paf->level      = fread_number(fp);
++                paf->duration   = fread_number(fp);
++                paf->modifier   = fread_number(fp);
++                paf->location   = fread_number(fp);
++                paf->bitvector  = fread_number(fp);
++                paf->next       = pet->affected;
++                pet->affected   = paf;
++                fMatch          = TRUE;
++                break;
++	   }
++
++            if (!str_cmp(word,"Affc"))
++            {
++                AFFECT_DATA *paf;
++                int sn;
++
++                paf = new_affect();
++
++                sn = skill_lookup(fread_word(fp));
++                if (sn < 0)
++                    bug("Fread_char: unknown skill.",0);
++                else
++                   paf->type = sn;
++
++                paf->where      = fread_number(fp);
++                paf->level      = fread_number(fp);
++                paf->duration   = fread_number(fp);
++                paf->modifier   = fread_number(fp);
++                paf->location   = fread_number(fp);
++                paf->bitvector  = fread_number(fp);
++                paf->next       = pet->affected;
++                pet->affected   = paf;
++                fMatch          = TRUE;
++                break;
++	    }
++
++    	    if (!str_cmp(word,"AMod"))
++    	    {
++    	     	int stat;
++    	     	
++    	     	for (stat = 0; stat < MAX_STATS; stat++)
++    	     	    pet->mod_stat[stat] = fread_number(fp);
++    	     	fMatch = TRUE;
++    	     	break;
++    	    }
++    	     
++    	    if (!str_cmp(word,"Attr"))
++    	    {
++    	         int stat;
++    	         
++    	         for (stat = 0; stat < MAX_STATS; stat++)
++    	             pet->perm_stat[stat] = fread_number(fp);
++    	         fMatch = TRUE;
++    	         break;
++    	    }
++    	    break;
++    	     
++    	 case 'C':
++    	     KEY( "Clan",       pet->clan,       clan_lookup(fread_string(fp)));
++	     KEY( "Comm",	pet->comm,		fread_number(fp));
++    	     break;
++    	     
++    	 case 'D':
++    	     KEY( "Dam",	pet->damroll,		fread_number(fp));
++    	     KEY( "Desc",	pet->description,	fread_string(fp));
++    	     break;
++    	     
++    	 case 'E':
++    	     if (!str_cmp(word,"End"))
++	     {
++                ch->mount = pet;
++                pet->mount = ch;
++                /* adjust hp mana move up  -- here for speed's sake */
++                percent = (current_time - lastlogoff) * 25 / ( 2 * 60 * 60);
++
++                if (percent > 0 && !IS_AFFECTED(ch,AFF_POISON)
++                &&  !IS_AFFECTED(ch,AFF_PLAGUE))
++                {
++                    percent = UMIN(percent,100);
++                    pet->hit    += (pet->max_hit - pet->hit) * percent / 100;
++                    pet->mana   += (pet->max_mana - pet->mana) * percent / 100;
++                    pet->move   += (pet->max_move - pet->move)* percent / 100;
++                }
++
++    	     	return;
++	     }
++    	     KEY( "Exp",	pet->exp,		fread_number(fp));
++    	     break;
++    	     
++    	 case 'G':
++    	     KEY( "Gold",	pet->gold,		fread_number(fp));
++    	     break;
++    	     
++    	 case 'H':
++    	     KEY( "Hit",	pet->hitroll,		fread_number(fp));
++    	     
++    	     if (!str_cmp(word,"HMV"))
++    	     {
++    	     	pet->hit	= fread_number(fp);
++    	     	pet->max_hit	= fread_number(fp);
++    	     	pet->mana	= fread_number(fp);
++    	     	pet->max_mana	= fread_number(fp);
++    	     	pet->move	= fread_number(fp);
++    	     	pet->max_move	= fread_number(fp);
++    	     	fMatch = TRUE;
++    	     	break;
++    	     }
++    	     break;
++    	     
++     	case 'L':
++    	     KEY( "Levl",	pet->level,		fread_number(fp));
++    	     KEY( "LnD",	pet->long_descr,	fread_string(fp));
++             KEY( "LogO",       lastlogoff,             fread_number(fp));
++    	     break;
++    	     
++    	case 'N':
++    	     KEY( "Name",	pet->name,		fread_string(fp));
++    	     break;
++    	     
++    	case 'P':
++    	     KEY( "Pos",	pet->position,		fread_number(fp));
++    	     break;
++    	     
++	case 'R':
++    	    KEY( "Race",	pet->race, race_lookup(fread_string(fp)));
++    	    break;
++ 	    
++    	case 'S' :
++    	    KEY( "Save",	pet->saving_throw,	fread_number(fp));
++    	    KEY( "Sex",		pet->sex,		fread_number(fp));
++    	    KEY( "ShD",		pet->short_descr,	fread_string(fp));
++            KEY( "Silv",        pet->silver,            fread_number( fp ) );
++    	    break;
++    	    
++    	if ( !fMatch )
++    	{
++    	    bug("Fread_mount: no match.",0);
++    	    fread_to_eol(fp);
++    	}
++    	
++    	}
++    }
++    
++}
++
+ 
+ 
+ 
+--- tables.c	1997/10/08 11:22:45	1.1
++++ tables.c	1997/08/09 13:30:42
+@@ -89,6 +89,7 @@
+     {	"sentinel",		B,	TRUE	},
+     {	"scavenger",		C,	TRUE	},
+     {	"aggressive",		F,	TRUE	},
++    {	"mount",		E,	TRUE	},
+     {	"stay_area",		G,	TRUE	},
+     {	"wimpy",		H,	TRUE	},
+     {	"pet",			I,	TRUE	},
+--- update.c	1997/10/08 11:22:45	1.1
++++ update.c	1997/08/09 13:30:42
+@@ -1062,7 +1062,20 @@
+ 	    if ( victim == NULL )
+ 		continue;
+ 
+-	    multi_hit( ch, victim, TYPE_UNDEFINED );
++            if (RIDDEN(ch))
++	    {
++		if (!mount_success(RIDDEN(wch), ch, FALSE))
++		{
++		    send_to_char("Your mount escapes your control!\n\r", RIDDEN(ch));
++		    multi_hit( ch, victim, TYPE_UNDEFINED );
++		}
++		else
++		{
++		    send_to_char("You manage to keep your mount under control.\n\r", RIDDEN(ch));
++		}
++	    }
++	    else 
++   	        multi_hit( ch, victim, TYPE_UNDEFINED );
+ 	}
+     }
+ 
+--- interp.h	1997/10/08 11:22:45	1.1
++++ interp.h	1997/08/09 13:30:39
+@@ -292,3 +292,6 @@
+ DECLARE_DO_FUN(	do_yell		);
+ DECLARE_DO_FUN(	do_zap		);
+ DECLARE_DO_FUN( do_zecho	);
++
++DECLARE_DO_FUN( do_mount	);
++DECLARE_DO_FUN( do_dismount	);
+--- merc.h	1997/10/08 11:22:45	1.1
++++ merc.h	1997/08/09 13:30:40
+@@ -128,7 +128,7 @@
+  * Adjust the pulse numbers to suit yourself.
+  */
+ #define MAX_SOCIALS		  256
+-#define MAX_SKILL		  150
++#define MAX_SKILL		  151
+ #define MAX_GROUP		   30
+ #define MAX_IN_GROUP		   15
+ #define MAX_ALIAS		    5
+@@ -565,6 +565,9 @@
+ #define ACT_SENTINEL	    	(B)		/* Stays in one room	*/
+ #define ACT_SCAVENGER	      	(C)		/* Picks up objects	*/
+ #define ACT_AGGRESSIVE		(F)    		/* Attacks PC's		*/
++
++#define ACT_MOUNT		(E)
++
+ #define ACT_STAY_AREA		(G)		/* Won't leave area	*/
+ #define ACT_WIMPY		(H)
+ #define ACT_PET			(I)		/* Auto set for pets	*/
+@@ -1100,6 +1103,7 @@
+ #define ROOM_LAW		(S)
+ #define ROOM_NOWHERE		(T)
+ 
++#define ROOM_MOUNT_SHOP		(U)
+ 
+ 
+ /*
+@@ -1443,6 +1447,8 @@
+     sh_int		dam_type;
+     sh_int		start_pos;
+     sh_int		default_pos;
++    CHAR_DATA *		mount;
++    bool		riding;
+ };
+ 
+ 
+@@ -1789,6 +1795,7 @@
+ extern sh_int  gsn_staves;
+ extern sh_int  gsn_wands;
+ extern sh_int  gsn_recall;
++extern sh_int  gsn_riding;
+ 
+ 
+ 
+@@ -1842,7 +1849,11 @@
+ #define DAZE_STATE(ch, npulse)  ((ch)->daze = UMAX((ch)->daze, (npulse)))
+ #define get_carry_weight(ch)	((ch)->carry_weight + (ch)->silver/10 +  \
+ 						      (ch)->gold * 2 / 5)
+-
++#define MOUNTED(ch) \
++		((!IS_NPC(ch) && ch->mount && ch->riding) ? ch->mount : NULL)
++#define RIDDEN(ch) \
++		((IS_NPC(ch) && ch->mount && ch->riding) ? ch->mount : NULL)
++#define IS_DRUNK(ch)		((ch->pcdata->condition[COND_DRUNK] > 10))
+ 
+ 
+ /*
+@@ -2316,6 +2327,13 @@
+ void	gain_exp	args( ( CHAR_DATA *ch, int gain ) );
+ void	gain_condition	args( ( CHAR_DATA *ch, int iCond, int value ) );
+ void	update_handler	args( ( void ) );
++
++/* mount.c */
++int     mount_success	args( ( CHAR_DATA *ch, CHAR_DATA *mount, int canattack ) );
++void    do_mount        args( ( CHAR_DATA *ch, char *argument ) );
++void    do_dismount     args( ( CHAR_DATA *ch, char *argument ) );
++void	do_buy_mount	args( ( CHAR_DATA *ch, char *argument ) );
++
+ 
+ #undef	CD
+ #undef	MID

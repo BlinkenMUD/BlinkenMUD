@@ -1,0 +1,22 @@
+
+ Changes for snippet "do_slay" since v1.0
+
+ 1.1 removed references in install.txt to a separate .c file, included
+     instructions to cut into act_wiz.c instead.
+
+     included "slay.hlp" instructions, to be pasted into ../area/help.hlp
+
+     split single "slay.v1" file into "install.txt" and "slay.c"
+
+
+
+
+
+
+
+
+
+slay-1.1/changes.txt | gary@dharvest.com
+
+
+ 

@@ -1,0 +1,15 @@
+These are the files to add horses to a Rom2.4b4 mud. The original code was
+taken from the Eod code, by John Booth (?). There is a problem with
+extract_char (handler.c) or nuke_pets (act_comm.c) I don't know how to fix it,
+so if anybody knows, please let me know 8)
+
+The problem is:
+All the horse stuff is saved into the player file, but it doesn't extract the
+horse when you log out. When you relog in the mud the horse is still there,
+but now, the player is not the master, and it doesn't load the old mount from
+the pfile.
+
+Well, any suggestions would be appreciate :)
+
+
+					Yago Diaz / yago@cerberus.uab.es
