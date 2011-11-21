@@ -169,7 +169,7 @@ sh_int gsn_grip;
 sh_int gsn_sharpen;
 
 sh_int gsn_throw;
-
+sh_int gsn_sharpen;
 
 /*
  * Locals.

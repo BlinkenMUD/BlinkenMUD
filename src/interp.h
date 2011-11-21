@@ -390,3 +390,4 @@ DECLARE_DO_FUN (do_withdraw);
 DECLARE_DO_FUN (do_map);
 DECLARE_DO_FUN (do_wpeace);
 DECLARE_DO_FUN (do_throw);
+DECLARE_DO_FUN (do_sharpen);

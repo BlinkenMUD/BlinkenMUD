@@ -4484,7 +4484,17 @@ const struct skill_type skill_table[MAX_SKILL] = {
     1, 1, 2, 1, 1, 1, 1},
     spell_null, TAR_IGNORE, POS_FIGHTING,
     &gsn_throw, TRUE, SLOT(0), 0, 0,
-    "throw", "!throw!", ""}
+    "throw", "!throw!", ""},
+
+  {
+    "sharpen",
+    {102, 102,  60, 65, 55, 102, 102,
+     102, 102, 102, 65, 50, 102, 102},
+    {  0,   0,   3,  2,  5,   0,   0,
+       0,   0,   0,  2,  6,   0,   0},
+    spell_null, TAR_IGNORE, POS_RESTING,
+    &gsn_sharpen, TRUE, SLOT(0), 0, 36,
+    "", "!Sharpen!", ""}
     
 };
 

@@ -1104,12 +1104,3 @@ group_remove (CHAR_DATA * ch, const char *name)
       gn_remove (ch, gn);	/* be sure to call gn_add on all remaining groups */
     }
 }
-
-/* Sharpen skill by Froboz questions comments send to froboz@cyberdude.com */
-
-void
-do_sharpen (CHAR_DATA * ch)
-{
-  send_to_char ("While you are fighting? Yea right!.\n\r", ch);
-  return;
-}

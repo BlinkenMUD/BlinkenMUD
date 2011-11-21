@@ -1,3 +1,9 @@
+New in 1.7:
+New command: sharpen. Some classes can sharpen weapons to make them stronger.
+
+New in 1.6:
+Cleaned the repository.
+
 New in 1.5:
 New immortal command: pathfind. In area pathfind. 
 

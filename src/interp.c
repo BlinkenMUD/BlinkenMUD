@@ -263,7 +263,7 @@ const struct cmd_type cmd_table[] = {
   {"value", do_value, POS_RESTING, 0, 1, LOG_NORMAL, 1},
   {"wear", do_wear, POS_RESTING, 0, 1, LOG_NORMAL, 1},
   {"zap", do_zap, POS_RESTING, 0, 1, LOG_NORMAL, 1},
-
+  {"sharpen", do_sharpen, POS_RESTING, 0, 1, LOG_NORMAL, 1},
   /*
    * Combat commands.
    */
@@ -284,7 +284,7 @@ const struct cmd_type cmd_table[] = {
   {"surrender", do_surrender, POS_FIGHTING, 0, 1, LOG_NORMAL, 1},
   {"trip", do_trip, POS_FIGHTING, 0, 1, LOG_NORMAL, 1},
   {"throw", do_throw, POS_FIGHTING, 0, 1, LOG_NORMAL, 1},
-  
+
   /*
    * Mob command interpreter (placed here for faster scan...)
    */

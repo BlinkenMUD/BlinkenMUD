@@ -2127,7 +2127,7 @@ extern sh_int gsn_grip;
 extern sh_int gsn_peek;
 
 extern sh_int gsn_throw;
-
+extern sh_int gsn_sharpen;
 
 /*
  * Utility macros.
