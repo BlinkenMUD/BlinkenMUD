@@ -8,3 +8,7 @@ log/*
 area/rot
 \.*
 \#*\#
+*.are
+area/*
+player/*
+gods/*
