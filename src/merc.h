@@ -598,7 +598,7 @@ struct kill_data
 
 #define MOB_VNUM_PATROLMAN	   2106
 #define MOB_VNUM_CORPSE		   3174
-#define OBJ_VNUM_STONE             3099	/*Stone vnum for sharpen */
+#define OBJ_VNUM_STONE             3098	/*Stone vnum for sharpen */
 #define MOB_VNUM_ANIMATE	   3175
 #define MOB_VNUM_DEMON		   3181
 #define MOB_VNUM_CLAYTON	   10009

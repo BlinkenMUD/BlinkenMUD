@@ -301,6 +301,7 @@ const struct flag_type item_weapon[] = {
   {"two-handed", F, TRUE},
   {"shocking", G, TRUE},
   {"poisoned", H, TRUE},
+  {"sharp", I, TRUE},
   {NULL, 0, 0}
 };
 
@@ -764,6 +765,7 @@ const struct flag_type weapon_type2[] = {
   {"twohands", WEAPON_TWO_HANDS, TRUE},
   {"shocking", WEAPON_SHOCKING, TRUE},
   {"poison", WEAPON_POISON, TRUE},
+  {"sharp", WEAPON_SHARP, TRUE},
   {NULL, 0, 0}
 };
 
