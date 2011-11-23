@@ -118,85 +118,85 @@ do_channels (CHAR_DATA * ch, char *argument)
 
   /* lists all channels and their status */
   send_to_char ("   channel     status\n\r", ch);
-  send_to_char ("---------------------\n\r", ch);
+  send_to_char ("{^---------------------{x\n\r", ch);
 
   send_to_char ("gossip         ", ch);
   if (!IS_SET (ch->comm, COMM_NOGOSSIP))
-    send_to_char ("ON\n\r", ch);
+    send_to_char ("{2ON{x\n\r", ch);
   else
-    send_to_char ("OFF\n\r", ch);
+    send_to_char ("{1OF{xF\n\r", ch);
 
   send_to_char ("clan gossip    ", ch);
   if (!IS_SET (ch->comm, COMM_NOCGOSSIP))
-    send_to_char ("ON\n\r", ch);
+    send_to_char ("{2ON{x\n\r", ch);
   else
-    send_to_char ("OFF\n\r", ch);
+    send_to_char ("{1OFF{x\n\r", ch);
 
   send_to_char ("quest gossip   ", ch);
   if (!IS_SET (ch->comm, COMM_NOCGOSSIP))
-    send_to_char ("ON\n\r", ch);
+    send_to_char ("{2ON{x\n\r", ch);
   else
-    send_to_char ("OFF\n\r", ch);
+    send_to_char ("{1OFF{x\n\r", ch);
 
   send_to_char ("ooc            ", ch);
   if (!IS_SET (ch->comm, COMM_NOOOC))
-    send_to_char ("ON\n\r", ch);
+    send_to_char ("{2ON{x\n\r", ch);
   else
-    send_to_char ("OFF\n\r", ch);
+    send_to_char ("{1OFF{x\n\r", ch);
 
   send_to_char ("music          ", ch);
   if (!IS_SET (ch->comm, COMM_NOMUSIC))
-    send_to_char ("ON\n\r", ch);
+    send_to_char ("{2ON{x\n\r", ch);
   else
-    send_to_char ("OFF\n\r", ch);
+    send_to_char ("{1OFF{x\n\r", ch);
 
   send_to_char ("Q/A            ", ch);
   if (!IS_SET (ch->comm, COMM_NOASK))
-    send_to_char ("ON\n\r", ch);
+    send_to_char ("{2ON{x\n\r", ch);
   else
-    send_to_char ("OFF\n\r", ch);
+    send_to_char ("{1OFF{x\n\r", ch);
 
   send_to_char ("Quote          ", ch);
   if (!IS_SET (ch->comm, COMM_NOQUOTE))
-    send_to_char ("ON\n\r", ch);
+    send_to_char ("{2ON{x\n\r", ch);
   else
-    send_to_char ("OFF\n\r", ch);
+    send_to_char ("{1OFF{x\n\r", ch);
 
   send_to_char ("grats          ", ch);
   if (!IS_SET (ch->comm, COMM_NOGRATS))
-    send_to_char ("ON\n\r", ch);
+    send_to_char ("{2ON{x\n\r", ch);
   else
-    send_to_char ("OFF\n\r", ch);
+    send_to_char ("{1OFF{x\n\r", ch);
 
   if (IS_IMMORTAL (ch))
     {
       send_to_char ("god channel    ", ch);
       if (!IS_SET (ch->comm, COMM_NOWIZ))
-	send_to_char ("ON\n\r", ch);
+	send_to_char ("{2ON{x\n\r", ch);
       else
-	send_to_char ("OFF\n\r", ch);
+	send_to_char ("{1OFF{x\n\r", ch);
     }
 
   send_to_char ("shouts         ", ch);
   if (!IS_SET (ch->comm, COMM_SHOUTSOFF))
-    send_to_char ("ON\n\r", ch);
+    send_to_char ("{2ON{x\n\r", ch);
   else
-    send_to_char ("OFF\n\r", ch);
+    send_to_char ("{1OFF{x\n\r", ch);
 
   send_to_char ("tells          ", ch);
   if (!IS_SET (ch->comm, COMM_DEAF))
-    send_to_char ("ON\n\r", ch);
+    send_to_char ("{2ON{x\n\r", ch);
   else
-    send_to_char ("OFF\n\r", ch);
+    send_to_char ("{1OFF{x\n\r", ch);
 
   send_to_char ("quiet mode     ", ch);
   if (IS_SET (ch->comm, COMM_QUIET))
-    send_to_char ("ON\n\r", ch);
+    send_to_char ("{2ON{x\n\r", ch);
   else
-    send_to_char ("OFF\n\r", ch);
+    send_to_char ("{1OFF{x\n\r", ch);
 
   if (IS_SET (ch->comm, COMM_AFK))
-    send_to_char ("You are AFK.\n\r", ch);
+    send_to_char ("You are {3AFK{x.\n\r", ch);
 
   if (IS_SET (ch->comm, COMM_STORE))
     send_to_char ("You store tells during fights.\n\r", ch);
@@ -243,12 +243,12 @@ do_deaf (CHAR_DATA * ch, char *argument)
 
   if (IS_SET (ch->comm, COMM_DEAF))
     {
-      send_to_char ("You can now hear tells again.\n\r", ch);
+      send_to_char ("You can now hear {%tells{x again.\n\r", ch);
       REMOVE_BIT (ch->comm, COMM_DEAF);
     }
   else
     {
-      send_to_char ("From now on, you won't hear tells.\n\r", ch);
+      send_to_char ("From now on, you won't hear {%tells{x.\n\r", ch);
       SET_BIT (ch->comm, COMM_DEAF);
     }
 }
@@ -286,18 +286,18 @@ do_afk (CHAR_DATA * ch, char *argument)
 		   "AFK mode removed.  You have {R%d{x tells waiting.\n\r",
 		   ch->tells);
 	  send_to_char (buf, ch);
-	  send_to_char ("Type 'replay' to see tells.\n\r", ch);
+	  send_to_char ("Type '{6replay{x' to see {%tells{x.\n\r", ch);
 	}
       else
 	{
-	  send_to_char ("AFK mode removed.  You have no tells waiting.\n\r",
+	  send_to_char ("{3AFK{x mode removed.  You have no {%tells{x waiting.\n\r",
 			ch);
 	}
       REMOVE_BIT (ch->comm, COMM_AFK);
     }
   else
     {
-      send_to_char ("You are now in AFK mode.\n\r", ch);
+      send_to_char ("You are now in {3AFK{x mode.\n\r", ch);
       SET_BIT (ch->comm, COMM_AFK);
     }
 }
@@ -307,12 +307,12 @@ do_autostore (CHAR_DATA * ch, char *argument)
 {
   if (IS_SET (ch->comm, COMM_STORE))
     {
-      send_to_char ("You will no longer store tells during fights.\n\r", ch);
+      send_to_char ("You will no longer store {%tells{x during fights.\n\r", ch);
       REMOVE_BIT (ch->comm, COMM_STORE);
     }
   else
     {
-      send_to_char ("You will now store tells during fights.\n\r", ch);
+      send_to_char ("You will now store {%tells{x during fights.\n\r", ch);
       SET_BIT (ch->comm, COMM_STORE);
     }
 }
@@ -328,7 +328,7 @@ do_replay (CHAR_DATA * ch, char *argument)
 
   if (buf_string (ch->pcdata->buffer)[0] == '\0')
     {
-      send_to_char ("You have no tells to replay.\n\r", ch);
+      send_to_char ("You have no {%tells{x to replay.\n\r", ch);
       return;
     }
 
@@ -1371,12 +1371,12 @@ do_announce (CHAR_DATA * ch, char *argument)
     {
       if (IS_SET (ch->comm, COMM_NOANNOUNCE))
 	{
-	  send_to_char ("Info channel is now ON\n\r", ch);
+	  send_to_char ("Info channel is now {2ON{x\n\r", ch);
 	  REMOVE_BIT (ch->comm, COMM_NOANNOUNCE);
 	}
       else
 	{
-	  send_to_char ("Info channel is now OFF\n\r", ch);
+	  send_to_char ("Info channel is now {1OFF{x\n\r", ch);
 	  SET_BIT (ch->comm, COMM_NOANNOUNCE);
 	}
       return;
@@ -1409,12 +1409,12 @@ do_immtalk (CHAR_DATA * ch, char *argument)
     {
       if (IS_SET (ch->comm, COMM_NOWIZ))
 	{
-	  send_to_char ("Immortal channel is now ON\n\r", ch);
+	  send_to_char ("Immortal channel is now {2ON{x\n\r", ch);
 	  REMOVE_BIT (ch->comm, COMM_NOWIZ);
 	}
       else
 	{
-	  send_to_char ("Immortal channel is now OFF\n\r", ch);
+	  send_to_char ("Immortal channel is now {1OFF{x\n\r", ch);
 	  SET_BIT (ch->comm, COMM_NOWIZ);
 	}
       return;
