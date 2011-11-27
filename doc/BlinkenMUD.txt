@@ -1,0 +1,28 @@
+*************************************************************
+*
+*------------- BlinkenMUD 
+*
+*************************************************************
+
+BlinkenMUD is wsa based off of Rot1.4 however it has been 
+changed alot. 
+
+FEATURES
+ - Clans
+ - OLC
+ - Autoquests
+ - Lots of color
+ - tons of emotes
+ - extra channels (say, tell, gossip, yell, clan, imm, ect)
+ - custom areas
+ - Major changes in code (gcc4 compatability and lots of cleaning)
+ - Much more
+
+BlinkenMUD is/was developed on the free shell servers @ 
+http://www.blinkenshell.org and spearheaded by Keeperx (Alec 
+Perseghin) with support by many members along the way 
+(see BlinkenMUD.credits). 
+
+A special thanks goes out to independence (owner operator of 
+blinkenshell.org) for facilitating the needs of the project 
+and the the players/developers. 
