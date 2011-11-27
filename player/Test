@@ -1,0 +1,324 @@
+#PLAYER
+Name Test~
+Id   1209646944
+LogO 1321906898
+Vers 5
+Prom <{R%hhp {M%mm {G%vmv{x>~
+Race gnome~
+Sex  1
+Clas cleric~
+Levl 15
+Tier 0
+Incr 0
+Sec  0
+Plyd 16991
+Notb  1321288108 0 0 0 0 0
+Scro 22
+Room 21206
+HMV  359 359 678 678 183 268
+Plat 4
+Gold 2
+Silv 0
+Plat_bank 196
+Gold_bank 0
+Silv_bank 9
+Exp  16500
+Act  BCDEFGHJQ
+AfBy J
+Comm NOb
+Pos  8
+Prac 36
+Trai 12
+Save  -12
+Alig  -214
+Hit   14
+ACs 29 30 27 70
+Attr 16 20 21 15 15
+AMod 2 0 0 1 0
+Pass ~
+Titl  the Vicar~
+Pnts 39
+TSex 1
+LLev 4
+Reca 0
+HMVP 351 678 268
+Cnd  0 0 0 0
+Sk 1 'acid blast'
+Sk 1 'burning hands'
+Sk 1 'chain lightning'
+Sk 1 'chill touch'
+Sk 1 'colour spray'
+Sk 1 'fireball'
+Sk 1 'lightning bolt'
+Sk 1 'magic missile'
+Sk 1 'shocking grasp'
+Sk 75 'mace'
+Sk 75 'sword'
+Sk 1 'kick'
+Sk 1 'fast healing'
+Sk 75 'scrolls'
+Sk 75 'staves'
+Sk 75 'wands'
+Sk 75 'recall'
+Gr 'rom basics'
+Gr 'cleric basics'
+Gr 'combat'
+Affc 'shield'   0  96  75 -20  17          0
+Affc 'bless'   0  94  72 -12  24          0
+Affc 'bless'   0  94  72  12  18          0
+End
+
+#O
+Vnum 1203
+Nest 0
+Cond 0
+Wear 12
+Lev  5
+Cost 100
+End
+
+#O
+Vnum 3716
+Nest 0
+Cond 0
+Wear -1
+Cost 0
+Val  0 0 97 0 0
+End
+
+#O
+Vnum 6601
+Nest 0
+Cond 0
+Wear 2
+Cost 620
+End
+
+#O
+Vnum 6601
+Nest 0
+Cond 0
+Wear 1
+Cost 620
+End
+
+#O
+Vnum 3504
+Nest 0
+Cond 0
+Wear -1
+Lev  5
+Cost 690
+End
+
+#O
+Vnum 3504
+Nest 0
+Cond 0
+Wear 15
+Lev  5
+Cost 690
+End
+
+#O
+Vnum 3362
+Nest 0
+Cond 0
+Wear 13
+Lev  5
+Cost 450
+End
+
+#O
+Vnum 3113
+Nest 0
+Cond 0
+Wear 8
+Lev  5
+Cost 660
+End
+
+#O
+Vnum 3112
+Nest 0
+Cond 0
+Wear 7
+Lev  5
+Cost 660
+End
+
+#O
+Vnum 3111
+Nest 0
+Cond 0
+Wear 6
+Lev  5
+Cost 660
+End
+
+#O
+Vnum 3077
+Nest 0
+Cond 0
+Wear -1
+Lev  5
+Cost 420
+End
+
+#O
+Vnum 3076
+Nest 0
+Cond 0
+Wear -1
+Lev  5
+Cost 420
+End
+
+#O
+Vnum 1507
+Nest 0
+Cond 0
+Wear 4
+Lev  5
+Cost 480
+End
+
+#O
+Vnum 3162
+Nest 0
+Cond 0
+Wear -1
+Cost 500
+End
+
+#O
+Vnum 3163
+Nest 0
+Cond 0
+Wear -1
+Cost 700
+End
+
+#O
+Vnum 3169
+Nest 0
+Cond 0
+Wear -1
+Cost 700
+End
+
+#O
+Vnum 9224
+Nest 0
+Cond 0
+Wear -1
+Lev  5
+Cost 200
+Val  150 38 0 0 0
+End
+
+#O
+Vnum 9222
+Nest 0
+Cond 0
+Wear 0
+Lev  5
+Cost 250
+Val  0 0 846 0 0
+End
+
+#O
+Vnum 7803
+Nest 0
+Cond 0
+Wear 3
+Lev  5
+Cost 900
+End
+
+#O
+Vnum 7802
+Nest 0
+Cond 0
+Wear -1
+Lev  5
+Cost 670
+End
+
+#O
+Vnum 7802
+Nest 0
+Cond 0
+Wear 16
+Lev  5
+Cost 670
+End
+
+#O
+Vnum 7800
+Nest 0
+Cond 0
+Wear 5
+Lev  5
+Cost 1080
+End
+
+#O
+Vnum 3162
+Nest 0
+Cond 0
+Wear -1
+Lev  5
+Cost 500
+End
+
+#O
+Vnum 3097
+Nest 0
+Cond 0
+Wear 11
+Lev  5
+Cost 750
+End
+
+#O
+Vnum 3709
+Nest 0
+Cond 0
+Wear 9
+Cost 72
+End
+
+#O
+Vnum 3710
+Nest 0
+Cond 0
+Wear 10
+Cost 72
+End
+
+#O
+Vnum 3713
+Nest 0
+Cond 0
+Wear 14
+Cost 48
+End
+
+#O
+Vnum 3715
+Nest 0
+Cond 0
+Wear -1
+Cost 1140
+End
+
+#O
+Vnum 1001
+Nest 0
+Cond 0
+Wear 17
+Cost 0
+End
+
+#END
