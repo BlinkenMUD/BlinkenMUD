@@ -4,7 +4,7 @@
 *
 *************************************************************
 
-BlinkenMUD is wsa based off of Rot1.4 however it has been 
+BlinkenMUD is/was based off of Rot1.4 however it has been 
 changed alot. 
 
 FEATURES
@@ -16,6 +16,8 @@ FEATURES
  - extra channels (say, tell, gossip, yell, clan, imm, ect)
  - custom areas
  - Major changes in code (gcc4 compatability and lots of cleaning)
+ - Lottery
+ - Mounts
  - Much more
 
 BlinkenMUD is/was developed on the free shell servers @ 

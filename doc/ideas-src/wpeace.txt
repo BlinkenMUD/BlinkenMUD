@@ -1,24 +1,3 @@
-/*
- * I don't think ROM muds have this particular function, if you do...
- * just don't include it :)
- */
-
-/*
-CHAR_DATA *get_char( CHAR_DATA *ch )
-{
-    if ( !ch->pcdata )
-        return ch->desc->original;
-    else
-        return ch;
-}
-*/
-
-/*
- * Copywrite 1996 by Amadeus of AnonyMUD, AVATAR, Horizon MUD, and Despair
- *			( amadeus@myself.com )
- *
- * Public use authorized with this header intact.
- */		
 void do_wpeace(CHAR_DATA *ch, char *argument )
 {
      CHAR_DATA *rch;
