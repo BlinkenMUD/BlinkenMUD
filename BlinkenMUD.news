@@ -1,13 +1,11 @@
-New in 1.7:
-New command: sharpen. Some classes can sharpen weapons to make them stronger.
+Changes till version 1.6:
 
-New in 1.6:
-Cleaned the repository.
+Throw: Its now possible to trow special throwables. 
+Sharpen: Some classes can sharpen their weapons to make them more powerfull.
+Teleport: Some rooms teleport players into a different room (random or fixed). 
+Color: working color.
+Minimap disable: Disable the minimap for force the user to read the text in the room. 
+Quests: Mob or object quests.
+Wpeace: Declare world peace to escape a fight.
+Pathfind: Lets gods find the shortest path from A to B (only works when you're in the same area).
 
-New in 1.5:
-New immortal command: pathfind. In area pathfind. 
-
-New in 1.4:
-
-New command: wpeace. Declare world peace. 
-New command: throw. Throw throwable objects while fighting.
