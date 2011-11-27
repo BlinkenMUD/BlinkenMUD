@@ -1,0 +1,64 @@
+#format IAC  %a 255 
+#format DONT %a 254 
+#format DO   %a 253 
+#format WONT %a 252 
+#format WILL %a 251                                                  
+#format SB   %a 250 
+#format SE   %a 240 
+
+#format GMCP %a 201 
+
+#nop Turn telnet debug off once everything works as it's spammy. 
+  
+#config {debug telnet} {on}    
+
+#var CLIENT_NAME TinTin++ 
+#var CLIENT_VERSION 2.00.3 
+
+#event {PROGRAM START} 
+{                      
+        #var CLIENT_NAME %0; 
+        #var CLIENT_VERSION %1 
+} 
+        
+#event {IAC WILL GMCP} 
+{        
+        #send {$IAC$DO$GMCP\}; 
+        #send {$IAC$SB$GMCP Core.Hello { "client": "$CLIENT_NAME", "version": "$CLIENT_VERSION" } $IAC$SE\}; 
+        #send {$IAC$SB$GMCP Core.Supports.Set [ "Room 1", "Room.Info 1" ] $IAC$SE\} 
+} 
+
+#event {IAC SB GMCP Room.Info IAC SE}              
+{ 
+        #var ROOM_INFO {%0}; 
+
+        #map goto {$ROOM_INFO[num]} {dig}; 
+
+        #map get roomarea {result};          
+
+        #if {"$result" == ""}            
+        { 
+                #map set roomarea $ROOM_INFO[area];                              
+                #map set roomnote $ROOM_INFO[environment]; 
+                #map set roomname $ROOM_INFO[name];                  
+                #map set roomcolor <178>                            
+        }; 
+
+        #foreach {$ROOM_INFO[exits][]} {exit}                                          
+        { 
+                #map get {roomexit} {result}; 
+
+                #if {&result[$exit] == 0} 
+                {                        
+                        #map get {roomvnum} {result} {$ROOM_INFO[exits][$exit]}; 
+
+                        #map dig {$exit} {$ROOM_INFO[exits][$exit]}; 
+                                                                    
+                        #if {$result == 0}                          
+                        {                  
+                                #map set {roomcolor} {<fca>} {$ROOM_INFO[exits][$exit]} 
+                        }                                                              
+                }        
+        }        
+
+} 
