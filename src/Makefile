@@ -5,7 +5,7 @@ C_FLAGS =  $(PROF) $(NOCRYPT) -std=gnu99 -Wall -Wformat -Wformat-security -Wunus
  -Wextra -Wno-unused-parameter  
 L_FLAGS =  $(PROF)
 
-ROT_FILES = act_comm.o act_enter.o act_info.o act_move.o act_obj.o act_wiz.o \
+BMUD_FILES = act_comm.o act_enter.o act_info.o act_move.o act_obj.o act_wiz.o \
           alias.o ban.o clans.o comm.o const.o curse.o db.o db2.o effects.o \
 	  fight.o finger.o flags.o forget.o handler.o healer.o interp.o note.o \
 	  lookup.o magic.o magic2.o music.o recycle.o repent.o save.o scan.o \
@@ -19,9 +19,9 @@ ROT_FILES = act_comm.o act_enter.o act_info.o act_move.o act_obj.o act_wiz.o \
 
 all:: rot
 
-rot: $(ROT_FILES)
+rot: $(BMUD_FILES)
 	rm -f $(NAME)
-	$(CC) $(L_FLAGS) -o $(NAME) $(ROT_FILES)
+	$(CC) $(L_FLAGS) -o $(NAME) $(BMUD_FILES)
 	@mv ./$(NAME) ../bin/
 
 .c.o: merc.h
@@ -30,4 +30,4 @@ rot: $(ROT_FILES)
 clean: 
 	@rm -fr *.o
 	@rm -fr ../bin/$(NAME)
-	@echo "BlinkenMuD has been cleaned"
+	@echo "BlinkenMUD has been cleaned"
