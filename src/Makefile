@@ -12,7 +12,7 @@ ROT_FILES = act_comm.o act_enter.o act_info.o act_move.o act_obj.o act_wiz.o \
 	  sign.o skills.o special.o tables.o update.o wizlist.o \
           mob_cmds.o mob_prog.o olc.o olc_act.o olc_save.o bit.o mem.o \
           string.o olc_mpcode.o minimap.o bank.o reward.o remort.o quest.o  \
-	  teleport.o wpeace.o throwing.o pathfind.c sharpen.c
+	  teleport.o wpeace.o throwing.o pathfind.o sharpen.o
 
 
 
