@@ -1,0 +1,30 @@
+Todo:
+
+* Finish the fbs/mounts branch.
+  The
+*** We applied the doc/ideas-src/mount/rom24b4_horse.patch to the source. But it causes some segvs. 
+
+* Postal office
+*** Universal send/receive for players. Could also be used as a global payout system. 
+
+* Teleport guy
+*** Give users the possibility to teleport to areas they already discovered.
+
+* Lottery
+*** Simple, buy a ticket and hope you win. Fixed time or minimum time + amount sold. 
+
+* Games
+*** Be creative :)
+
+* Limited amount of money
+** Limit the total amount of money in the game (maybe based on active players)
+** Give each mob (store) its own bank account. 
+
+* Improve quests
+*** Use your imagination here ;) 
+
+* Cleanup
+*** A lot of the `new' things we added are still in separate files. These need to get merged into the appropriate act* file.  
+
+* drool.txt
+** See drool.txt
