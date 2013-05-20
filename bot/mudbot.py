@@ -29,7 +29,7 @@ Config
 HOST="irc.blinkenshell.org"
 PORT=6667
 NICK="MUD-Bot"
-PASSWORD="firewall"
+PASSWORD="password"
 IDENT="mudbot"
 REALNAME="MudiousRoboticus"
 OWNER='KeeperX' #The bot owner's nick 
